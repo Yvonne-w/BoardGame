@@ -15,7 +15,17 @@ public class Metro {
      * @return True if this string is well-formed
      */
     public static boolean isPiecePlacementWellFormed(String piecePlacement) {
-        // FIXME Task 2: determine whether a piece placement is well-formed
+        if (piecePlacement.length() == 6){
+            if(piecePlacement.charAt(0) <= 'd' && piecePlacement.charAt(0) >= 'a'
+            && piecePlacement.charAt(1) <= 'd' && piecePlacement.charAt(1) >= 'a'
+            && piecePlacement.charAt(2) <= 'd' && piecePlacement.charAt(2) >= 'a'
+            && piecePlacement.charAt(3) <= 'd' && piecePlacement.charAt(3) >= 'a'){
+                if(Character.getNumericValue(piecePlacement.charAt(4)) <= 7 && Character.getNumericValue(piecePlacement.charAt(4)) >= 0
+                && Character.getNumericValue(piecePlacement.charAt(5)) <= 7 && Character.getNumericValue(piecePlacement.charAt(5)) >= 0) {
+                return true;
+                 }
+            }
+        }
         return false;
     }
 
