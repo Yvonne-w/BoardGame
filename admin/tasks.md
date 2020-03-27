@@ -9,11 +9,11 @@ Everyone: create application skeleton - meeting 10:00 Mar 24th
 
 ## Week 5
 
-Zhang San: Task 3 isPiecePlacementWellFormed - 26 Mar
+Yiwei - Sort out skeleton based on group discussion
 
-Jane Bloggs: Task 4 getNeighbours - 27 Mar
+Luna - Task 2
 
-Erika Mustermann: Task 6 getViablePiecePlacements - 28 Mar (depends on Task 3)
+Birady - Task 3
 
 ## Week 6
 

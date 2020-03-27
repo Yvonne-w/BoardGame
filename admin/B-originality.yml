@@ -20,8 +20,8 @@ declaration: >-
 # Add as many "name+comment" entries as necessary
 # (or remove it altogether if you haven't collaborated with anyone)
 collaboration:
-  - name:
-    comment: >-
+  - name: TIAN WU
+    comment: He shared a metro card set so we can print out.
 
 # Use this to list any code that you used that you did not write,
 # aside from code provided by the lecturer.  Provide a comment
@@ -42,16 +42,16 @@ code:
 # Add as many "url+licence+comment" entries as necessary
 # (or remove it altogether if you haven't used any external assets)
 assets:
-  - comment:
-    url:
-    licence:
+  - comment: Metro Game IOS Version
+    url: None
+    licence: NA
 
 
 # Sign *your* name and uids here. (Remove entries if you have fewer
 # than three members.)
 signatures:
-  - name:
-    uid:
+  - name: Yiwei Wu
+    uid: u7020050
   - name:
     uid:
   - name:
