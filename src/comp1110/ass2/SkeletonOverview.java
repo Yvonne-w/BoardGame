@@ -2,7 +2,13 @@ package comp1110.ass2;
 
 public class SkeletonOverview {
 /*
-7 classes in total
+Main class:
+Plan to use Game.fxml (or a Main class link to Game.fxml).
+I have finished the layout part of the Game.fxml, so am not writing too much here. 
+For the enent-handler part, I am still learning. 
+Therefore, not too much in this skeleton part. (Please check the Game.fxml in GUI folder)
+
+7 sub classes in total:
 
 Class 1. Board {
     initial stage (UI setting, don't know how to describe in details yet)
@@ -127,9 +133,6 @@ Class 7. PossibleLocation {
 }
  */
 
-    public static void main(String[] args) {
-        
-    }
 }
 
 
