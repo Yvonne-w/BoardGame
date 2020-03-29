@@ -8,7 +8,10 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
 /**
@@ -30,6 +33,7 @@ public class Viewer extends Application {
     private final Group controls = new Group();
     private TextField textField;
 
+
     /**
      * Draw a placement in the window, removing any previously drawn one
      *
@@ -37,6 +41,10 @@ public class Viewer extends Application {
      */
     void makePlacement(String placement) {
         // FIXME Task 4: implement the simple placement viewer
+        ImageView tile = new ImageView();
+        tile.setImage(new Image(this.getClass().getResource("assets/aaaa.jpg").toString()));
+        root.getChildren().add(tile);
+
     }
 
     /**
@@ -62,6 +70,13 @@ public class Viewer extends Application {
         controls.getChildren().add(hb);
     }
 
+    //added by Yiwei, Mar 29th, starting point
+    public static void main(String[] args) {
+        launch(args);
+    }
+    //added by Yiwei, Mar 29th, ending point
+
+
     @Override
     public void start(Stage primaryStage) throws Exception {
         primaryStage.setTitle("FocusGame Viewer");
@@ -70,6 +85,10 @@ public class Viewer extends Application {
         root.getChildren().add(controls);
 
         makeControls();
+
+        //added by Yiwei, Mar 29th, starting point
+        makePlacement("aaaa");
+        //added by Yiwei, Mar 29th, ending point
 
         primaryStage.setScene(scene);
         primaryStage.show();
