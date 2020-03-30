@@ -4,9 +4,8 @@ public class SkeletonOverview {
 /*
 Main class:
 Plan to use Game.fxml (or a Main class link to Game.fxml).
-I have finished the layout part of the Game.fxml, so am not writing too much here. 
-For the enent-handler part, I am still learning. 
-Therefore, not too much in this skeleton part. (Please check the Game.fxml in GUI folder)
+I have finished the layout part of the Game.fxml, so please check the Game.fxml in the GUI folder.
+For the event-handler part, we are trying to mock the Metro Game on iOS platform as much as we can.
 
 7 sub classes in total:
 
