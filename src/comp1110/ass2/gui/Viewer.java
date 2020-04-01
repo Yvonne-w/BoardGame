@@ -3,13 +3,16 @@ package comp1110.ass2.gui;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.Group;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
@@ -70,13 +73,6 @@ public class Viewer extends Application {
         controls.getChildren().add(hb);
     }
 
-    //added by Yiwei, Mar 29th, starting point
-    public static void main(String[] args) {
-        launch(args);
-    }
-    //added by Yiwei, Mar 29th, ending point
-
-
     @Override
     public void start(Stage primaryStage) throws Exception {
         primaryStage.setTitle("FocusGame Viewer");
@@ -89,6 +85,12 @@ public class Viewer extends Application {
         //added by Yiwei, Mar 29th, starting point
         makePlacement("aaaa");
         //added by Yiwei, Mar 29th, ending point
+
+        //Added by Yiwei, Mar 30th, starting point
+        BorderPane root = new BorderPane();
+        Parent content = FXMLLoader.load(getClass().getResource("Game.fxml"));
+        root.setCenter(content);
+        //Added by Yiwei, Mar 30th, ending point
 
         primaryStage.setScene(scene);
         primaryStage.show();
