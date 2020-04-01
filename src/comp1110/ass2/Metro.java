@@ -59,6 +59,7 @@ public class Metro {
      */
     public static String drawFromDeck(String placementSequence, String totalHands) {
         // FIXME Task 5: draw a random tile from the deck
+
         return "";
     }
 
