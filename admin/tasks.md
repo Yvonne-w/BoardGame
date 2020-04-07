@@ -8,18 +8,23 @@ Use the entries below as an example.
 Everyone: create application skeleton - meeting 10:00 Mar 24th
 
 ## Week 5
+Group Meeting - Wed 18.00 pm
 
 Yiwei - Sort out skeleton based on group discussion
 
 Luna - Task 2
 
-Birady - Task 3
-
-## Week 6
-
-...
+Birdy - Task 3
 
 ## Mid-Semester Break
+
+Break Week 1
+
+Yiwei - Task 4
+
+Luna - Task 5
+
+Birdy - Task 3
 
 ## Week 7
 
