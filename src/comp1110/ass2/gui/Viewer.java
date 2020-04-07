@@ -13,6 +13,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
@@ -44,9 +45,85 @@ public class Viewer extends Application {
      */
     void makePlacement(String placement) {
         // FIXME Task 4: implement the simple placement viewer
+        //board
+        GridPane board = new GridPane();
+
+        for (int i = 1; i <= 8; i++) {
+            ImageView station = new ImageView();
+            String stationLoc = URI_BASE + "station" + i + ".jpg";
+            station.setFitWidth(64);
+            station.setFitHeight(64);
+            station.setImage(new Image(this.getClass().getResource(stationLoc).toString()));
+            board.add(station, 9 - i, 0);
+        }
+
+        for (int i = 9; i <= 16; i++) {
+            ImageView station = new ImageView();
+            String stationLoc = URI_BASE + "station" + i + ".jpg";
+            station.setFitWidth(64);
+            station.setFitHeight(64);
+            station.setImage(new Image(this.getClass().getResource(stationLoc).toString()));
+            board.add(station, 0, i - 8);
+        }
+
+        for (int i = 17; i <= 24; i++) {
+            ImageView station = new ImageView();
+            String stationLoc = URI_BASE + "station" + i + ".jpg";
+            station.setFitWidth(64);
+            station.setFitHeight(64);
+            station.setImage(new Image(this.getClass().getResource(stationLoc).toString()));
+            board.add(station, i - 16, 9);
+        }
+
+        for (int i = 25; i <= 32; i++) {
+            ImageView station = new ImageView();
+            String stationLoc = URI_BASE + "station" + i + ".jpg";
+            station.setFitWidth(64);
+            station.setFitHeight(64);
+            station.setImage(new Image(this.getClass().getResource(stationLoc).toString()));
+            board.add(station, 9, 33 - i);
+        }
+
+        //corner
+        ImageView corner = new ImageView();
+        corner.setFitHeight(64);
+        corner.setFitWidth(64);
+        corner.setImage(new Image(this.getClass().getResource("assets/tile_back_cover.jpg").toString()));
+        board.add(corner, 0, 0);
+
+        ImageView corner1 = new ImageView();
+        corner1.setFitHeight(64);
+        corner1.setFitWidth(64);
+        corner1.setImage(new Image(this.getClass().getResource("assets/tile_back_cover.jpg").toString()));
+        board.add(corner1, 0, 9);
+
+        ImageView corner2 = new ImageView();
+        corner2.setFitHeight(64);
+        corner2.setFitWidth(64);
+        corner2.setImage(new Image(this.getClass().getResource("assets/tile_back_cover.jpg").toString()));
+        board.add(corner2, 9, 0);
+
+        ImageView corner3 = new ImageView();
+        corner3.setFitHeight(64);
+        corner3.setFitWidth(64);
+        corner3.setImage(new Image(this.getClass().getResource("assets/tile_back_cover.jpg").toString()));
+        board.add(corner3, 9, 9);
+
+        //tile placement
+        String tileType = placement.substring(0, 4);
+        int row = Integer.parseInt(placement.substring(4, 5));
+        int column = Integer.parseInt(placement.substring(5, 6));
+
+        String tileLoc = URI_BASE + tileType + ".jpg";
+
         ImageView tile = new ImageView();
-        tile.setImage(new Image(this.getClass().getResource("assets/aaaa.jpg").toString()));
-        root.getChildren().add(tile);
+        tile.setFitWidth(64);
+        tile.setFitHeight(64);
+        tile.setImage(new Image(this.getClass().getResource(tileLoc).toString()));
+
+        board.add(tile, column + 1, row+1);
+
+        root.getChildren().add(board);
 
     }
 
@@ -77,21 +154,8 @@ public class Viewer extends Application {
     public void start(Stage primaryStage) throws Exception {
         primaryStage.setTitle("FocusGame Viewer");
         Scene scene = new Scene(root, VIEWER_WIDTH, VIEWER_HEIGHT);
-
         root.getChildren().add(controls);
-
         makeControls();
-
-        //added by Yiwei, Mar 29th, starting point
-        makePlacement("aaaa");
-        //added by Yiwei, Mar 29th, ending point
-
-        //Added by Yiwei, Mar 30th, starting point
-        BorderPane root = new BorderPane();
-        Parent content = FXMLLoader.load(getClass().getResource("Game.fxml"));
-        root.setCenter(content);
-        //Added by Yiwei, Mar 30th, ending point
-
         primaryStage.setScene(scene);
         primaryStage.show();
     }
