@@ -43,8 +43,7 @@ public class Metro {
      * @return true if this placement sequence is well-formed
      */
     public static boolean isPlacementSequenceWellFormed(String placement) {
-      //  if (placement = )
-
+        if (isPiecePlacementWellFormed(placement) ){return true;}
 
         return false;
     }
