@@ -12,10 +12,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.Pane;
+import javafx.scene.layout.*;
 import javafx.stage.Stage;
 
 /**
@@ -44,7 +41,7 @@ public class Viewer extends Application {
      * @param placement A valid placement string
      */
     void makePlacement(String placement) {
-        // FIXME Task 4: implement the simple placement viewer
+        // Task 4: implement the simple placement viewer
         //board
         GridPane board = new GridPane();
 
@@ -110,18 +107,20 @@ public class Viewer extends Application {
         board.add(corner3, 9, 9);
 
         //tile placement
-        String tileType = placement.substring(0, 4);
-        int row = Integer.parseInt(placement.substring(4, 5));
-        int column = Integer.parseInt(placement.substring(5, 6));
+        for(int idx = 0;idx<placement.length();idx+=6){
+            String tileType = placement.substring(idx, idx+4);
+            int row = Integer.parseInt(placement.substring(idx+4, idx+5));
+            int column = Integer.parseInt(placement.substring(idx+5, idx+6));
 
-        String tileLoc = URI_BASE + tileType + ".jpg";
+            String tileLoc = URI_BASE + tileType + ".jpg";
 
-        ImageView tile = new ImageView();
-        tile.setFitWidth(64);
-        tile.setFitHeight(64);
-        tile.setImage(new Image(this.getClass().getResource(tileLoc).toString()));
+            ImageView tile = new ImageView();
+            tile.setFitWidth(64);
+            tile.setFitHeight(64);
+            tile.setImage(new Image(this.getClass().getResource(tileLoc).toString()));
 
-        board.add(tile, column + 1, row+1);
+            board.add(tile, column + 1, row+1);
+        }
 
         root.getChildren().add(board);
 
