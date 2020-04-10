@@ -43,7 +43,9 @@ public class Metro {
      * @return true if this placement sequence is well-formed
      */
     public static boolean isPlacementSequenceWellFormed(String placement) {
-        // FIXME Task 3: determine whether a placement sequence is well-formed
+        if (placement = )
+
+
         return false;
     }
 
