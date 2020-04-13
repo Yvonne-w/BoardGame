@@ -43,8 +43,18 @@ public class Metro {
      * @return true if this placement sequence is well-formed
      */
     public static boolean isPlacementSequenceWellFormed(String placement) {
-        if (isPiecePlacementWellFormed(placement) ){return true;}
+        if (placement.length() < 360 && (placement.length() % 6) == 0) {
 
+            foo:for (int i = 0; i <placement.length(); i += 6) {
+                String pieceplacement = (placement.substring(i, i + 6));
+                if (isPiecePlacementWellFormed(pieceplacement) == true) {
+                    if (i== placement.length()-6){
+                        return true;}
+
+                    continue foo;
+                }
+            }return false;
+        }
         return false;
     }
 
