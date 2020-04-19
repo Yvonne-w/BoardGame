@@ -1,5 +1,9 @@
 package comp1110.ass2;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Random;
+
 public class Metro {
     /**
      * Task 2
@@ -15,15 +19,15 @@ public class Metro {
      * @return True if this string is well-formed
      */
     public static boolean isPiecePlacementWellFormed(String piecePlacement) {
-        if (piecePlacement.length() == 6){
-            if(piecePlacement.charAt(0) <= 'd' && piecePlacement.charAt(0) >= 'a'
-            && piecePlacement.charAt(1) <= 'd' && piecePlacement.charAt(1) >= 'a'
-            && piecePlacement.charAt(2) <= 'd' && piecePlacement.charAt(2) >= 'a'
-            && piecePlacement.charAt(3) <= 'd' && piecePlacement.charAt(3) >= 'a'){
-                if(Character.getNumericValue(piecePlacement.charAt(4)) <= 7 && Character.getNumericValue(piecePlacement.charAt(4)) >= 0
-                && Character.getNumericValue(piecePlacement.charAt(5)) <= 7 && Character.getNumericValue(piecePlacement.charAt(5)) >= 0) {
-                return true;
-                 }
+        if (piecePlacement.length() == 6) {
+            if (piecePlacement.charAt(0) <= 'd' && piecePlacement.charAt(0) >= 'a'
+                    && piecePlacement.charAt(1) <= 'd' && piecePlacement.charAt(1) >= 'a'
+                    && piecePlacement.charAt(2) <= 'd' && piecePlacement.charAt(2) >= 'a'
+                    && piecePlacement.charAt(3) <= 'd' && piecePlacement.charAt(3) >= 'a') {
+                if (Character.getNumericValue(piecePlacement.charAt(4)) <= 7 && Character.getNumericValue(piecePlacement.charAt(4)) >= 0
+                        && Character.getNumericValue(piecePlacement.charAt(5)) <= 7 && Character.getNumericValue(piecePlacement.charAt(5)) >= 0) {
+                    return true;
+                }
             }
         }
         return false;
@@ -43,19 +47,22 @@ public class Metro {
      * @return true if this placement sequence is well-formed
      */
     public static boolean isPlacementSequenceWellFormed(String placement) {
-        if (placement.length()== 0)
+        if (placement.length() == 0)
             return true;
         if (placement.length() < 360 && (placement.length() % 6) == 0) {
 
-            foo:for (int i = 0; i <placement.length(); i += 6) {
+            foo:
+            for (int i = 0; i < placement.length(); i += 6) {
                 String pieceplacement = (placement.substring(i, i + 6));
                 if (isPiecePlacementWellFormed(pieceplacement) == true) {
-                    if (i == placement.length()-6){
-                        return true;}
+                    if (i == placement.length() - 6) {
+                        return true;
+                    }
 
                     continue foo;
                 }
-            }return false;
+            }
+            return false;
         }
         return false;
     }
@@ -72,8 +79,44 @@ public class Metro {
      */
     public static String drawFromDeck(String placementSequence, String totalHands) {
         // FIXME Task 5: draw a random tile from the deck
+        ArrayList<String> tileList = new ArrayList<String>(
+                Arrays.asList("aacb", "aacb", "aacb", "aacb",
+                        "cbaa", "cbaa", "cbaa", "cbaa",
+                        "acba", "acba", "acba", "acba",
+                        "baac", "baac", "baac", "baac",
+                        "aaaa", "aaaa", "aaaa", "aaaa",
+                        "cbcb", "cbcb", "cbcb",
+                        "bcbc", "bcbc", "bcbc",
+                        "cccc", "cccc",
+                        "bbbb", "bbbb",
+                        "dacc", "dacc",
+                        "cdac", "cdac",
+                        "ccda","ccda",
+                        "accd","accd",
+                        "dbba","dbba",
+                        "adbb","adbb",
+                        "badb","badb",
+                        "bbad","bbad",
+                        "ddbc","ddbc",
+                        "cddb","cddb",
+                        "bcdd","bcdd",
+                        "dbcd","dbcd",
+                        "adad","adad",
+                        "dada","dada",
+                        "dddd","dddd"));
+        for(int i =0;i<placementSequence.length();i+=6){
+            String currentTile = placementSequence.substring(i,i+4);
+            tileList.remove(currentTile);
+        }
 
-        return "";
+        for(int j =0;j<totalHands.length();j+=4){
+            String currentHand = totalHands.substring(j, j+4);
+            tileList.remove(currentHand);
+        }
+
+        String randomTile = tileList.get(new Random().nextInt(tileList.size()));
+
+        return randomTile;
     }
 
     /**

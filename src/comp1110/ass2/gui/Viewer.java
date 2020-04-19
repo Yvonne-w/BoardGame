@@ -33,6 +33,7 @@ public class Viewer extends Application {
     private final Group root = new Group();
     private final Group controls = new Group();
     private TextField textField;
+    private GridPane board; //Yiwei added Apr 19th
 
 
     /**
@@ -42,6 +43,7 @@ public class Viewer extends Application {
      */
     void makePlacement(String placement) {
         // Task 4: implement the simple placement viewer
+
         //board
         GridPane board = new GridPane();
 
@@ -123,7 +125,6 @@ public class Viewer extends Application {
         }
 
         root.getChildren().add(board);
-
     }
 
     /**
@@ -131,8 +132,9 @@ public class Viewer extends Application {
      */
     private void makeControls() {
         Label label1 = new Label("Placement:");
-        textField = new TextField();
+        textField = new TextField("Board appears after correct placement input"); //Yiwei added String Apr 19th
         textField.setPrefWidth(300);
+
         Button button = new Button("Refresh");
         button.setOnAction(new EventHandler<ActionEvent>() {
             @Override
