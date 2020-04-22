@@ -35,6 +35,9 @@ public class Viewer extends Application {
     private TextField textField;
     private GridPane board; //Yiwei added Apr 19th
 
+    public static void main(String[] args) {
+        launch(args);
+    }
 
     /**
      * Draw a placement in the window, removing any previously drawn one
