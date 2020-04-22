@@ -78,7 +78,7 @@ public class Metro {
      * @return a random tile from the deck
      */
     public static String drawFromDeck(String placementSequence, String totalHands) {
-        // FIXME Task 5: draw a random tile from the deck
+        // Task 5: draw a random tile from the deck
         ArrayList<String> tileList = new ArrayList<String>(
                 Arrays.asList("aacb", "aacb", "aacb", "aacb",
                         "cbaa", "cbaa", "cbaa", "cbaa",
