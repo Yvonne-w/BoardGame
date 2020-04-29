@@ -114,7 +114,7 @@
                   </GridPane>
                   <ImageView fitHeight="512.0" fitWidth="512.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../../../../assets/board_withoutEdges.png" />
+                        <Image url="@assets/board_withoutEdges.png" />
                      </image>
                   </ImageView>
                </children>
