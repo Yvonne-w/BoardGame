@@ -18,7 +18,7 @@ public class IsPiecePlacementWellFormedTest {
                 ", but got " + out, out == expected);
     }
 
-
+;
     @Test
     public void testWellFormed() {
         testTrivial();
