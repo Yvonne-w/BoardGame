@@ -91,26 +91,26 @@ public class Metro {
                         "bbbb", "bbbb",
                         "dacc", "dacc",
                         "cdac", "cdac",
-                        "ccda","ccda",
-                        "accd","accd",
-                        "dbba","dbba",
-                        "adbb","adbb",
-                        "badb","badb",
-                        "bbad","bbad",
-                        "ddbc","ddbc",
-                        "cddb","cddb",
-                        "bcdd","bcdd",
-                        "dbcd","dbcd",
-                        "adad","adad",
-                        "dada","dada",
-                        "dddd","dddd"));
-        for(int i =0;i<placementSequence.length();i+=6){
-            String currentTile = placementSequence.substring(i,i+4);
+                        "ccda", "ccda",
+                        "accd", "accd",
+                        "dbba", "dbba",
+                        "adbb", "adbb",
+                        "badb", "badb",
+                        "bbad", "bbad",
+                        "ddbc", "ddbc",
+                        "cddb", "cddb",
+                        "bcdd", "bcdd",
+                        "dbcd", "dbcd",
+                        "adad", "adad",
+                        "dada", "dada",
+                        "dddd", "dddd"));
+        for (int i = 0; i < placementSequence.length(); i += 6) {
+            String currentTile = placementSequence.substring(i, i + 4);
             tileList.remove(currentTile);
         }
 
-        for(int j =0;j<totalHands.length();j+=4){
-            String currentHand = totalHands.substring(j, j+4);
+        for (int j = 0; j < totalHands.length(); j += 4) {
+            String currentHand = totalHands.substring(j, j + 4);
             tileList.remove(currentHand);
         }
 

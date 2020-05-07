@@ -1,0 +1,10 @@
+.root {
+    -fx-font-family: "Comic Sans MS";
+    -fx-text-alignment: center; //not working
+    -fx-text-fill: white;  //not working
+}
+
+
+
+
+

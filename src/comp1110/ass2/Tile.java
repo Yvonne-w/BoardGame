@@ -1,19 +1,33 @@
 package comp1110.ass2;
 // This class represents a tile on the game board.
 
-public class Tile {
-    public static int NUM_POSITIONS = 64;
+import comp1110.ass2.gui.Game;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.shape.Polygon;
 
-    /* need to fix
+import static comp1110.ass2.gui.Game.SQUARE_SIZE;
+
+public class Tile extends Polygon {
     private final TileType tileType;
     private int position;
 
-    public Tile(TileType tileType, int position){
+    public Tile(TileType tileType, int position) {
+        super();
         this.tileType = tileType;
         this.position = position;
-    }
-     */
 
+        ImageView Tile = new ImageView();
+        Tile.setFitWidth(SQUARE_SIZE);
+        Tile.setFitHeight(SQUARE_SIZE);
+        String tileloc = "gui/assets/" + tileType + ".jpg";
+        System.out.println(tileloc); //
+        Tile.setImage(new Image(this.getClass().getResource(tileloc).toString()));
+
+    }
+
+
+    //Tile inner union method
     static int[] tileCode = new int[8];
 
     public static int[] encodeTile(String tilePlacement) {
