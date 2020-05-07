@@ -7,6 +7,8 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Group;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
@@ -279,7 +281,6 @@ public class Game extends Application {
 
     //Interactive Part
     public class DraggableTile extends Tile {
-
         public DraggableTile(TileType tileType, int position) {
             super(tileType, position);
         }
@@ -289,6 +290,13 @@ public class Game extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
         primaryStage.setTitle("Metro Game");
+
+        //Button button = new Button("Start");
+        //button.setLayoutX(BOARD_MARGIN + SQUARE_SIZE * 5);
+        //button.setLayoutY(BOARD_MARGIN + SQUARE_SIZE * 10);
+        //StackPane stackPane = new StackPane(button);
+        //root.getChildren().add(button);
+
         Scene scene = new Scene(root, GAME_WIDTH, GAME_HEIGHT);
         scene.setFill(Color.rgb(109, 95, 87));
         makeBoard();
@@ -297,12 +305,18 @@ public class Game extends Application {
         setVBoxRight();
         sethBOX();
 
-        Tile tile = new Tile(TileType.aaaa, 32);
+        /*
+            Tile tile = new Tile(TileType.aaaa, 32);
         tile.setLayoutX(BOARD_MARGIN + SQUARE_SIZE * 10);
         tile.setLayoutY(GAME_HEIGHT - 50);
         root.getChildren().add(tile);
         tile.toFront();
+         */
 
+        //change starting
+
+
+        //ending
 
         primaryStage.setScene(scene);
         scene.getStylesheets().addAll(this.getClass().getResource("styleGame.css").toExternalForm());

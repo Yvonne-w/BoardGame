@@ -5,7 +5,6 @@ import comp1110.ass2.gui.Game;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.shape.Polygon;
-
 import static comp1110.ass2.gui.Game.SQUARE_SIZE;
 
 public class Tile extends Polygon {
@@ -20,7 +19,7 @@ public class Tile extends Polygon {
         ImageView Tile = new ImageView();
         Tile.setFitWidth(SQUARE_SIZE);
         Tile.setFitHeight(SQUARE_SIZE);
-        String tileloc = "gui/assets/" + tileType + ".jpg";
+        String tileloc = "gui/assets/aaaa.jpg";
         System.out.println(tileloc); //
         Tile.setImage(new Image(this.getClass().getResource(tileloc).toString()));
 
