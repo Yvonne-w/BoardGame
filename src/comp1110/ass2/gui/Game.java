@@ -281,7 +281,7 @@ public class Game extends Application {
 
     //Interactive Part
     public class DraggableTile extends Tile {
-        public DraggableTile(TileType tileType, int position) {
+        public DraggableTile(String tileType, int position) {
             super(tileType, position);
         }
     }
@@ -291,7 +291,7 @@ public class Game extends Application {
     public void start(Stage primaryStage) throws Exception {
         primaryStage.setTitle("Metro Game");
 
-        //Button button = new Button("Start");
+        Button button = new Button("Start");
         //button.setLayoutX(BOARD_MARGIN + SQUARE_SIZE * 5);
         //button.setLayoutY(BOARD_MARGIN + SQUARE_SIZE * 10);
         //StackPane stackPane = new StackPane(button);
@@ -306,17 +306,13 @@ public class Game extends Application {
         sethBOX();
 
         /*
-            Tile tile = new Tile(TileType.aaaa, 32);
+        String tileType = "aaaa";
+        Tile tile = new Tile(tileType, 32);
         tile.setLayoutX(BOARD_MARGIN + SQUARE_SIZE * 10);
         tile.setLayoutY(GAME_HEIGHT - 50);
         root.getChildren().add(tile);
         tile.toFront();
          */
-
-        //change starting
-
-
-        //ending
 
         primaryStage.setScene(scene);
         scene.getStylesheets().addAll(this.getClass().getResource("styleGame.css").toExternalForm());
