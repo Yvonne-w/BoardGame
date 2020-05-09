@@ -1,14 +1,21 @@
 package comp1110.ass2.gui;
 
+import comp1110.ass2.Tile;
+import comp1110.ass2.TileType;
 import javafx.application.Application;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.scene.Group;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
 import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
 import javafx.scene.text.Text;
@@ -17,7 +24,7 @@ public class Game extends Application {
     //Task 8
     private static final int GAME_WIDTH = 1024;
     private static final int GAME_HEIGHT = 768;
-    private static final int SQUARE_SIZE = 64;
+    public static final int SQUARE_SIZE = 64;
     private static final int BOARD_MARGIN = 50;
     private static final int VBOX_WIDTH = 234;
     private static final int VBOX_HEIGHT = 512;
@@ -35,7 +42,7 @@ public class Game extends Application {
     private Text mark6 = new Text();
 
 
-    private void makeBoard() {
+    void makeBoard() {
         //board
         board.setLayoutX(BOARD_MARGIN);
         board.setLayoutY(BOARD_MARGIN);
@@ -132,6 +139,7 @@ public class Game extends Application {
 
         mark1.setTextAlignment(TextAlignment.LEFT);
         mark1.setText("Mark for Player 1");
+        mark1.setFill(Color.WHITE);
         vLeft.getChildren().add(mark1);
 
         ImageView player3 = new ImageView();
@@ -142,6 +150,7 @@ public class Game extends Application {
 
         mark3.setTextAlignment(TextAlignment.LEFT);
         mark3.setText("Mark for Player 3");
+        mark3.setFill(Color.WHITE);
         vLeft.getChildren().add(mark3);
 
         ImageView player5 = new ImageView();
@@ -152,6 +161,7 @@ public class Game extends Application {
 
         mark5.setTextAlignment(TextAlignment.LEFT);
         mark5.setText("Mark for Player 5");
+        mark5.setFill(Color.WHITE);
         vLeft.getChildren().add(mark5);
 
         root.getChildren().add(vLeft);
@@ -170,6 +180,7 @@ public class Game extends Application {
 
         mark2.setTextAlignment(TextAlignment.RIGHT);
         mark2.setText("Mark for Player 2");
+        mark2.setFill(Color.WHITE);
         vRight.getChildren().add(mark2);
 
         ImageView player4 = new ImageView();
@@ -180,6 +191,7 @@ public class Game extends Application {
 
         mark4.setTextAlignment(TextAlignment.RIGHT);
         mark4.setText("Mark for Player 4");
+        mark4.setFill(Color.WHITE);
         vRight.getChildren().add(mark4);
 
         ImageView player6 = new ImageView();
@@ -190,6 +202,7 @@ public class Game extends Application {
 
         mark6.setTextAlignment(TextAlignment.RIGHT);
         mark6.setText("Mark for Player 6");
+        mark6.setFill(Color.WHITE);
         vRight.getChildren().add(mark6);
 
         root.getChildren().add(vRight);
@@ -202,6 +215,7 @@ public class Game extends Application {
 
         Text tHand = new Text();
         tHand.setText("Hand");
+        tHand.setFill(Color.WHITE);
         hHandDock.getChildren().add(tHand);
 
         ImageView playerHand = new ImageView();
@@ -212,6 +226,7 @@ public class Game extends Application {
 
         Text tDock = new Text();
         tDock.setText("    Dock");
+        tDock.setFill(Color.WHITE);
         hHandDock.getChildren().add(tDock);
 
         ImageView dockTile = new ImageView();
@@ -224,16 +239,83 @@ public class Game extends Application {
 
     }
 
+    /*
+        void setButton() {
+        HBox hbutton = new HBox();
+        hbutton.setLayoutX(BOARD_MARGIN + SQUARE_SIZE * 5);
+        hbutton.setLayoutY(BOARD_MARGIN);
+
+        Button button = new Button("Start");
+        button.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent e) {
+
+            }
+        });
+        hbutton.getChildren().add(button);
+        root.getChildren().add(hbutton);
+    }
+     */
+
+    /*
+        private void makeControls() {
+        Label label1 = new Label("Placement:");
+        textField = new TextField("Board appears after correct placement input"); //Yiwei added String Apr 19th
+        textField.setPrefWidth(300);
+
+        Button button = new Button("Refresh");
+        button.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent e) {
+                textField.clear();
+            }
+        });
+        HBox hb = new HBox();
+        hb.getChildren().addAll(label1, textField, button);
+        hb.setSpacing(10);
+        hb.setLayoutX(130);
+        hb.setLayoutY(GAME_HEIGHT - 50);
+        controls.getChildren().add(hb);
+    }
+     */
+
+    //Interactive Part
+    public class DraggableTile extends Tile {
+        public DraggableTile(String tileType, int position) {
+            super(tileType, position);
+        }
+    }
+
+
     @Override
     public void start(Stage primaryStage) throws Exception {
         primaryStage.setTitle("Metro Game");
+
+        Button button = new Button("Start");
+        //button.setLayoutX(BOARD_MARGIN + SQUARE_SIZE * 5);
+        //button.setLayoutY(BOARD_MARGIN + SQUARE_SIZE * 10);
+        //StackPane stackPane = new StackPane(button);
+        //root.getChildren().add(button);
+
         Scene scene = new Scene(root, GAME_WIDTH, GAME_HEIGHT);
+        scene.setFill(Color.rgb(109, 95, 87));
         makeBoard();
         setBoardBackground();
         setVBoxLeft();
         setVBoxRight();
         sethBOX();
+
+        /*
+        String tileType = "aaaa";
+        Tile tile = new Tile(tileType, 32);
+        tile.setLayoutX(BOARD_MARGIN + SQUARE_SIZE * 10);
+        tile.setLayoutY(GAME_HEIGHT - 50);
+        root.getChildren().add(tile);
+        tile.toFront();
+         */
+
         primaryStage.setScene(scene);
+        scene.getStylesheets().addAll(this.getClass().getResource("styleGame.css").toExternalForm());
         primaryStage.show();
     }
 

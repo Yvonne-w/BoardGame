@@ -1,0 +1,60 @@
+# Write your name and UID here.
+#
+reviewer: Yiwei Wu
+    name: Yiwei Wu
+    uid: u7020050
+
+# Write the name of the author of the code here.
+#
+author: Birdy Shang
+  name: Birdy Shang
+  uid: u6864755
+
+# Write the class or method being reviewed here.
+#
+component:
+    /**
+      * Task 3
+      * Determine whether a placement sequence string is well-formed.
+      * For a placement sequence to be well-formed, it must satisfy the
+      * following criteria:
+      * - It must be composed of well-formed tile placements.
+      * - For any piece x, there can exist no more instances of x on the board
+      * than instances of x in the deck.
+      *
+      * @param placement A String representing the placement of all tiles on the
+      *                  board
+      * @return true if this placement sequence is well-formed
+     */
+      public static boolean isPlacementSequenceWellFormed(String placement) {
+      if (placement.length() == 0)
+      return true;
+      if (placement.length() < 360 && (placement.length() % 6) == 0) {
+
+        foo:
+      for (int i = 0; i < placement.length(); i += 6) {
+      String pieceplacement = (placement.substring(i, i + 6));
+      if (isPiecePlacementWellFormed(pieceplacement) == true) {
+      if (i == placement.length() - 6) {
+      return true;
+}
+
+      continue foo;
+}
+}
+  return false;
+}
+  return false;
+}
+
+# Write a list of review comments here.
+#
+comments:
+  - It is good to call isPlacementSequenceWell and use loops.
+  - But I don't understand what the inner IF statement does on line 38.
+  - The task passes all the test without that inner IF.
+  - And that continue is not neseccary to me in this FOR loop.
+  - Unfortunately, the task failed to compare the instance of x in the placement with x in the dock.
+  - In conclusion, it is a weird combination to me and could be improved.
+  - I am surprised it somehow works. :)
+
