@@ -47,7 +47,7 @@ public class Metro {
      *                  board
      * @return true if this placement sequence is well-formed
      */
-    // author of this method: Birdy
+    // author of this method: Birdy(u6864755)
     public static boolean isPlacementSequenceWellFormed(String placement) {
         if (placement.length() == 0)
             return true;
