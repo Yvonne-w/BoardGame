@@ -1,4 +1,5 @@
 package comp1110.ass2;
+// author of this class: Luna
 
 import java.util.HashSet;
 

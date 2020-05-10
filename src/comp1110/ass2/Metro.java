@@ -18,6 +18,7 @@ public class Metro {
      * @param piecePlacement A String representing the piece to be placed
      * @return True if this string is well-formed
      */
+    // author of this method: Luna
     public static boolean isPiecePlacementWellFormed(String piecePlacement) {
         if (piecePlacement.length() == 6) {
             if (piecePlacement.charAt(0) <= 'd' && piecePlacement.charAt(0) >= 'a'
@@ -46,6 +47,7 @@ public class Metro {
      *                  board
      * @return true if this placement sequence is well-formed
      */
+    // author of this method: Birdy
     public static boolean isPlacementSequenceWellFormed(String placement) {
         if (placement.length() == 0)
             return true;
@@ -153,6 +155,7 @@ public class Metro {
      * @param numberOfPlayers   The number of players in the game
      * @return an array containing the scores for all players
      */
+    // author of this method: Luna
     public static int[] getScore(String placementSequence, int numberOfPlayers) {
 
         return new RoadMap(placementSequence, numberOfPlayers).getScore();
