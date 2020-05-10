@@ -46,7 +46,7 @@ assets:
   - comment: Substring
     url: https://docs.oracle.com/javase/tutorial/java/data/manipstrings.html
     licence: https://www.oracle.com/legal/terms.html
-    
+
 # Sign *your* name and uids here. (Remove entries if you have fewer
 # than three members.)
 signatures:
