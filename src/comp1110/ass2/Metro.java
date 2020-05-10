@@ -138,7 +138,11 @@ public class Metro {
      * @return Whether this placement string is valid.
      */
     public static boolean isPlacementSequenceValid(String placementSequence) {
-        // FIXME Task 6: determine whether a placement sequence is valid
+        if (placementSequence.length() == 0)
+            return true;
+        if
+
+
         return false;
     }
 

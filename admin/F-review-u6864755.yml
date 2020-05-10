@@ -1,21 +1,49 @@
 # Write your name and UID here.
 #
 reviewer:
-  name: TBD
-  uid: u0000000
+  name: Birdy Shang
+  uid: u6864755
 
 # Write the name of the author of the code here.
 #
 author:
-  name: TBD
-  uid: u0000000
+  name: Runa Ebihara
+  uid: u6648214
 
 # Write the class or method being reviewed here.
 #
 component: Please pass CI
 
 # Write a list of review comments here.
-#
+#* Task 2
+  #     * Determine whether a piece placement is well-formed. For a piece
+  #     * placement to be well-formed, it must:
+  #     * - contain exactly six characters;
+  #     * - have as its first, second, third and fourth characters letters between
+  #     * 'a' and 'd' inclusive (tracks); and
+  #     * - have as its fifth and sixth characters digits between 0 and 7 inclusive
+  #     * (column and row respectively).
+  #     *
+  #     * @param piecePlacement A String representing the piece to be placed
+  #     * @return True if this string is well-formed
+  #     */
+  #    public static boolean isPiecePlacementWellFormed(String piecePlacement) {
+  #        if (piecePlacement.length() == 6) {
+  #            if (piecePlacement.charAt(0) <= 'd' && piecePlacement.charAt(0) >= 'a'
+  #                    && piecePlacement.charAt(1) <= 'd' && piecePlacement.charAt(1) >= 'a'
+  #                    && piecePlacement.charAt(2) <= 'd' && piecePlacement.charAt(2) >= 'a'
+  #                    && piecePlacement.charAt(3) <= 'd' && piecePlacement.charAt(3) >= 'a') {
+  #                if (Character.getNumericValue(piecePlacement.charAt(4)) <= 7 && Character.getNumericValue(piecePlacement.charAt(4)) >= 0
+  #                        && Character.getNumericValue(piecePlacement.charAt(5)) <= 7 && Character.getNumericValue(piecePlacement.charAt(5)) >= 0) {
+  #                    return true;
+  #                }
+  #            }
+  #        }
+#        return false;
+#    }
 comments:
   - Please pass CI
+
+# 1. What are the best features of this code?
+#  It uses if loop
 
