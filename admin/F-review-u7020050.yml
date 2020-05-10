@@ -46,8 +46,8 @@ component:
   #}
 
   # Write a list of review comments here.
-#
-comments:
+  #
+
   - # A line to pass CI
     #  1. What are the best features of this code?
     #  - It is good to call isPlacementSequenceWell and use loops.
