@@ -50,7 +50,6 @@ component:
 # Write a list of review comments here.
 #
 comments:
-  See below
 #  1. What are the best features of this code?
 #  - It is good to call isPlacementSequenceWell and use loops.
 
