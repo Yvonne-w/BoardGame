@@ -180,7 +180,7 @@ public class Game extends Application {
             //p.setFill(new ImagePattern(imgplayer));
             //vLeft.getChildren().add(p);
             Image imgplayer = new Image(this.getClass().getResource("assets/p" + (i + 1) + ".jpg").toString());
-            Circle c = new Circle(PLAYER_HEIGHT / numPlayers1);
+            Circle c = new Circle(PLAYER_WIDTH / 2);
             c.setFill(new ImagePattern(imgplayer));
             vLeft.getChildren().add(c);
 
