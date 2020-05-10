@@ -45,5 +45,17 @@ comments:
   - Please pass CI
 
 # 1. What are the best features of this code?
-#  It uses if loop
+# - It uses if statement
 
+# 2.Is the code well-documented?
+# - Didn't see comment. Would be better to add some comments.
+
+# 3.Is the program decomposition (class and method structure) appropriate?
+# - Line 27 seems a bit repetitive, as it has used IF statement in line 23. It could be improved by merging
+# - the conditions together.
+
+# 4. Does it follow Java code conventions (for example, are methods and variables properly named), and is the style consistent throughout?
+# Yes it does.
+
+#  5. If you suspect an error in the code, suggest a particular situation in which the program will not function correctly.
+# No error appears after running the test. In conclusion, this function works.
