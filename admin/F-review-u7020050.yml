@@ -13,8 +13,7 @@ author:
 # Write the class or method being reviewed here.
 #
 component:
-  #    /**
-  Task 3
+  - Task 3
 #      * Determine whether a placement sequence string is well-formed.
 #      * For a placement sequence to be well-formed, it must satisfy the
 #      * following criteria:
@@ -50,7 +49,7 @@ component:
 # Write a list of review comments here.
 #
 comments:
-  items: [ 1, 2, 3, 4, 5 ]
+  - Task 3
 #  1. What are the best features of this code?
 #  - It is good to call isPlacementSequenceWell and use loops.
 
