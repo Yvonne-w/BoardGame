@@ -150,8 +150,8 @@ public class Metro {
      * @return an array containing the scores for all players
      */
     public static int[] getScore(String placementSequence, int numberOfPlayers) {
-        // FIXME Task 7: determine the current score for the game
-        return new int[0];
+
+        return new RoadMap(placementSequence, numberOfPlayers).getScore();
     }
 
     /**
