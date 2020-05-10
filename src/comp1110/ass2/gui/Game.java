@@ -53,17 +53,47 @@ public class Game extends Application {
 
     private ArrayList<Square> squareBoard;
     Square hightlighted = null;
+    public String playerInput1;
+    public int numPlayers1;
+    public String playerInput2;
 
 
     private void makeControls() {
         Label label1 = new Label("Player Name:");
         label1.setTextFill(Color.WHITE);
-        textField = new TextField("Enter Players'names as a String, use comma to separate, e.g. Amy, Bob");
+        textField = new TextField("Enter Human Players'names as a String, use comma to separate, e.g. Amy, Bob");
         textField.setPrefWidth(300);
         Button button = new Button("Start");
         button.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent e) {
+                playerInput1 = textField.getText();
+                System.out.println(playerInput1);
+
+                //create player image based on input
+                numPlayers1 = 1;
+                for (int i = 0; i < playerInput1.length(); i++) {
+                    if (playerInput1.charAt(i) == ',') {
+                        numPlayers1++;
+                    }
+                }
+                System.out.println(numPlayers1);
+
+                /*
+                textField = new TextField("Enter AI Players'names as a String, use comma to separate, e.g. Amy, Bob");
+                playerInput2 = textField.getText();
+                System.out.println(playerInput2);
+
+                //create player image based on input
+                int numPlayers2 = 1;
+                for (int i = 0; i < playerInput2.length(); i++) {
+                    if (playerInput2.charAt(i) == ',') {
+                        numPlayers2++;
+                    }
+                }
+                System.out.println(numPlayers2);
+                 */
+
                 textField.clear();
             }
         });
@@ -89,7 +119,7 @@ public class Game extends Application {
         setVBoxRight();
         sethBOX();
 
-        ArrayList<Square> squareBoard = new ArrayList<>();
+        ArrayList<Square> squareBoard = new ArrayList<>();  //create a lightgrey square Arraylist on Board for future highlight
         for (int i = 0; i < 8; i++) {
             for (int j = 0; j < 8; j++) {
                 Square square = new Square(BOARD_MARGIN + 1.5 * SQUARE_SIZE + SQUARE_SIZE * i, BOARD_MARGIN + 1.5 * SQUARE_SIZE + SQUARE_SIZE * j);
@@ -103,12 +133,12 @@ public class Game extends Application {
             }
         }
 
-        DraggableSquare draggableSquareHand = new DraggableSquare(GAME_WIDTH - BOARD_MARGIN - VBOX_WIDTH, GAME_HEIGHT - BOARD_MARGIN - SQUARE_SIZE, this);
+        DraggableSquare draggableSquareHand = new DraggableSquare(GAME_WIDTH - BOARD_MARGIN - VBOX_WIDTH + SQUARE_SIZE, GAME_HEIGHT - BOARD_MARGIN - SQUARE_SIZE / 2, this);
         Image img1 = new Image(this.getClass().getResource("assets/bcbc.jpg").toString());
         draggableSquareHand.setFill(new ImagePattern(img1));
         root.getChildren().add(draggableSquareHand);
 
-        DraggableSquare draggableSquareDock = new DraggableSquare(GAME_WIDTH - BOARD_MARGIN - VBOX_WIDTH, GAME_HEIGHT - BOARD_MARGIN - SQUARE_SIZE, this);
+        DraggableSquare draggableSquareDock = new DraggableSquare(GAME_WIDTH - BOARD_MARGIN - VBOX_WIDTH + SQUARE_SIZE, GAME_HEIGHT - BOARD_MARGIN - SQUARE_SIZE / 2, this);
         Image img2 = new Image(this.getClass().getResource("assets/aaaa.jpg").toString());
         draggableSquareDock.setFill(new ImagePattern(img2));
         root.getChildren().add(draggableSquareDock);
@@ -291,6 +321,12 @@ public class Game extends Application {
         vLeft.getChildren().add(mark5);
 
         root.getChildren().add(vLeft);
+    }
+
+    private void setHumanPlayers() {
+        for (int i = 0; i < numPlayers1; i++) {
+
+        }
     }
 
     private void setVBoxRight() {

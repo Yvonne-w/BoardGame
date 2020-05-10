@@ -13,27 +13,39 @@ author:
 # Write the class or method being reviewed here.
 #
 component:
-Task 3:
-  public static boolean isPlacementSequenceWellFormed(String placement) {
-  if (placement.length() == 0)
-  return true;
-  if (placement.length() < 360 && (placement.length() % 6) == 0) {
+#    /**
+#      * Task 3
+#      * Determine whether a placement sequence string is well-formed.
+#      * For a placement sequence to be well-formed, it must satisfy the
+#      * following criteria:
+#      * - It must be composed of well-formed tile placements.
+#      * - For any piece x, there can exist no more instances of x on the board
+#      * than instances of x in the deck.
+#      *
+#      * @param placement A String representing the placement of all tiles on the
+#      *                  board
+#      * @return true if this placement sequence is well-formed
+#  */
+#      public static boolean isPlacementSequenceWellFormed(String placement) {
+#      if (placement.length() == 0)
+#      return true;
+#      if (placement.length() < 360 && (placement.length() % 6) == 0) {
 
-  foo:
-  for (int i = 0; i < placement.length(); i += 6) {
-  String pieceplacement = (placement.substring(i, i + 6));
-  if (isPiecePlacementWellFormed(pieceplacement) == true) {
-  if (i == placement.length() - 6) {
-  return true;
-}
-
-  continue foo;
-}
-}
-  return false;
-}
-  return false;
-}
+#        foo:
+#      for (int i = 0; i < placement.length(); i += 6) {
+#      String pieceplacement = (placement.substring(i, i + 6));
+#      if (isPiecePlacementWellFormed(pieceplacement) == true) {
+#      if (i == placement.length() - 6) {
+#      return true;
+#      }
+#
+#      continue foo;
+#      }
+#}
+#      return false;
+#}
+#      return false;
+#}
 
 # Write a list of review comments here.
 #
