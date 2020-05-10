@@ -26,9 +26,6 @@ public class Square extends Polygon {
     }
 
     public double getDistance(double x2, double y2) {
-        double movex = x2 - x;
-        double movey = y2 - y;
-        double length = Math.sqrt(Math.pow(movex, 2) + Math.pow(movey, 2));
-        return length;
+        return Math.sqrt(Math.pow(x2 - x, 2) + Math.pow(y2 - y, 2));
     }
 }
