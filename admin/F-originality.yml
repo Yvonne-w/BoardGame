@@ -34,8 +34,19 @@ declaration: >-
 #
 # Add as many "url+licence+comment" entries as necessary
 # (or remove it altogether if you haven't used any external assets)
+assets:
+  - comment: Images for players
+    url: https://www.pinterest.com.au/cheryldctn/impressionist-portrait/
+    licence: Photo
 
+  - comment: Enum type
+    url: https://docs.oracle.com/javase/tutorial/java/javaOO/enum.html
+    licence: https://www.oracle.com/legal/terms.html
 
+  - comment: Substring
+    url: https://docs.oracle.com/javase/tutorial/java/data/manipstrings.html
+    licence: https://www.oracle.com/legal/terms.html
+    
 # Sign *your* name and uids here. (Remove entries if you have fewer
 # than three members.)
 signatures:
@@ -43,5 +54,5 @@ signatures:
     uid: u7020050
   - name: TBD
     uid: u0000000
-  - name: TBD
-    uid: u0000000
+  - name: Runa Ebihara
+    uid: u6648214
