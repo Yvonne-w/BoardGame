@@ -1,6 +1,8 @@
 package comp1110.ass2;
 // This class represents a tile on the game board.
+// author of this class: Yiwei (u7020050)
 
+import comp1110.ass2.gui.Game;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.shape.Polygon;
@@ -16,14 +18,9 @@ public class Tile extends Polygon {
         this.tileType = tileType;
         this.position = position;
 
-        /*
-        ImageView Tile = new ImageView();
-        Tile.setFitWidth(SQUARE_SIZE);
-        Tile.setFitHeight(SQUARE_SIZE);
-        Tile.setImage(new Image(this.getClass().getResource("assets/" + tileType + ".jpg").toString()));
-         */
-
     }
+
+
 
     //Tile inner union method
     static int[] tileCode = new int[8];

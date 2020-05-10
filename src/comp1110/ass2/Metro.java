@@ -79,6 +79,7 @@ public class Metro {
      */
     public static String drawFromDeck(String placementSequence, String totalHands) {
         // Task 5: draw a random tile from the deck
+        //// author of this method: Yiwei (u7020050)
         ArrayList<String> tileList = new ArrayList<String>(
                 Arrays.asList("aacb", "aacb", "aacb", "aacb",
                         "cbaa", "cbaa", "cbaa", "cbaa",

@@ -43,7 +43,7 @@ public class Viewer extends Application {
      */
     void makePlacement(String placement) {
         // Task 4: implement the simple placement viewer
-
+        //// author of this method: Yiwei (u7020050)
         //board
         GridPane board = new GridPane();
 

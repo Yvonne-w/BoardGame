@@ -25,18 +25,11 @@ public class Test extends Application {
         Scene scene = new Scene(root, 1024, 768);
         //scene.setFill(Color.rgb(109, 95, 87));
 
-        /*
-        Tile tile = new Tile(TileType.aaaa, 32);
-        tile.setLayoutX(50);
-        tile.setLayoutY(60);
-        root.getChildren().add(tile);
-        tile.toFront();
-         */
-
+        String tileType = "aaaa";
         ImageView playerHand = new ImageView();
         playerHand.setFitWidth(SQUARE_SIZE);
         playerHand.setFitHeight(SQUARE_SIZE);
-        playerHand.setImage(new Image(this.getClass().getResource("assets/aaaa.jpg").toString()));
+        playerHand.setImage(new Image(this.getClass().getResource("assets/" + tileType + ".jpg").toString()));
         root.getChildren().add(playerHand);
 
         primaryStage.setScene(scene);
