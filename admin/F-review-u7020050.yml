@@ -12,7 +12,7 @@ author:
 
 # Write the class or method being reviewed here.
 #
-# component:
+component: Please pass CI
 #  Determine whether a placement sequence string is well-formed.
 #      * For a placement sequence to be well-formed, it must satisfy the
 #      * following criteria:
@@ -46,7 +46,8 @@ author:
 #}
 
 # Write a list of review comments here.
-#
+comments:
+  - Please pass CI.
 
 # A line to pass CI
 #  1. What are the best features of this code?
