@@ -13,7 +13,7 @@ author:
 # Write the class or method being reviewed here.
 #
 component:
-#    /**
+  #    /**
   Task 3
 #      * Determine whether a placement sequence string is well-formed.
 #      * For a placement sequence to be well-formed, it must satisfy the
@@ -50,24 +50,25 @@ component:
 # Write a list of review comments here.
 #
 comments:
-  1. What are the best features of this code?
-  - It is good to call isPlacementSequenceWell and use loops.
+  See below
+#  1. What are the best features of this code?
+#  - It is good to call isPlacementSequenceWell and use loops.
 
-  2. Is the code well-documented?
-  - No comment found, and this could be improved by adding comments.
+#  2. Is the code well-documented?
+#  - No comment found, and this could be improved by adding comments.
 
-  3. Is the program decomposition (class and method structure) appropriate?
-  - I don't understand what the inner IF statement does on line 38.
-  - The task passes all the test without that inner IF.
-  - And that continue is not neseccary to me in this FOR loop.
+#  3. Is the program decomposition (class and method structure) appropriate?
+#  - I don't understand what the inner IF statement does on line 38.
+#  - The task passes all the test without that inner IF.
+#  - And that continue is not neseccary to me in this FOR loop.
 
-  4. Does it follow Java code conventions (for example, are methods and variables properly named), and is the style consistent throughout?
-  - The naming for the loop seems a bit informal.
+#  4. Does it follow Java code conventions (for example, are methods and variables properly named), and is the style consistent throughout?
+#  - The naming for the loop seems a bit informal.
 
-  5. If you suspect an error in the code, suggest a particular situation in which the program will not function correctly.
-  - Unfortunately, the task failed to compare the instance of x in the placement with x in the dock.
-  - In conclusion, it is a weird combination to me and could be improved.
-  - I am surprised it somehow works. :)
+#  5. If you suspect an error in the code, suggest a particular situation in which the program will not function correctly.
+#  - Unfortunately, the task failed to compare the instance of x in the placement with x in the dock.
+#  - In conclusion, it is a weird combination to me and could be improved.
+#  - I am surprised it somehow works. :)
 
 
 
