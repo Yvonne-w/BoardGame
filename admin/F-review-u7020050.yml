@@ -1,12 +1,12 @@
 # Write your name and UID here.
 #
-reviewer: Yiwei Wu
+reviewer:
   name: Yiwei Wu
   uid: u7020050
 
 # Write the name of the author of the code here.
 #
-author: Birdy Shang
+author:
   name: Birdy Shang
   uid: u6864755
 
@@ -25,7 +25,7 @@ component:
       * @param placement A String representing the placement of all tiles on the
       *                  board
       * @return true if this placement sequence is well-formed
-      
+
       public static boolean isPlacementSequenceWellFormed(String placement) {
       if (placement.length() == 0)
       return true;
