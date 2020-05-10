@@ -20,6 +20,7 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
+import javafx.scene.shape.Circle;
 import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
 import javafx.scene.text.Text;
@@ -40,8 +41,8 @@ public class Game extends Application {
 
     private final Group root = new Group();
     private final GridPane board = new GridPane();
-
-
+    private final Group controls = new Group();
+    public VBox vLeft;
     private ImageView player1;
     private ImageView player3;
     private ImageView player5;
@@ -52,20 +53,18 @@ public class Game extends Application {
     private Text mark4 = new Text();
     private Text mark5 = new Text();
     private Text mark6 = new Text();
-    private final Group controls = new Group();
     private TextField textField;
-    public VBox vLeft;
 
-    public ArrayList<Square> squareBoard = new ArrayList<>();
-    Square hightlighted = null;
-    public String playerInput1;
-    public int numPlayers1;
-    public ArrayList<Text> markList = new ArrayList<>();
-    public ArrayList<String> humanPlayerList = new ArrayList<>();
     private double mousex;
     private double mousey;
+    public int numPlayers1;
+    public String playerInput1;
+    Square hightlighted = null;
     public DraggableSquare draggableSquareHand;
-    public DraggableSquare draggableSquareDock;
+    public ArrayList<String> humanPlayerList = new ArrayList<>();
+    public ArrayList<Square> squareBoard = new ArrayList<>();
+    public ArrayList<Square> tileOnBoard = new ArrayList<>();
+    public ArrayList<Text> markList = new ArrayList<>();
 
 
     public static void main(String[] args) {
@@ -85,32 +84,12 @@ public class Game extends Application {
         setVBoxLeft();
         setVBoxRight();
         sethBOX();
+        makeLightGreySquareBoard();
 
-        //create a lightgrey square Arraylist on Board for future highlight
-        for (int i = 0; i < 8; i++) {
-            for (int j = 0; j < 8; j++) {
-                Square square = new Square(BOARD_MARGIN + 1.5 * SQUARE_SIZE + SQUARE_SIZE * i, BOARD_MARGIN + 1.5 * SQUARE_SIZE + SQUARE_SIZE * j);
-                square.setFill(Color.LIGHTGRAY);
-                square.setOpacity(0.3);
-                if ((i == 3 || i == 4) && (j == 3 || j == 4)) {
-                    square.setFill(Color.TRANSPARENT);
-                }
-                squareBoard.add(square);
-                root.getChildren().add(square);
-            }
-        }
-
-        draggableSquareHand = new DraggableSquare(GAME_WIDTH - BOARD_MARGIN - VBOX_WIDTH + SQUARE_SIZE, GAME_HEIGHT - BOARD_MARGIN - SQUARE_SIZE / 2, this);
+        draggableSquareHand = new DraggableSquare(GAME_WIDTH - BOARD_MARGIN - VBOX_WIDTH + SQUARE_SIZE, GAME_HEIGHT - BOARD_MARGIN, this);
         Image img1 = new Image(this.getClass().getResource("assets/bcbc.jpg").toString());
         draggableSquareHand.setFill(new ImagePattern(img1));
         root.getChildren().add(draggableSquareHand);
-
-        /*
-        draggableSquareDock = new DraggableSquare(GAME_WIDTH - BOARD_MARGIN - VBOX_WIDTH + SQUARE_SIZE, GAME_HEIGHT - BOARD_MARGIN - SQUARE_SIZE / 2, this);
-        Image img2 = new Image(this.getClass().getResource("assets/aaaa.jpg").toString());
-        draggableSquareDock.setFill(new ImagePattern(img2));
-        root.getChildren().add(draggableSquareDock);
-         */
 
         primaryStage.setScene(scene);
         scene.getStylesheets().addAll(this.getClass().getResource("styleGame.css").toExternalForm());
@@ -143,6 +122,7 @@ public class Game extends Application {
             this.setOnMouseReleased(event -> {
                 draggableSquareHand.setLayoutX(hightlighted.x);
                 draggableSquareHand.setLayoutY(hightlighted.y);
+                tileOnBoard.add(draggableSquareHand);
 
             });
         }
@@ -175,14 +155,33 @@ public class Game extends Application {
         }
     }
 
+    public void makeLightGreySquareBoard() {
+        //create a lightgrey square Arraylist on Board for future highlight
+        for (int i = 0; i < 8; i++) {
+            for (int j = 0; j < 8; j++) {
+                Square square = new Square(BOARD_MARGIN + 1.5 * SQUARE_SIZE + SQUARE_SIZE * i, BOARD_MARGIN + 1.5 * SQUARE_SIZE + SQUARE_SIZE * j);
+                square.setFill(Color.LIGHTGRAY);
+                square.setOpacity(0.3);
+                if ((i == 3 || i == 4) && (j == 3 || j == 4)) {
+                    square.setFill(Color.TRANSPARENT);
+                }
+                squareBoard.add(square);
+                root.getChildren().add(square);
+            }
+        }
+    }
+
     private void setHumanPlayers() {
         vLeft.getChildren().removeAll(player1, player3, player5, mark1, mark3, mark5);
 
         for (int i = 0; i < numPlayers1; i++) {
-            Square p = new Square(BOARD_MARGIN + SQUARE_SIZE * 10 + BOARD_MARGIN, BOARD_MARGIN);
+            //Square p = new Square(BOARD_MARGIN + SQUARE_SIZE * 10 + BOARD_MARGIN, BOARD_MARGIN);
+            //p.setFill(new ImagePattern(imgplayer));
+            //vLeft.getChildren().add(p);
             Image imgplayer = new Image(this.getClass().getResource("assets/p" + (i + 1) + ".jpg").toString());
-            p.setFill(new ImagePattern(imgplayer));
-            vLeft.getChildren().add(p);
+            Circle c = new Circle(PLAYER_WIDTH / 2);
+            c.setFill(new ImagePattern(imgplayer));
+            vLeft.getChildren().add(c);
 
             Text mark = new Text();
             mark.setTextAlignment(TextAlignment.LEFT);
@@ -196,7 +195,7 @@ public class Game extends Application {
     private void makeControls() {
         Label label1 = new Label("Player Name:");
         label1.setTextFill(Color.WHITE);
-        textField = new TextField("Enter Human Players'names as a String, use comma to separate, e.g. Amy, Bob");
+        textField = new TextField("Enter Players' Sequence, e.g. Amy, Bob");
         textField.setPrefWidth(300);
         Button button = new Button("Start");
         button.setOnAction(new EventHandler<ActionEvent>() {
@@ -289,7 +288,7 @@ public class Game extends Application {
 
     private void setVBoxRight() {
         VBox vRight = new VBox();
-        vRight.setLayoutX(BOARD_MARGIN + SQUARE_SIZE * 10 + BOARD_MARGIN + PLAYER_WIDTH);
+        vRight.setLayoutX(BOARD_MARGIN + SQUARE_SIZE * 10 + BOARD_MARGIN + PLAYER_WIDTH + 5);
         vRight.setLayoutY(BOARD_MARGIN);
 
         ImageView player2 = new ImageView();
@@ -331,7 +330,7 @@ public class Game extends Application {
     private void sethBOX() {
         HBox hHandDock = new HBox();
         hHandDock.setLayoutX(GAME_WIDTH - BOARD_MARGIN - VBOX_WIDTH);
-        hHandDock.setLayoutY(GAME_HEIGHT - BOARD_MARGIN - SQUARE_SIZE);
+        hHandDock.setLayoutY(GAME_HEIGHT - BOARD_MARGIN - SQUARE_SIZE / 2);
 
         Text tHand = new Text();
         tHand.setText("Hand");
