@@ -172,6 +172,7 @@ public class Game extends Application {
     }
 
     private void setHumanPlayers() {
+        //create Image for players
         vLeft.getChildren().removeAll(player1, player3, player5, mark1, mark3, mark5);
 
         for (int i = 0; i < numPlayers1; i++) {
@@ -179,7 +180,7 @@ public class Game extends Application {
             //p.setFill(new ImagePattern(imgplayer));
             //vLeft.getChildren().add(p);
             Image imgplayer = new Image(this.getClass().getResource("assets/p" + (i + 1) + ".jpg").toString());
-            Circle c = new Circle(PLAYER_WIDTH / 2);
+            Circle c = new Circle(PLAYER_HEIGHT / numPlayers1);
             c.setFill(new ImagePattern(imgplayer));
             vLeft.getChildren().add(c);
 
