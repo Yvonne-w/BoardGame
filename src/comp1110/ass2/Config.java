@@ -1,5 +1,7 @@
 package comp1110.ass2;
 
+// author of this class: Luna
+
 public class Config {
     final static int[][][] playersStations = new int[][][]{
             // define the start point
