@@ -14,7 +14,7 @@ author:
 #
 component:
 #    /**
-#      * Task 3
+  Task 3
 #      * Determine whether a placement sequence string is well-formed.
 #      * For a placement sequence to be well-formed, it must satisfy the
 #      * following criteria:
