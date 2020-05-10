@@ -140,7 +140,6 @@ public class Metro {
     public static boolean isPlacementSequenceValid(String placementSequence) {
         if (placementSequence.length() == 0)
             return true;
-        if
 
 
         return false;
