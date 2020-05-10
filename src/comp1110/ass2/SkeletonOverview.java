@@ -1,4 +1,5 @@
 package comp1110.ass2;
+//// author of this class: Yiwei (u7020050)
 
 public class SkeletonOverview {
 /*

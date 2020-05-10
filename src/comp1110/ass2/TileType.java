@@ -1,4 +1,5 @@
 package comp1110.ass2;
+// author of this class: Yiwei (u7020050)
 
 public enum TileType {
     aacb, cbaa, acba, baac, aaaa, cbcb, bcbc, cccc, bbbb, dacc, cdac, ccda, accd, dbba, adbb, badb, bbad, ddbc, cddb, bcdd, dbcd, adad, dada, dddd;

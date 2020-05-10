@@ -1,7 +1,9 @@
 package comp1110.ass2.gui;
 
-import comp1110.ass2.Tile;
-import comp1110.ass2.TileType;
+// This class represents the main Game and include almost all the GUI parts.
+// author of this class: Yiwei (u7020050)
+
+import comp1110.ass2.Square;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -9,6 +11,7 @@ import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
@@ -16,9 +19,14 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
+import javafx.scene.paint.ImagePattern;
+import javafx.scene.shape.Polygon;
 import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
 import javafx.scene.text.Text;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class Game extends Application {
     //Task 8
@@ -40,7 +48,125 @@ public class Game extends Application {
     private Text mark4 = new Text();
     private Text mark5 = new Text();
     private Text mark6 = new Text();
+    private final Group controls = new Group();
+    private TextField textField;
 
+    private ArrayList<Square> squareBoard;
+    Square hightlighted = null;
+
+
+    private void makeControls() {
+        Label label1 = new Label("Player Name:");
+        label1.setTextFill(Color.WHITE);
+        textField = new TextField("Enter Players'names as a String, use comma to separate, e.g. Amy, Bob");
+        textField.setPrefWidth(300);
+        Button button = new Button("Start");
+        button.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent e) {
+                textField.clear();
+            }
+        });
+        HBox hb = new HBox();
+        hb.getChildren().addAll(label1, textField, button);
+        hb.setSpacing(10);
+        hb.setLayoutX(130);
+        hb.setLayoutY(GAME_HEIGHT - 50);
+        controls.getChildren().add(hb);
+    }
+
+    @Override
+    public void start(Stage primaryStage) throws Exception {
+        primaryStage.setTitle("Metro Game");
+        root.getChildren().add(controls);
+        makeControls();
+
+        Scene scene = new Scene(root, GAME_WIDTH, GAME_HEIGHT);
+        scene.setFill(Color.rgb(109, 95, 87));
+        makeBoard();
+        setBoardBackground();
+        setVBoxLeft();
+        setVBoxRight();
+        sethBOX();
+
+        ArrayList<Square> squareBoard = new ArrayList<>();
+        for (int i = 0; i < 8; i++) {
+            for (int j = 0; j < 8; j++) {
+                Square square = new Square(BOARD_MARGIN + 1.5 * SQUARE_SIZE + SQUARE_SIZE * i, BOARD_MARGIN + 1.5 * SQUARE_SIZE + SQUARE_SIZE * j);
+                square.setFill(Color.LIGHTGRAY);
+                square.setOpacity(0.3);
+                if ((i == 3 || i == 4) && (j == 3 || j == 4)) {
+                    square.setFill(Color.TRANSPARENT);
+                }
+                squareBoard.add(square);
+                root.getChildren().add(square);
+            }
+        }
+
+        DraggableSquare draggableSquareHand = new DraggableSquare(GAME_WIDTH - BOARD_MARGIN - VBOX_WIDTH, GAME_HEIGHT - BOARD_MARGIN - SQUARE_SIZE, this);
+        Image img1 = new Image(this.getClass().getResource("assets/bcbc.jpg").toString());
+        draggableSquareHand.setFill(new ImagePattern(img1));
+        root.getChildren().add(draggableSquareHand);
+
+        DraggableSquare draggableSquareDock = new DraggableSquare(GAME_WIDTH - BOARD_MARGIN - VBOX_WIDTH, GAME_HEIGHT - BOARD_MARGIN - SQUARE_SIZE, this);
+        Image img2 = new Image(this.getClass().getResource("assets/aaaa.jpg").toString());
+        draggableSquareDock.setFill(new ImagePattern(img2));
+        root.getChildren().add(draggableSquareDock);
+
+        primaryStage.setScene(scene);
+        scene.getStylesheets().addAll(this.getClass().getResource("styleGame.css").toExternalForm());
+        primaryStage.show();
+    }
+
+    /*
+      public Square findNearestSquare(double x, double y) {
+        double shortDistance = GAME_WIDTH;
+        int index = 0;
+        for (int m = 0; m < squareBoard.size(); m++) {
+            double newDistance = squareBoard.get(m).getDistance(squareBoard.get(m).getLayoutX(), squareBoard.get(m).getLayoutY());
+            if (newDistance < shortDistance) {
+                shortDistance = newDistance;
+                index = m;
+            }
+        }
+        return squareBoard.get(index);
+    }
+
+    public void highlightNearestTriangle(double x, double y) {
+        //hightlighted.setFill(Color.LIGHTGRAY);
+        hightlighted = findNearestSquare(x, y);
+        hightlighted.setFill(Color.RED);
+    }
+
+     */
+
+
+    public class DraggableSquare extends Square {
+        private Game game;
+        private double mousex;
+        private double mousey;
+
+        DraggableSquare(double x, double y, Game game) {
+            super(x, y);
+            this.game = game;
+
+            this.setOnMousePressed(event -> {
+                mousex = event.getSceneX();
+                mousey = event.getSceneY();
+            });
+
+            this.setOnMouseDragged(event -> {
+                double movex = event.getSceneX() - mousex;
+                double movey = event.getSceneY() - mousey;
+                this.setLayoutX(mousex + movex);
+                this.setLayoutY(mousey + movey);
+                mousex = this.getLayoutX();
+                mousey = this.getLayoutY();
+
+                //highlightNearestTriangle(mousex, mousey);
+            });
+        }
+    }
 
     void makeBoard() {
         //board
@@ -221,7 +347,7 @@ public class Game extends Application {
         ImageView playerHand = new ImageView();
         playerHand.setFitWidth(SQUARE_SIZE);
         playerHand.setFitHeight(SQUARE_SIZE);
-        playerHand.setImage(new Image(this.getClass().getResource("assets/aaaa.jpg").toString()));
+        playerHand.setImage(new Image(this.getClass().getResource("assets/tile_back_cover.jpg").toString()));
         hHandDock.getChildren().add(playerHand);
 
         Text tDock = new Text();
@@ -232,91 +358,11 @@ public class Game extends Application {
         ImageView dockTile = new ImageView();
         dockTile.setFitWidth(SQUARE_SIZE);
         dockTile.setFitHeight(SQUARE_SIZE);
-        dockTile.setImage(new Image(this.getClass().getResource("assets/bcbc.jpg").toString()));
+        dockTile.setImage(new Image(this.getClass().getResource("assets/tile_back_cover.jpg").toString()));
         hHandDock.getChildren().add(dockTile);
 
         root.getChildren().add(hHandDock);
 
-    }
-
-    /*
-        void setButton() {
-        HBox hbutton = new HBox();
-        hbutton.setLayoutX(BOARD_MARGIN + SQUARE_SIZE * 5);
-        hbutton.setLayoutY(BOARD_MARGIN);
-
-        Button button = new Button("Start");
-        button.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent e) {
-
-            }
-        });
-        hbutton.getChildren().add(button);
-        root.getChildren().add(hbutton);
-    }
-     */
-
-    /*
-        private void makeControls() {
-        Label label1 = new Label("Placement:");
-        textField = new TextField("Board appears after correct placement input"); //Yiwei added String Apr 19th
-        textField.setPrefWidth(300);
-
-        Button button = new Button("Refresh");
-        button.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent e) {
-                textField.clear();
-            }
-        });
-        HBox hb = new HBox();
-        hb.getChildren().addAll(label1, textField, button);
-        hb.setSpacing(10);
-        hb.setLayoutX(130);
-        hb.setLayoutY(GAME_HEIGHT - 50);
-        controls.getChildren().add(hb);
-    }
-     */
-
-    //Interactive Part
-    public class DraggableTile extends Tile {
-        public DraggableTile(String tileType, int position) {
-            super(tileType, position);
-        }
-    }
-
-
-    @Override
-    public void start(Stage primaryStage) throws Exception {
-        primaryStage.setTitle("Metro Game");
-
-        Button button = new Button("Start");
-        //button.setLayoutX(BOARD_MARGIN + SQUARE_SIZE * 5);
-        //button.setLayoutY(BOARD_MARGIN + SQUARE_SIZE * 10);
-        //StackPane stackPane = new StackPane(button);
-        //root.getChildren().add(button);
-
-        Scene scene = new Scene(root, GAME_WIDTH, GAME_HEIGHT);
-        scene.setFill(Color.rgb(109, 95, 87));
-        makeBoard();
-        setBoardBackground();
-        setVBoxLeft();
-        setVBoxRight();
-        sethBOX();
-
-        /*
-        String tileType = "aaaa";
-        Tile tile = new Tile(tileType, 32);
-        tile.setLayoutX(BOARD_MARGIN + SQUARE_SIZE * 10);
-        tile.setLayoutY(GAME_HEIGHT - 50);
-        root.getChildren().add(tile);
-        tile.toFront();
-         */
-
-        primaryStage.setScene(scene);
-        scene.getStylesheets().addAll(this.getClass().getResource("styleGame.css").toExternalForm());
-        primaryStage.show();
     }
 
     public static void main(String[] args) {
