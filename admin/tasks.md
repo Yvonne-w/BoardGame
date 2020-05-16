@@ -28,9 +28,23 @@ Birdy - Task 3
 
 ## Week 7
 
+Yiwei - Task 8
+
+Luna - Task 7
+
+Birdy - Task 6
+
 ## Week 8
 
+Individual Deliverable
+
 ## Week 9
+
+Yiwei - GUI part
+
+Luna - Task 7
+
+Birdy - Task 6
 
 ## Week 10
 
