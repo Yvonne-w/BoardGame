@@ -20,10 +20,9 @@ import static comp1110.ass2.gui.Game.SQUARE_SIZE;
 
 public class Test {
     public static void main(String[] args) {
-        System.out.println(Metro.getScore("bcbc01dada30cbcb05cdac60bbad31accd67baac02bcdd41cccc57bbbb17dacc72ccda20cbaa21dbba76dddd22aacb06aaaa32acba42", 2));
-
-
-
+        //Game.highlightPossibleLocation("", "cbcb");
+        //Game.getPossibleLocation("","cbcb");
+        //System.out.println(Metro.getScore("bcbc01dada30cbcb05cdac60bbad31accd67baac02bcdd41cccc57bbbb17dacc72ccda20cbaa21dbba76dddd22aacb06aaaa32acba42", 2));
         //System.out.println(isPlacementSequenceValid(""));
         //generateMove("", "cccc", 2);
         //System.out.println(Metro.possibleLocListStr);

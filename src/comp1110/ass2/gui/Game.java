@@ -24,12 +24,13 @@ import javafx.stage.Stage;
 import javafx.scene.text.Text;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class Game extends Application {
     /**
      * This class was created as an implementation of Task 8, and then extended to be the main scene of the game.
      *
-     * @author of class: Yiwei
+     * @author Yiwei
      */
     private static final int GAME_WIDTH = 1024;
     private static final int GAME_HEIGHT = 768;
@@ -63,15 +64,13 @@ public class Game extends Application {
     public String playerInput1;
     Tile hightlighted = null;
     public ArrayList<String> humanPlayerList = new ArrayList<>();
-    public ArrayList<Tile> squareBoard = new ArrayList<>();
+    public static ArrayList<Tile> squareBoard = new ArrayList<>();
     public ArrayList<Tile> tileOnBoard = new ArrayList<>();
     public ArrayList<Text> markList = new ArrayList<>();
     public String placementSequence;
     public String allTilesGenerated = "";
 
-    //change starts
-    public Stage primaryStage;
-    public Stage startStage;
+    //Startscene
     public Scene sceneStart;
     private final Group rootStart = new Group();
     private final Group controlsStart = new Group();
@@ -88,7 +87,6 @@ public class Game extends Application {
     public String playerInput3Start;
     public ArrayList<String> humanPlayerListStart = new ArrayList<>();
     public ArrayList<String> aiplayerlistStart = new ArrayList<>();
-    //change ends
 
 
     public static void main(String[] args) {
@@ -101,9 +99,13 @@ public class Game extends Application {
         /**
          * This start method sets the primaryStage of the game.
          */
+
         //To launch the still setting part of the game
         mainscene = new Scene(root, GAME_WIDTH, GAME_HEIGHT);
-        mainscene.setFill(Color.rgb(109, 95, 87));
+
+        Image mainSceneBackground = new Image(this.getClass().getResource("assets/vintagePaper.jpg").toString());
+        mainscene.setFill(new ImagePattern(mainSceneBackground));
+
         primaryStage.setTitle("Metro Game");
         root.getChildren().add(controls);
         makeControls();
@@ -115,9 +117,9 @@ public class Game extends Application {
         sethBOX();
         makeLightGreySquareBoard();
 
-        //s
+
+        //Startscene
         sceneStart = new Scene(rootStart, GAME_WIDTH, GAME_HEIGHT);
-        sceneStart.setFill(Color.rgb(109, 95, 87));
         makeStartControls();
         addVariants();
         rootStart.getChildren().add(controlsStart);
@@ -127,14 +129,13 @@ public class Game extends Application {
         button3.setOnMouseClicked(event -> {
             primaryStage.setScene(mainscene);
         });
-        //e
 
         primaryStage.setScene(sceneStart);
         mainscene.getStylesheets().addAll(this.getClass().getResource("styleGame.css").toExternalForm());
         primaryStage.show();
     }
 
-    //change s
+
     private void makeStartControls() {
         //Label, input and button part
         Label label1 = new Label("Human Player Name:");
@@ -223,6 +224,25 @@ public class Game extends Application {
         vbStart.setSpacing(10);
 
         controlsStart.getChildren().add(vbStart);
+    }
+
+    private void setHumanPlayers() {
+        //create Image for players
+        vLeft.getChildren().removeAll(playerStillList.get(0), playerStillList.get(1), playerStillList.get(2), mark1, mark3, mark5);
+
+        for (int i = 0; i < numPlayers1; i++) {
+            Image imgPlayer = new Image(this.getClass().getResource("assets/p" + (i + 1) + ".jpg").toString());
+            Circle c = new Circle(PLAYER_WIDTH / 2);
+            c.setFill(new ImagePattern(imgPlayer));
+            vLeft.getChildren().add(c);
+
+            Text mark = new Text();
+            mark.setTextAlignment(TextAlignment.LEFT);
+            mark.setText(humanPlayerList.get(i) + "\nMark: " + Metro.getScore(getPlacementSequence(), numPlayers1)[i] + "\n");
+            mark.setFill(Color.BROWN);
+            vLeft.getChildren().add(mark);
+            markList.add(mark);
+        }
     }
 
     private void addVariants() {
@@ -335,17 +355,31 @@ public class Game extends Application {
     }
 
 
-    public static ArrayList<Tile> getPossibleLocation() {
+    public static ArrayList<String> getPossibleLocation(String placementSequence, String tileType) {
         //TODO: need input to run metro.possibleListStr
-        ArrayList<String> possibleLocationListStr = Metro.possibleLocListStr;
-        ArrayList<Tile> possibleLocationList = new ArrayList<>();
-        for (int i = 0; i < possibleLocationListStr.size(); i++) {
-            String location = possibleLocationListStr.get(i);
-            int index = Integer.parseInt(String.valueOf(location.charAt(0))) * 7 + Integer.parseInt(String.valueOf(location.charAt(1)));
-            System.out.println(index);
+
+        ArrayList<String> placementList = new ArrayList<>(Arrays.asList(
+                "00", "01", "02", "03", "04", "05", "06", "07",
+                "10", "11", "12", "13", "14", "15", "16", "17",
+                "20", "21", "22", "23", "24", "25", "26", "27",
+                "30", "31", "32", "33", "34", "35", "36", "37",
+                "40", "41", "42", "43", "44", "45", "46", "47",
+                "50", "51", "52", "53", "54", "55", "56", "57",
+                "60", "61", "62", "63", "64", "65", "66", "67",
+                "70", "71", "72", "73", "74", "75", "76", "77"));
+
+        ArrayList<String> possibleLocationList = new ArrayList<>();
+
+        for (int i = 0; i < placementList.size(); i++) {
+            String s = placementSequence + tileType + placementList.get(i);
+            //System.out.println(s);
+            if (Metro.isPlacementSequenceValid(s)) {
+                String location = s.substring(s.length() - 2, s.length());
+                possibleLocationList.add(location);
+                //System.out.println(s);
+            }
         }
-
-
+        //System.out.println(possibleLocationList);
         return possibleLocationList;
     }
 
@@ -353,17 +387,11 @@ public class Game extends Application {
         /**
          * This class implements the draggable square to represent the tile
          */
-
-        //public int tileRow;
-        //public int tileColumn;
         private Game game;
 
         public DraggableSquare(double x, double y, Game game) {
             super(x, y);
             this.game = game;
-
-            //this.tileRow = (int) (this.getLayoutX() - 82 / 64);
-            //this.tileColumn = (int) (this.getLayoutY() - 82 / 64);
 
             this.setOnMousePressed(event -> {
                 mousex = event.getSceneX();
@@ -423,8 +451,51 @@ public class Game extends Application {
         }
     }
 
+    public void highlightPossibleLocation(String placementSequence, String tileType) {
+        for (int i = 0; i < squareBoard.size(); i++) {
+            squareBoard.get(i).setFill(Color.LIGHTGRAY);
+        }
+
+        ArrayList<Integer> indexList = new ArrayList<>();
+        for (String element : getPossibleLocation(placementSequence, tileType)) {
+            int row = Integer.parseInt(String.valueOf(element.charAt(0)));
+            int column = Integer.parseInt(String.valueOf(element.charAt(1)));
+            System.out.println("row");
+            System.out.println("column");
+            int index = Integer.parseInt(String.valueOf(element.charAt(0))) * 8 + Integer.parseInt(String.valueOf(element.charAt(1)));
+            indexList.add(index);
+        }
+        System.out.println("indexlist " + indexList);
+
+        for (int i = 0; i < squareBoard.size(); i++) {
+            System.out.println("new tile");
+            if (indexList.contains(i)) {
+                squareBoard.get(i).setFill(Color.BLUE);
+                System.out.println("i = " + i);
+                System.out.println("x " + squareBoard.get(i).getLayoutX());
+            }
+        }
+    }
+
     public void makeLightGreySquareBoard() {
         //create a lightgrey square Arraylist on Board for future highlight
+
+        for (int i = 0; i < 64; i++) {
+            int row = i / 8;
+            int j = i % 8;
+            //Tile square = new Tile(BOARD_MARGIN + 1.5 * SQUARE_SIZE + SQUARE_SIZE * row, BOARD_MARGIN + 1.5 * SQUARE_SIZE + SQUARE_SIZE * j);
+            Tile square = new Tile(BOARD_MARGIN + 1.5 * SQUARE_SIZE + SQUARE_SIZE * j, BOARD_MARGIN + 1.5 * SQUARE_SIZE + SQUARE_SIZE * row);
+            square.setFill(Color.LIGHTGRAY);
+            square.setOpacity(0.3);
+            if ((i == 27 || i == 28) || (i == 35 || i == 36)) {
+                square.setFill(central);
+            }
+            squareBoard.add(square);
+            root.getChildren().add(square);
+        }
+
+
+        /*
         for (int i = 0; i < 8; i++) {
             for (int j = 0; j < 8; j++) {
                 Tile square = new Tile(BOARD_MARGIN + 1.5 * SQUARE_SIZE + SQUARE_SIZE * i, BOARD_MARGIN + 1.5 * SQUARE_SIZE + SQUARE_SIZE * j);
@@ -437,27 +508,11 @@ public class Game extends Application {
                 root.getChildren().add(square);
             }
         }
+
+         */
+
+
     }
-
-    private void setHumanPlayers() {
-        //create Image for players
-        vLeft.getChildren().removeAll(playerStillList.get(0), playerStillList.get(1), playerStillList.get(2), mark1, mark3, mark5);
-
-        for (int i = 0; i < numPlayers1; i++) {
-            Image imgplayer = new Image(this.getClass().getResource("assets/p" + (i + 1) + ".jpg").toString());
-            Circle c = new Circle(PLAYER_WIDTH / 2);
-            c.setFill(new ImagePattern(imgplayer));
-            vLeft.getChildren().add(c);
-
-            Text mark = new Text();
-            mark.setTextAlignment(TextAlignment.LEFT);
-            mark.setText(humanPlayerList.get(i) + "\nMark: " + Metro.getScore(getPlacementSequence(), numPlayers1)[i] + "\n");
-            mark.setFill(Color.WHITE);
-            vLeft.getChildren().add(mark);
-            markList.add(mark);
-        }
-    }
-
 
     private void setVBoxLeft() {
         //To set the left box for human players
@@ -478,21 +533,21 @@ public class Game extends Application {
             if (j == 0) {
                 mark1.setTextAlignment(TextAlignment.RIGHT);
                 mark1.setText("Mark for Player 1");
-                mark1.setFill(Color.WHITE);
+                mark1.setFill(Color.BROWN);
                 vLeft.getChildren().add(mark1);
             }
 
             if (j == 1) {
                 mark3.setTextAlignment(TextAlignment.RIGHT);
                 mark3.setText("Mark for Player 3");
-                mark3.setFill(Color.WHITE);
+                mark3.setFill(Color.BROWN);
                 vLeft.getChildren().add(mark3);
             }
 
             if (j == 2) {
                 mark5.setTextAlignment(TextAlignment.RIGHT);
                 mark5.setText("Mark for Player 5");
-                mark5.setFill(Color.WHITE);
+                mark5.setFill(Color.BROWN);
                 vLeft.getChildren().add(mark5);
             }
         }
@@ -516,21 +571,21 @@ public class Game extends Application {
             if (j == 0) {
                 mark2.setTextAlignment(TextAlignment.RIGHT);
                 mark2.setText("Mark for Player 2");
-                mark2.setFill(Color.WHITE);
+                mark2.setFill(Color.BROWN);
                 vRight.getChildren().add(mark2);
             }
 
             if (j == 1) {
                 mark4.setTextAlignment(TextAlignment.RIGHT);
                 mark4.setText("Mark for Player 4");
-                mark4.setFill(Color.WHITE);
+                mark4.setFill(Color.BROWN);
                 vRight.getChildren().add(mark4);
             }
 
             if (j == 2) {
                 mark6.setTextAlignment(TextAlignment.RIGHT);
                 mark6.setText("Mark for Player 6");
-                mark6.setFill(Color.WHITE);
+                mark6.setFill(Color.BROWN);
                 vRight.getChildren().add(mark6);
             }
         }
@@ -546,7 +601,7 @@ public class Game extends Application {
 
         Text tHand = new Text();
         tHand.setText("Hand");
-        tHand.setFill(Color.WHITE);
+        tHand.setFill(Color.BROWN);
         hHandDock.getChildren().add(tHand);
 
         ImageView playerHand = new ImageView();
@@ -562,23 +617,24 @@ public class Game extends Application {
                 tiletype1 = Metro.drawFromDeck("", "");
                 tileHand.tileType = tiletype1;
                 allTilesGenerated = allTilesGenerated + tiletype1;
-
             } else {
                 tiletype1 = Metro.drawFromDeck("", allTilesGenerated);
                 tileHand.tileType = tiletype1;
                 allTilesGenerated = allTilesGenerated + tiletype1;
             }
 
+            highlightPossibleLocation(getPlacementSequence(), tiletype1);
             //System.out.println(getPlacementSequence());
-
             Image img1 = new Image(this.getClass().getResource("assets/" + tiletype1 + ".jpg").toString());
             tileHand.setFill(new ImagePattern(img1));
             root.getChildren().add(tileHand);
+
+
         });
 
         Text tDock = new Text();
         tDock.setText("    Deck");
-        tDock.setFill(Color.WHITE);
+        tDock.setFill(Color.BROWN);
         hHandDock.getChildren().add(tDock);
 
         ImageView dockTile = new ImageView();
@@ -601,11 +657,11 @@ public class Game extends Application {
                 tiletype2 = Metro.drawFromDeck("", allTilesGenerated);
                 tileDock.tileType = tiletype2;
                 allTilesGenerated = allTilesGenerated + tiletype2;
-                //System.out.println("addedDock " + allTilesGenerated);
             }
+            highlightPossibleLocation(getPlacementSequence(), tiletype2);
 
-            Image img1 = new Image(this.getClass().getResource("assets/" + tiletype2 + ".jpg").toString());
-            tileDock.setFill(new ImagePattern(img1));
+            Image img2 = new Image(this.getClass().getResource("assets/" + tiletype2 + ".jpg").toString());
+            tileDock.setFill(new ImagePattern(img2));
             root.getChildren().add(tileDock);
         });
 
