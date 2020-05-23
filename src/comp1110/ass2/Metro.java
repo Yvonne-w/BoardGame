@@ -277,6 +277,7 @@ public class Metro {
      */
     // author of this method: Luna
     public static int[] getScore(String placementSequence, int numberOfPlayers) {
+
         /*
         //Yiwei's trial, to have a better understanding of the game
         System.out.println(placementSequence);
@@ -284,37 +285,182 @@ public class Metro {
 
         ArrayList<ArrayList<Integer>> playerstation = getplayerstationByNum(numberOfPlayers);
 
-        HashMap<String, String> tileList = new HashMap<>();
+        HashMap<String, String> tileListPT = new HashMap<>();
         for (int j = 0; j < placementSequence.length(); j += 6) {
             //Hashmap for the placement, position as Key
             String tile = placementSequence.substring(j, j + 4);
             String position = placementSequence.substring(j + 4, j + 6);
-            tileList.put(position, tile);
+            tileListPT.put(position, tile);
             //System.out.println(positionInt + " " + tile);
         }
 
+
+        ArrayList<LinkedList<Integer>> pathlist = new ArrayList<>(32);
+        for (int n = 1; n <= 32; n++) {
+            LinkedList<Integer> path = new LinkedList<>();
+            path.addFirst(n);
+            pathlist.add(n - 1, path);
+        }
+        //System.out.println("pathlist " + pathlist);
+
+
         for (int i = 0; i < playerstation.size(); i++) {
-            ArrayList<String> startPlaceStr = convertStationToStartLoc(playerstation.get(i));
-            System.out.println("startPlaceStr " + startPlaceStr);
-            
-            for (int j = 0; j < startPlaceStr.size(); j++) {
-                //System.out.println("here" + startPlaceStr.get(j));
+            ArrayList<String> startPlaceStrList = convertStationToStartLoc(playerstation.get(i));
+            System.out.println("startPlaceStrList " + startPlaceStrList);
 
-                if (tileList.containsKey(startPlaceStr.get(j))) {
+            for (int j = 0; j < startPlaceStrList.size(); j++) {
+                //System.out.println("here" + startPlaceStrList.get(j));
+
+                if (tileListPT.containsKey(startPlaceStrList.get(j))) {
+                    String startPlaceStr = startPlaceStrList.get(j);
+                    System.out.println("startPlaceStr " + startPlaceStr);
                     int startStationInt = playerstation.get(i).get(j);
-                    System.out.println("startStationInt " + startStationInt);
+                    //System.out.println("startStationInt " + startStationInt);
 
-                    System.out.println("startTile " + tileList.get(startPlaceStr.get(j)));
-                    String tileStr = tileList.get(startPlaceStr.get(j));
-                    int checkDirction = getDirectionByStartStation(startStationInt);
-                    System.out.println("checkDirection " + checkDirction);
+                    //System.out.println("startTile " + tileListPT.get(startPlaceStrList.get(j)));
+                    String tileStr = tileListPT.get(startPlaceStrList.get(j));
+                    System.out.println("tileStr " + tileStr);
+
+                    //int checkDirction = getDirectionByStartStation(startStationInt);
+                    //System.out.println("checkDirection " + checkDirction);
+
+
+                    int previousDirection = getPreviousDirctionForEdge(tileStr, Integer.parseInt(startPlaceStr));
+                    //System.out.println("previousDirection " + previousDirection);
+                    int checkDirction2 = previousDirection;
+                    //System.out.println("test tileStr " + tileStr);
+                    //System.out.println(Integer.parseInt(startPlaceStr));
+                    //System.out.println("checkDirection2 " + checkDirction2);
+                    int checkDirction = checkDirction2;
+
+
+                    String position = startPlaceStr;
+                    int directionCheck = checkDirction;
+
+                    ArrayList<String> terminate = new ArrayList(Arrays.asList("00", "01", "02", "03", "04", "05", "06", "07", "10", "17", "70", "71", "72", "73", "74", "75", "76", "77", "20", "27", "30", "37", "40", "47", "50", "57", "60", "67"));
+
+                    while (isTileConnected(tileListPT, position, directionCheck)) {
+                        int newposition = Integer.parseInt(position) + directionCheck;
+                        //System.out.println("new position " + newposition);
+                        pathlist.get(startStationInt - 1).add(newposition);
+
+                        String tiletypeNew = tileListPT.get(String.valueOf(newposition));
+                        //System.out.println("tiletypeNew " + tiletypeNew);
+
+                        int newDirection = getDirectionForTile(tiletypeNew, newposition, directionCheck);
+                        //System.out.println("newDirection " + newDirection);
+
+                        position = String.valueOf(newposition);
+                        directionCheck = newDirection;
+
+                        if (terminate.contains(position)) {
+                            break;
+                        }
+
+                    }
+                }
+            }
+
+            System.out.println("new PathList " + pathlist);
+        }
+
+        return markList;
+        */
+        return new RoadMap(placementSequence, numberOfPlayers).getScore();
+    }
+
+    public static int getPreviousDirctionForEdge(String tileType, int tilePlace) {
+        int previousDirection = 0;
+        int index = 0;
+        int[] tileCode = Tile.encodeTile(tileType);
+
+        if (tilePlace <= 8) {
+            index = 0;
+        } else if (tilePlace <= 16) {
+            index = 6;
+        } else if (tilePlace <= 24) {
+            index = 4;
+        } else {
+            index = 2;
+        }
+
+        for (int i = 0; i < tileCode.length; i++) {
+            if (tileCode[index] == tileCode[i]) {
+                switch (i) {
+                    case (1):
+                        previousDirection = -10;
+                        break;
+                    case (3):
+                        previousDirection = 1;
+                        break;
+                    case (5):
+                        previousDirection = +10;
+                        break;
+                    case (7):
+                        previousDirection = -1;
+                        break;
+                }
+            }
+        }
+        return previousDirection;
+    }
+
+    /**
+     * @param tileType1
+     * @param tilePlace1
+     * @param previoudDirection -10 Up, +10 Down, +1 Right, -1 Left
+     * @return
+     */
+
+    public static int getDirectionForTile(String tileType1, int tilePlace1, int previoudDirection) {
+        int convertDirection = 0;
+        switch (previoudDirection) {
+            case (-10):
+                convertDirection = 4;
+                break;
+            case (10):
+                convertDirection = 0;
+                break;
+            case (1):
+                convertDirection = 6;
+                break;
+            case (-1):
+                convertDirection = 2;
+                break;
+        }
+        //System.out.println("convertPosition " + convertDirection);
+        int[] tileCode = Tile.encodeTile(tileType1);
+
+        int direction = 0;
+        for (int i = 0; i < tileCode.length; i++) {
+            if (tileCode[convertDirection] == tileCode[i]) {
+                switch (i) {
+                    case (1):
+                        direction = -10;
+                        break;
+                    case (3):
+                        direction = 1;
+                        break;
+                    case (5):
+                        direction = +10;
+                        break;
+                    case (7):
+                        direction = -1;
+                        break;
                 }
             }
         }
 
+        return direction;
+    }
 
-        return markList;
-        //return new RoadMap(placementSequence, numberOfPlayers).getScore();
+    public static boolean isTileConnected(HashMap<String, String> tileList, String position, int direction) {
+        int positionInt = Integer.parseInt(position);
+        int checkLoc = positionInt + direction;
+        if (tileList.containsKey(String.valueOf(checkLoc))) {
+            return true;
+        }
+        return false;
     }
 
     public static int getDirectionByStartStation(int playerStation) {
@@ -394,8 +540,8 @@ public class Metro {
         }
 
         return startStationList;
-         */
-        return new RoadMap(placementSequence, numberOfPlayers).getScore();
+
+        //return new RoadMap(placementSequence, numberOfPlayers).getScore();
     }
 
     /**
