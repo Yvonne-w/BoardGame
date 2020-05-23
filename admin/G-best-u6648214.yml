@@ -16,36 +16,38 @@ declaration: >-
 # Use this to list names of people who you collaborated with, and a
 # comment about what you collaborated on.
 #
-# Add as many "name+comment" entries as necessary
-# (or remove it altogether if you haven't collaborated with anyone)
-# collaboration:
-#  - name:
-#    comment: >-
-
-# Use this to list any code that you used that you did not write,
-# aside from code provided by the lecturer.  Provide a comment
-# explaining your use and the URL to that code and the licence for
-# that code
-#
-# Add as many "url+licence+comment" entries as necessary
-# (or remove it altogether if you haven't used any external code)
-#code:
-#  - comment:
-#    url:
-#    licence:
 
 # I wish to submit the following classes as entirely my own (remove this if
 # you want to just submit methods):
 #class:
-#  -
-#  -
+#  - RoadMap
 
     # I wish to submit the following methods as entirely my own (remove this if
   # you want to just submit classes):
 #method:
-#  -
-#  -
+#  -private void addTile(TileRoad tileRoad) {
+  #        roads[tileRoad.getY()][tileRoad.getX()] = tileRoad;
+  #    }
+  #
+  #    public int[] getScore() {
+  #        int[][] playerStations = Config.getPlayerStations(numberOfPlayers);
+  #        assert playerStations != null;
+  #        int[] ans = new int[playerStations.length];
+  #        for (int i = 0; i < ans.length; i++) {
+  #            ans[i] = 0;
+  #            HashSet<TrainPosition> visitd = new HashSet<>();
+  #            for (int j = 0; j < playerStations[i].length; j++) {
+  #                TrainPosition trainPosition = TrainPosition.computeStartTrainPosition(playerStations[i][j]);
+  #                assert trainPosition != null;
+  #                if (!visitd.contains(trainPosition)) {
+  #                    visitd.add(trainPosition);
+  #                    ans[i] += getStationScore(trainPosition, visitd);
+  #                }
+  #            }
+  #        }
+  #        return ans;
+  #    }
 
   # sign *your* name and uid here
-name: TBD
-uid: u0000000
+name: Runa Ebihara
+uid: u6648214
