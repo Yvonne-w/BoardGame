@@ -3,6 +3,7 @@ package comp1110.ass2;
 import java.util.*;
 
 public class Metro {
+    //public static final Integer TITLE_SIZE = 6; Birdy Shang
     public static ArrayList<String> possibleLocListStr;
 
     /**
@@ -137,8 +138,29 @@ public class Metro {
      * @param placementSequence A sequence of placements on the board.
      * @return Whether this placement string is valid.
      */
-    public static boolean isPlacementSequenceValid(String placementSequence) {
+
+
+    public static boolean isPlacementSequenceValid(String placementSequence) { /*
+        if (placementSequence.length() == 0)
+            return true;
+
+        if (placementSequence.length() % TITLE_SIZE == 0) {
+            if (!ValidCheck.isPlacementOverlap(placementSequence) || !ValidCheck.canPlaceCentralStations(placementSequence)|| !ValidCheck.isConnectRestBoard(placementSequence)
+                    || !ValidCheck.canPlaceEdge(placementSequence) || !ValidCheck.canPlaceCorner(placementSequence)){
+                return false;
+            }
+            return true;
+        }else {
+            return false;
+        }
+
+         */
+    // Birdy Shang
+
+
         //System.out.println(placementSequence);
+
+
 
         if (placementSequence.length() == 0 || placementSequence.length() == 360 || placementSequence == "dddd03acba57bbbb06cccc67") {
             //dddd first is an exception
