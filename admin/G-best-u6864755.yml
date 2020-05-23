@@ -31,28 +31,28 @@ declaration: >-
 
 # I wish to submit the following classes as entirely my own (remove this if
 # you want to just submit methods):
-class:
-  - ValidCheck
-  -
+#class:
+#  - ValidCheck
+#  -
 
     # I wish to submit the following methods as entirely my own (remove this if
   # you want to just submit classes):
-method:
-  - public static boolean isPlacementSequenceValid(String placementSequence) {
-      if (placementSequence.length() == 0)
-        return true;
-
-      if (placementSequence.length() % TITLE_SIZE == 0) {
-        if (!ValidCheck.isPlacementOverlap(placementSequence) || !ValidCheck.canPlaceCentralStations(placementSequence)|| !ValidCheck.isConnectRestBoard(placementSequence)
-            || !ValidCheck.canPlaceEdge(placementSequence) || !ValidCheck.canPlaceCorner(placementSequence)){
-        return false;
-        }
-        return true;
-    }else {
-        return false;
-    }
-   }
-  -
+#method:
+#  - public static boolean isPlacementSequenceValid(String placementSequence) {
+#      if (placementSequence.length() == 0)
+#        return true;
+#
+#      if (placementSequence.length() % TITLE_SIZE == 0) {
+#        if (!ValidCheck.isPlacementOverlap(placementSequence) || !ValidCheck.canPlaceCentralStations(placementSequence)|| !ValidCheck.isConnectRestBoard(placementSequence)
+#            || !ValidCheck.canPlaceEdge(placementSequence) || !ValidCheck.canPlaceCorner(placementSequence)){
+#        return false;
+#        }
+#        return true;
+#    }else {
+#        return false;
+#    }
+#   }
+#  -
 
   # sign *your* name and uid here
 name: Birdy Shang
