@@ -1,11 +1,35 @@
-/*package comp1110.ass2;
+#Refactored Archieve
+All these are working code and have passed tests.
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.LinkedList;
-import java.util.List;
+#Birdy Shang
+Metro.java
 
-public class ValidCheck {
+    public static boolean isPlacementSequenceValid(String placementSequence) { /*
+        if (placementSequence.length() == 0)
+            return true;
+
+        if (placementSequence.length() % TITLE_SIZE == 0) {
+            if (!ValidCheck.isPlacementOverlap(placementSequence) || !ValidCheck.canPlaceCentralStations(placementSequence)|| !ValidCheck.isConnectRestBoard(placementSequence)
+                    || !ValidCheck.canPlaceEdge(placementSequence) || !ValidCheck.canPlaceCorner(placementSequence)){
+                return false;
+            }
+            return true;
+        }else {
+            return false;
+        }
+
+     }
+     
+ValidCheck.java
+
+    package comp1110.ass2;
+    
+    import java.util.ArrayList;
+    import java.util.Arrays;
+    import java.util.LinkedList;
+    import java.util.List;
+
+    public class ValidCheck {
 
     private static final ArrayList<String> CENTRAL_LIST = new ArrayList<String>(
             Arrays.asList("34","43","33","44"));
@@ -228,6 +252,216 @@ public class ValidCheck {
             return false;
         }
 
+     }
     }
 
-}*/
+#Yiwei Wu 
+Game.java
+    
+    public int numPlayers1;
+    public String playerInput1;
+    private ArrayList<ImageView> playerStillList;
+    public ArrayList<String> humanPlayerList = new ArrayList<>();
+    private Text mark1 = new Text();
+    private Text mark2 = new Text();
+    private Text mark3 = new Text();
+    private Text mark4 = new Text();
+    private Text mark5 = new Text();
+    private Text mark6 = new Text();
+    private TextField textField;
+    private static final double PLAYER_HEIGHT = (double) VBOX_HEIGHT / 3;
+
+
+    from start{
+     makeControls();
+     makeTileControl();
+    } 
+     
+    private void setHumanPlayers() {
+        //create Image for players
+        vLeft.getChildren().removeAll(playerStillList.get(0), playerStillList.get(1), playerStillList.get(2), mark1, mark3, mark5);
+
+        for (int i = 0; i < numPlayers1; i++) {
+            Image imgPlayer = new Image(this.getClass().getResource("assets/p" + (i + 1) + ".jpg").toString());
+            Circle c = new Circle(PLAYER_WIDTH / 2);
+            c.setFill(new ImagePattern(imgPlayer));
+            vLeft.getChildren().add(c);
+
+            Text mark = new Text();
+            mark.setTextAlignment(TextAlignment.LEFT);
+            mark.setText(humanPlayerList.get(i) + "\nMark: " + Metro.getScore(getPlacementSequence(), numPlayers1)[i] + "\n");
+            mark.setFill(Color.BROWN);
+            vLeft.getChildren().add(mark);
+            markList.add(mark);
+        }
+    }
+    
+ 
+    private void makeControls() {
+         /**
+          * This method generates the left bottom part for playerSequence input.
+          * TODO: could be moved to StartScene
+          */
+ 
+         //Label, input and button part
+         Label label1 = new Label("Player Name:");
+         label1.setTextFill(Color.WHITE);
+         textField = new TextField("Enter Players' Sequence, e.g. Amy, Bob");
+         textField.setPrefWidth(300);
+         Button button = new Button("Start");
+         button.setOnAction(new EventHandler<ActionEvent>() {
+             @Override
+             public void handle(ActionEvent e) {
+                 playerInput1 = textField.getText();
+                 System.out.println(playerInput1);
+ 
+                 //create player image based on input
+                 numPlayers1 = 1;
+                 for (int i = 0; i < playerInput1.length(); i++) {
+                     if (playerInput1.charAt(i) == ',') {
+                         numPlayers1++;
+                     }
+                 }
+                 System.out.println(numPlayers1);
+ 
+                 String s = "";
+                 for (int j = 0; j < playerInput1.length(); j++) {
+                     if (playerInput1.charAt(j) != ',' && playerInput1.charAt(j) != ' ') {
+                         s = s + playerInput1.charAt(j);
+                     } else if (playerInput1.charAt(j) != ',') {
+                         humanPlayerList.add(s);
+                         s = "";
+                     }
+                 }
+                 humanPlayerList.add(s);
+ 
+                 for (int m = 0; m < humanPlayerList.size(); m++) {
+                     //System.out.println(humanPlayerList.get(m));
+                 }
+ 
+                 setHumanPlayers();
+                 textField.clear();
+             }
+         });
+ 
+         HBox hb = new HBox();
+         hb.getChildren().addAll(label1, textField, button);
+         hb.setSpacing(10);
+         hb.setLayoutX(130);
+         hb.setLayoutY(GAME_HEIGHT - 50);
+         controls.getChildren().add(hb);
+     }
+     
+    private void makeTileControl() {
+        /**
+         * This method will make control for the bottom left tile button part
+         * TODO: fix the backend logic
+         * @author Yiwei
+         */
+
+        Button buttonConfirm = new Button("Confirm");
+        buttonConfirm.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent e) {
+
+            }
+        });
+
+        Button buttonCancel = new Button("Cancel");
+        buttonCancel.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent e) {
+
+            }
+        });
+
+        HBox hbtile = new HBox();
+        hbtile.getChildren().addAll(buttonConfirm, buttonCancel);
+        hbtile.setSpacing(BOARD_MARGIN);
+        hbtile.setLayoutX(GAME_WIDTH - VBOX_WIDTH - 20);
+        hbtile.setLayoutY(GAME_HEIGHT - 50);
+        controls.getChildren().add(hbtile);
+    }
+     
+    private void setVBoxLeft() {
+        //To set the left box for human players
+        vLeft = new VBox();
+        vLeft.setLayoutX(BOARD_MARGIN + SQUARE_SIZE * 10 + BOARD_MARGIN);
+        vLeft.setLayoutY(BOARD_MARGIN);
+
+        playerStillList = new ArrayList<>();
+
+        for (int j = 0; j < 3; j++) {
+            ImageView player = new ImageView();
+            player.setFitWidth(PLAYER_WIDTH);
+            player.setFitHeight(PLAYER_HEIGHT);
+            player.setImage(new Image(this.getClass().getResource("assets/tile_back_cover.jpg").toString()));
+            vLeft.getChildren().add(player);
+            playerStillList.add(player);
+
+            if (j == 0) {
+                mark1.setTextAlignment(TextAlignment.RIGHT);
+                mark1.setText("Mark for Player 1");
+                mark1.setFill(Color.BROWN);
+                vLeft.getChildren().add(mark1);
+            }
+
+            if (j == 1) {
+                mark3.setTextAlignment(TextAlignment.RIGHT);
+                mark3.setText("Mark for Player 3");
+                mark3.setFill(Color.BROWN);
+                vLeft.getChildren().add(mark3);
+            }
+
+            if (j == 2) {
+                mark5.setTextAlignment(TextAlignment.RIGHT);
+                mark5.setText("Mark for Player 5");
+                mark5.setFill(Color.BROWN);
+                vLeft.getChildren().add(mark5);
+            }
+        }
+
+        root.getChildren().add(vLeft);
+    }
+    
+    private void setVBoxRight() {
+        //To set the left box for AI players
+        VBox vRight = new VBox();
+        vRight.setLayoutX(BOARD_MARGIN + SQUARE_SIZE * 10 + BOARD_MARGIN + PLAYER_WIDTH + 5);
+        vRight.setLayoutY(BOARD_MARGIN);
+
+        /*
+        for (int j = 0; j < 3; j++) {
+            ImageView player = new ImageView();
+            player.setFitWidth(PLAYER_WIDTH);
+            player.setFitHeight(PLAYER_HEIGHT);
+            player.setImage(new Image(this.getClass().getResource("assets/tile_back_cover.jpg").toString()));
+            vRight.getChildren().add(player);
+
+            if (j == 0) {
+                mark2.setTextAlignment(TextAlignment.RIGHT);
+                mark2.setText("Mark for Player 2");
+                mark2.setFill(Color.BROWN);
+                vRight.getChildren().add(mark2);
+            }
+
+            if (j == 1) {
+                mark4.setTextAlignment(TextAlignment.RIGHT);
+                mark4.setText("Mark for Player 4");
+                mark4.setFill(Color.BROWN);
+                vRight.getChildren().add(mark4);
+            }
+
+            if (j == 2) {
+                mark6.setTextAlignment(TextAlignment.RIGHT);
+                mark6.setText("Mark for Player 6");
+                mark6.setFill(Color.BROWN);
+                vRight.getChildren().add(mark6);
+            }
+        }
+         */
+
+        root.getChildren().add(vRight);
+    }
+    
+

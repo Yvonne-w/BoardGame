@@ -140,24 +140,7 @@ public class Metro {
      */
 
 
-    public static boolean isPlacementSequenceValid(String placementSequence) { /*
-        if (placementSequence.length() == 0)
-            return true;
-
-        if (placementSequence.length() % TITLE_SIZE == 0) {
-            if (!ValidCheck.isPlacementOverlap(placementSequence) || !ValidCheck.canPlaceCentralStations(placementSequence)|| !ValidCheck.isConnectRestBoard(placementSequence)
-                    || !ValidCheck.canPlaceEdge(placementSequence) || !ValidCheck.canPlaceCorner(placementSequence)){
-                return false;
-            }
-            return true;
-        }else {
-            return false;
-        }
-
-         */
-        // Birdy Shang
-
-
+    public static boolean isPlacementSequenceValid(String placementSequence) {
         //System.out.println(placementSequence);
 
 
@@ -298,8 +281,6 @@ public class Metro {
      */
     // author of this method: Luna
     public static int[] getScore(String placementSequence, int numberOfPlayers) {
-
-
         return new RoadMap(placementSequence, numberOfPlayers).getScore();
     }
 
@@ -349,12 +330,12 @@ public class Metro {
         if (placementSequence == "") {
             placelistStr = new ArrayList(Arrays.asList("00", "01", "02", "03", "04", "05", "06", "07", "10", "20", "30", "40", "50", "60", "70", "71", "72", "73", "74", "75", "76", "77", "17", "27", "37", "47", "57", "67"));
             int[] tilecode = Tile.encodeTileType(piece);
-            //System.out.println(tilecode);
-            if (tilecode[0] == 3) {
-                placelistStr.remove(0);
-                placelistStr.remove(7);
-                placelistStr.remove(14);
-                placelistStr.remove(21);
+            //System.out.println(Tile.encodeTileType("cccc")[0]);
+            if (tilecode[0] == 3 || tilecode[1] == 3) {
+                placelistStr.remove("00");
+                placelistStr.remove("07");
+                placelistStr.remove("70");
+                placelistStr.remove("77");
                 //System.out.println("placelistStr = " + placelistStr);
             }
 
@@ -408,7 +389,7 @@ public class Metro {
             }
 
         }
-        //System.out.println(possibleLocListStr);
+        System.out.println(possibleLocListStr);
 
         if (possibleLocListStr.size() != 0) {
             Random r = new Random();

@@ -23,15 +23,11 @@ import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
 import javafx.scene.text.Text;
 
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 
 public class Game extends Application {
-    /**
-     * This class was created as an implementation of Task 8, and then extended to be the main scene of the game.
-     *
-     * @author Yiwei
-     */
     private static final int GAME_WIDTH = 1024;
     private static final int GAME_HEIGHT = 768;
     public static final int SQUARE_SIZE = 64;
@@ -39,7 +35,6 @@ public class Game extends Application {
     private static final int VBOX_WIDTH = 234;
     private static final int VBOX_HEIGHT = 512;
     private static final double PLAYER_WIDTH = (double) VBOX_WIDTH / 2;
-    private static final double PLAYER_HEIGHT = (double) VBOX_HEIGHT / 3;
     private static final String URI_BASE = "assets/";
 
     public Scene mainscene;
@@ -47,23 +42,13 @@ public class Game extends Application {
     private final GridPane board = new GridPane();
     private final Group controls = new Group();
     public VBox vLeft;
-    private ArrayList<ImageView> playerStillList;
+    public VBox vRight;
     public Text mark = new Text();
-    private Text mark1 = new Text();
-    private Text mark2 = new Text();
-    private Text mark3 = new Text();
-    private Text mark4 = new Text();
-    private Text mark5 = new Text();
-    private Text mark6 = new Text();
-    private TextField textField;
     private final Color central = Color.TRANSPARENT;
 
     private double mousex;
     private double mousey;
-    public int numPlayers1;
-    public String playerInput1;
     Tile hightlighted = null;
-    public ArrayList<String> humanPlayerList = new ArrayList<>();
     public static ArrayList<Tile> squareBoard = new ArrayList<>();
     public ArrayList<Tile> tileOnBoard = new ArrayList<>();
     public ArrayList<Text> markList = new ArrayList<>();
@@ -80,14 +65,19 @@ public class Game extends Application {
     private VBox vbStart = new VBox();
     public Button button3;
 
+    public ImageView playerHand;//
+
     public int numPlayers1Start;
     public int numPlayers2Start;
+    public int totalPlayerNum;
     public String playerInput1Start;
     public String playerInput2Start;
     public String playerInput3Start;
     public ArrayList<String> humanPlayerListStart = new ArrayList<>();
     public ArrayList<String> aiplayerlistStart = new ArrayList<>();
-
+    public ArrayList<String> totalName = new ArrayList<>();
+    public boolean[] turns;
+    public int round = 0;
 
     public static void main(String[] args) {
         launch(args);
@@ -96,10 +86,6 @@ public class Game extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        /**
-         * This start method sets the primaryStage of the game.
-         */
-
         //To launch the still setting part of the game
         mainscene = new Scene(root, GAME_WIDTH, GAME_HEIGHT);
 
@@ -108,8 +94,7 @@ public class Game extends Application {
 
         primaryStage.setTitle("Metro Game");
         root.getChildren().add(controls);
-        makeControls();
-        makeTileControl();
+
         makeBoard();
         setBoardBackground();
         setVBoxLeft();
@@ -121,6 +106,7 @@ public class Game extends Application {
         //Startscene
         sceneStart = new Scene(rootStart, GAME_WIDTH, GAME_HEIGHT);
         makeStartControls();
+
         addVariants();
         rootStart.getChildren().add(controlsStart);
         Image startSceneBackground = new Image(this.getClass().getResource("assets/StartSceneBackground.jpg").toString());
@@ -151,11 +137,16 @@ public class Game extends Application {
 
                 //create player image based on input
                 numPlayers1Start = 1;
-                for (int i = 0; i < playerInput1Start.length(); i++) {
-                    if (playerInput1Start.charAt(i) == ',') {
+
+                //start
+                int l = 0;
+                while (l < playerInput1Start.length()) {
+                    if (playerInput1Start.charAt(l) == ',') {
                         numPlayers1Start++;
                     }
+                    l++;
                 }
+
                 System.out.println(numPlayers1Start);
 
                 String s = "";
@@ -169,11 +160,12 @@ public class Game extends Application {
                 }
                 humanPlayerListStart.add(s);
 
+
                 for (int m = 0; m < humanPlayerListStart.size(); m++) {
                     System.out.println(humanPlayerListStart.get(m));
                 }
 
-                textField1Start.clear();
+                setHumanPlayersStart();
             }
         });
 
@@ -195,11 +187,16 @@ public class Game extends Application {
 
                 //create player image based on input
                 numPlayers2Start = 1;
-                for (int i = 0; i < playerInput2Start.length(); i++) {
-                    if (playerInput2Start.charAt(i) == ',') {
+
+                //start
+                int l = 0;
+                while (l < playerInput2Start.length()) {
+                    if (playerInput2Start.charAt(l) == ',') {
                         numPlayers2Start++;
                     }
+                    l++;
                 }
+
                 System.out.println(numPlayers2Start);
 
                 String s2 = "";
@@ -217,7 +214,7 @@ public class Game extends Application {
                     System.out.println(aiplayerlistStart.get(m));
                 }
 
-                textField2Start.clear();
+                setAiPlayersStart();
             }
         });
         vbStart.getChildren().addAll(label2, textField2Start, button2);
@@ -226,24 +223,43 @@ public class Game extends Application {
         controlsStart.getChildren().add(vbStart);
     }
 
-    private void setHumanPlayers() {
+    private void setHumanPlayersStart() {
         //create Image for players
-        vLeft.getChildren().removeAll(playerStillList.get(0), playerStillList.get(1), playerStillList.get(2), mark1, mark3, mark5);
-
-        for (int i = 0; i < numPlayers1; i++) {
+        for (int i = 0; i < numPlayers1Start; i++) {
             Image imgPlayer = new Image(this.getClass().getResource("assets/p" + (i + 1) + ".jpg").toString());
-            Circle c = new Circle(PLAYER_WIDTH / 2);
+            Circle c = new Circle(PLAYER_WIDTH / 2.5);
             c.setFill(new ImagePattern(imgPlayer));
             vLeft.getChildren().add(c);
 
             Text mark = new Text();
             mark.setTextAlignment(TextAlignment.LEFT);
-            mark.setText(humanPlayerList.get(i) + "\nMark: " + Metro.getScore(getPlacementSequence(), numPlayers1)[i] + "\n");
-            mark.setFill(Color.BROWN);
+            mark.setText(humanPlayerListStart.get(i) + "\nMark: 0" + "\n");
+            //mark.setText(humanPlayerListStart.get(i) + "\nMark: " + Metro.getScore(getPlacementSequence(), humanPlayerListStart.size())[i] + "\n");
+            mark.setFill(Color.BLACK);
             vLeft.getChildren().add(mark);
             markList.add(mark);
         }
     }
+
+    private void setAiPlayersStart() {
+        //create Image for players
+        System.out.println(aiplayerlistStart);
+
+        for (int i = 0; i < numPlayers2Start; i++) {
+            Image imgPlayer2 = new Image(this.getClass().getResource("assets/p" + (i + 6) + ".jpg").toString());
+            Circle c2 = new Circle(PLAYER_WIDTH / 2.5);
+            c2.setFill(new ImagePattern(imgPlayer2));
+            vRight.getChildren().add(c2);
+
+            Text mark = new Text();
+            mark.setTextAlignment(TextAlignment.LEFT);
+            mark.setText(aiplayerlistStart.get(i) + "\nMark: " + Metro.getScore(getPlacementSequence(), numPlayers1Start + numPlayers2Start)[i + numPlayers1Start] + "\n");
+            mark.setFill(Color.BLACK);
+            vRight.getChildren().add(mark);
+            markList.add(mark);
+        }
+    }
+
 
     private void addVariants() {
         Label label3 = new Label("Enter Variants: ");
@@ -256,6 +272,13 @@ public class Game extends Application {
             public void handle(ActionEvent e) {
                 playerInput3Start = textField3Start.getText();
                 System.out.println(playerInput3Start);
+
+                totalName.addAll(humanPlayerListStart);
+                totalName.addAll(aiplayerlistStart);
+                totalPlayerNum = numPlayers1Start + numPlayers2Start;
+                turns = new boolean[totalPlayerNum];
+                System.out.println("turns " + turns.length);
+                turns[0] = true;
                 //TODO
 
                 textField1Start.clear();
@@ -266,98 +289,8 @@ public class Game extends Application {
         vbStart.getChildren().addAll(label3, textField3Start, button3);
     }
 
-    // change e
-
-    private void makeTileControl() {
-        /**
-         * This method will make control for the bottom left tile button part
-         * TODO: fix the backend logic
-         * @author Yiwei
-         */
-
-        Button buttonConfirm = new Button("Confirm");
-        buttonConfirm.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent e) {
-
-            }
-        });
-
-        Button buttonCancel = new Button("Cancel");
-        buttonCancel.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent e) {
-
-            }
-        });
-
-        HBox hbtile = new HBox();
-        hbtile.getChildren().addAll(buttonConfirm, buttonCancel);
-        hbtile.setSpacing(BOARD_MARGIN);
-        hbtile.setLayoutX(GAME_WIDTH - VBOX_WIDTH - 20);
-        hbtile.setLayoutY(GAME_HEIGHT - 50);
-        controls.getChildren().add(hbtile);
-    }
-
-    private void makeControls() {
-        /**
-         * This method generates the left bottom part for playerSequence input.
-         * TODO: could be moved to StartScene
-         */
-
-        //Label, input and button part
-        Label label1 = new Label("Player Name:");
-        label1.setTextFill(Color.WHITE);
-        textField = new TextField("Enter Players' Sequence, e.g. Amy, Bob");
-        textField.setPrefWidth(300);
-        Button button = new Button("Start");
-        button.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent e) {
-                playerInput1 = textField.getText();
-                System.out.println(playerInput1);
-
-                //create player image based on input
-                numPlayers1 = 1;
-                for (int i = 0; i < playerInput1.length(); i++) {
-                    if (playerInput1.charAt(i) == ',') {
-                        numPlayers1++;
-                    }
-                }
-                System.out.println(numPlayers1);
-
-                String s = "";
-                for (int j = 0; j < playerInput1.length(); j++) {
-                    if (playerInput1.charAt(j) != ',' && playerInput1.charAt(j) != ' ') {
-                        s = s + playerInput1.charAt(j);
-                    } else if (playerInput1.charAt(j) != ',') {
-                        humanPlayerList.add(s);
-                        s = "";
-                    }
-                }
-                humanPlayerList.add(s);
-
-                for (int m = 0; m < humanPlayerList.size(); m++) {
-                    //System.out.println(humanPlayerList.get(m));
-                }
-
-                setHumanPlayers();
-                textField.clear();
-            }
-        });
-
-        HBox hb = new HBox();
-        hb.getChildren().addAll(label1, textField, button);
-        hb.setSpacing(10);
-        hb.setLayoutX(130);
-        hb.setLayoutY(GAME_HEIGHT - 50);
-        controls.getChildren().add(hb);
-    }
-
 
     public static ArrayList<String> getPossibleLocation(String placementSequence, String tileType) {
-        //TODO: need input to run metro.possibleListStr
-
         ArrayList<String> placementList = new ArrayList<>(Arrays.asList(
                 "00", "01", "02", "03", "04", "05", "06", "07",
                 "10", "11", "12", "13", "14", "15", "16", "17",
@@ -372,22 +305,36 @@ public class Game extends Application {
 
         for (int i = 0; i < placementList.size(); i++) {
             String s = placementSequence + tileType + placementList.get(i);
-            //System.out.println(s);
             if (Metro.isPlacementSequenceValid(s)) {
                 String location = s.substring(s.length() - 2, s.length());
                 possibleLocationList.add(location);
-                //System.out.println(s);
             }
         }
-        //System.out.println(possibleLocationList);
         return possibleLocationList;
     }
 
+    public void highlightPossibleLocation(String placementSequence, String tileType) {
+        for (int i = 0; i < squareBoard.size(); i++) {
+            squareBoard.get(i).setFill(Color.LIGHTGRAY);
+        }
+
+        ArrayList<Integer> indexList = new ArrayList<>();
+        for (String element : getPossibleLocation(placementSequence, tileType)) {
+            int row = Integer.parseInt(String.valueOf(element.charAt(0)));
+            int column = Integer.parseInt(String.valueOf(element.charAt(1)));
+            int index = row * 8 + column;
+            indexList.add(index);
+        }
+
+        for (int i = 0; i < squareBoard.size(); i++) {
+            if (indexList.contains(i)) {
+                squareBoard.get(i).setFill(Color.BLUE);
+            }
+        }
+    }
+
     public class DraggableSquare extends Tile {
-        /**
-         * This class implements the draggable square to represent the tile
-         */
-        private Game game;
+        public Game game;
 
         public DraggableSquare(double x, double y, Game game) {
             super(x, y);
@@ -413,14 +360,68 @@ public class Game extends Application {
                 this.setLayoutX(hightlighted.x);
                 this.setLayoutY(hightlighted.y);
                 tileOnBoard.add(this);
-                for (int j = 0; j < markList.size(); j++) {
-                    //continue here
-                    markList.get(j).setText(humanPlayerList.get(j) + "\nMark: " + Metro.getScore(getPlacementSequence(), numPlayers1)[j] + "\n");
+
+
+                int indexTurn = 0;
+                for (int i = 0; i < totalPlayerNum; i++) {
+                    markList.get(i).setText(totalName.get(i) + "\nMark: " + updateMarks(totalPlayerNum, i));
                 }
+
+                updateTurns();
+
+                while (checkAiTurn()) {
+                    placeAiTile();
+                    updateTurns();
+                }
+                /*
+                System.out.println("indexTurn " + indexTurn);
+
+                round++;
+                System.out.println("round " + round);
+
+                int nextIndex = round % totalPlayerNum;
+                System.out.println("nextIndex " + nextIndex);
+
+                turns[indexTurn] = false;
+                turns[nextIndex] = true;
+
+
+                for (int d = 0; d < turns.length; d++) {
+                    System.out.print(turns[d] + "");
+                }
+                System.out.println();
+
+                 */
+
+                  /*
+                if (indexTurn >= numPlayers1Start) {
+                    System.out.println("AI turn");
+
+                    String tiletype3 = Metro.drawFromDeck("", allTilesGenerated);
+                    allTilesGenerated = allTilesGenerated + tiletype3;
+
+                    String s = Metro.generateMove(getPlacementSequence(), tiletype3, totalPlayerNum);
+                    System.out.println(s);
+
+                    int row = s.charAt(4);
+                    int column = s.charAt(5);
+                    double setX = (row + 1) * 64 + 82;
+                    double setY = (column + 1) * 64 + 82;
+
+                    DraggableSquare tileAI = new DraggableSquare(setX, setY, Game.this);
+                    Image img3 = new Image(this.getClass().getResource("assets/" + tiletype3 + ".jpg").toString());
+                    tileAI.setFill(new ImagePattern(img3));
+                    root.getChildren().add(tileAI);
+                    //tileOnBoard.add(tileAI);
+
+
+                }
+                */
 
             });
         }
     }
+
 
     public Tile findNearestSquare(double x, double y) {
         //To find the nearest square on board
@@ -451,144 +452,20 @@ public class Game extends Application {
         }
     }
 
-    public void highlightPossibleLocation(String placementSequence, String tileType) {
-        for (int i = 0; i < squareBoard.size(); i++) {
-            squareBoard.get(i).setFill(Color.LIGHTGRAY);
-        }
-
-        ArrayList<Integer> indexList = new ArrayList<>();
-        for (String element : getPossibleLocation(placementSequence, tileType)) {
-            int row = Integer.parseInt(String.valueOf(element.charAt(0)));
-            int column = Integer.parseInt(String.valueOf(element.charAt(1)));
-            System.out.println("row");
-            System.out.println("column");
-            int index = Integer.parseInt(String.valueOf(element.charAt(0))) * 8 + Integer.parseInt(String.valueOf(element.charAt(1)));
-            indexList.add(index);
-        }
-        System.out.println("indexlist " + indexList);
-
-        for (int i = 0; i < squareBoard.size(); i++) {
-            System.out.println("new tile");
-            if (indexList.contains(i)) {
-                squareBoard.get(i).setFill(Color.BLUE);
-                System.out.println("i = " + i);
-                System.out.println("x " + squareBoard.get(i).getLayoutX());
-            }
-        }
-    }
-
-    public void makeLightGreySquareBoard() {
-        //create a lightgrey square Arraylist on Board for future highlight
-
-        for (int i = 0; i < 64; i++) {
-            int row = i / 8;
-            int j = i % 8;
-            //Tile square = new Tile(BOARD_MARGIN + 1.5 * SQUARE_SIZE + SQUARE_SIZE * row, BOARD_MARGIN + 1.5 * SQUARE_SIZE + SQUARE_SIZE * j);
-            Tile square = new Tile(BOARD_MARGIN + 1.5 * SQUARE_SIZE + SQUARE_SIZE * j, BOARD_MARGIN + 1.5 * SQUARE_SIZE + SQUARE_SIZE * row);
-            square.setFill(Color.LIGHTGRAY);
-            square.setOpacity(0.3);
-            if ((i == 27 || i == 28) || (i == 35 || i == 36)) {
-                square.setFill(central);
-            }
-            squareBoard.add(square);
-            root.getChildren().add(square);
-        }
-
-
-        /*
-        for (int i = 0; i < 8; i++) {
-            for (int j = 0; j < 8; j++) {
-                Tile square = new Tile(BOARD_MARGIN + 1.5 * SQUARE_SIZE + SQUARE_SIZE * i, BOARD_MARGIN + 1.5 * SQUARE_SIZE + SQUARE_SIZE * j);
-                square.setFill(Color.LIGHTGRAY);
-                square.setOpacity(0.3);
-                if ((i == 3 || i == 4) && (j == 3 || j == 4)) {
-                    square.setFill(central);
-                }
-                squareBoard.add(square);
-                root.getChildren().add(square);
-            }
-        }
-
-         */
-
-
-    }
 
     private void setVBoxLeft() {
         //To set the left box for human players
         vLeft = new VBox();
         vLeft.setLayoutX(BOARD_MARGIN + SQUARE_SIZE * 10 + BOARD_MARGIN);
         vLeft.setLayoutY(BOARD_MARGIN);
-
-        playerStillList = new ArrayList<>();
-
-        for (int j = 0; j < 3; j++) {
-            ImageView player = new ImageView();
-            player.setFitWidth(PLAYER_WIDTH);
-            player.setFitHeight(PLAYER_HEIGHT);
-            player.setImage(new Image(this.getClass().getResource("assets/tile_back_cover.jpg").toString()));
-            vLeft.getChildren().add(player);
-            playerStillList.add(player);
-
-            if (j == 0) {
-                mark1.setTextAlignment(TextAlignment.RIGHT);
-                mark1.setText("Mark for Player 1");
-                mark1.setFill(Color.BROWN);
-                vLeft.getChildren().add(mark1);
-            }
-
-            if (j == 1) {
-                mark3.setTextAlignment(TextAlignment.RIGHT);
-                mark3.setText("Mark for Player 3");
-                mark3.setFill(Color.BROWN);
-                vLeft.getChildren().add(mark3);
-            }
-
-            if (j == 2) {
-                mark5.setTextAlignment(TextAlignment.RIGHT);
-                mark5.setText("Mark for Player 5");
-                mark5.setFill(Color.BROWN);
-                vLeft.getChildren().add(mark5);
-            }
-        }
-
         root.getChildren().add(vLeft);
     }
 
-    private void setVBoxRight() {
+    public void setVBoxRight() {
         //To set the left box for AI players
-        VBox vRight = new VBox();
+        vRight = new VBox();
         vRight.setLayoutX(BOARD_MARGIN + SQUARE_SIZE * 10 + BOARD_MARGIN + PLAYER_WIDTH + 5);
         vRight.setLayoutY(BOARD_MARGIN);
-
-        for (int j = 0; j < 3; j++) {
-            ImageView player = new ImageView();
-            player.setFitWidth(PLAYER_WIDTH);
-            player.setFitHeight(PLAYER_HEIGHT);
-            player.setImage(new Image(this.getClass().getResource("assets/tile_back_cover.jpg").toString()));
-            vRight.getChildren().add(player);
-
-            if (j == 0) {
-                mark2.setTextAlignment(TextAlignment.RIGHT);
-                mark2.setText("Mark for Player 2");
-                mark2.setFill(Color.BROWN);
-                vRight.getChildren().add(mark2);
-            }
-
-            if (j == 1) {
-                mark4.setTextAlignment(TextAlignment.RIGHT);
-                mark4.setText("Mark for Player 4");
-                mark4.setFill(Color.BROWN);
-                vRight.getChildren().add(mark4);
-            }
-
-            if (j == 2) {
-                mark6.setTextAlignment(TextAlignment.RIGHT);
-                mark6.setText("Mark for Player 6");
-                mark6.setFill(Color.BROWN);
-                vRight.getChildren().add(mark6);
-            }
-        }
 
         root.getChildren().add(vRight);
     }
@@ -604,7 +481,7 @@ public class Game extends Application {
         tHand.setFill(Color.BROWN);
         hHandDock.getChildren().add(tHand);
 
-        ImageView playerHand = new ImageView();
+        playerHand = new ImageView();
         playerHand.setFitWidth(SQUARE_SIZE);
         playerHand.setFitHeight(SQUARE_SIZE);
         playerHand.setImage(new Image(this.getClass().getResource("assets/tile_back_cover.jpg").toString()));
@@ -624,7 +501,6 @@ public class Game extends Application {
             }
 
             highlightPossibleLocation(getPlacementSequence(), tiletype1);
-            //System.out.println(getPlacementSequence());
             Image img1 = new Image(this.getClass().getResource("assets/" + tiletype1 + ".jpg").toString());
             tileHand.setFill(new ImagePattern(img1));
             root.getChildren().add(tileHand);
@@ -645,14 +521,12 @@ public class Game extends Application {
 
         dockTile.setOnMouseClicked(event -> {
             DraggableSquare tileDock = new DraggableSquare(GAME_WIDTH - BOARD_MARGIN - VBOX_WIDTH + 2.75 * SQUARE_SIZE, GAME_HEIGHT - 2 * BOARD_MARGIN, this);
-
-            //System.out.println("original " + allTilesGenerated);
             String tiletype2;
             if (allTilesGenerated == "") {
                 tiletype2 = Metro.drawFromDeck("", "");
                 tileDock.tileType = tiletype2;
                 allTilesGenerated = allTilesGenerated + tiletype2;
-                //System.out.println("addedDock " + allTilesGenerated);
+
             } else {
                 tiletype2 = Metro.drawFromDeck("", allTilesGenerated);
                 tileDock.tileType = tiletype2;
@@ -669,24 +543,24 @@ public class Game extends Application {
 
     }
 
-    private String getPlacementSequence() {
-        placementSequence = "";
-        for (int n = 0; n < tileOnBoard.size(); n++) {
-            double layoutX = tileOnBoard.get(n).getLayoutX();
-            double layoutY = tileOnBoard.get(n).getLayoutY();
-            int tileRow = (int) ((layoutY - 82) / 64) - 1;
-            int tileColumn = (int) ((layoutX - 82) / 64) - 1;
-            String placeString = tileOnBoard.get(n).tileType + String.valueOf(tileRow) + String.valueOf(tileColumn);
-            placementSequence = placementSequence + placeString;
+
+    public void makeLightGreySquareBoard() {
+        for (int i = 0; i < 64; i++) {
+            int row = i / 8;
+            int j = i % 8;
+            Tile square = new Tile(BOARD_MARGIN + 1.5 * SQUARE_SIZE + SQUARE_SIZE * j, BOARD_MARGIN + 1.5 * SQUARE_SIZE + SQUARE_SIZE * row);
+            square.setFill(Color.LIGHTGRAY);
+            square.setOpacity(0.3);
+            if ((i == 27 || i == 28) || (i == 35 || i == 36)) {
+                square.setFill(central);
+            }
+            squareBoard.add(square);
+            root.getChildren().add(square);
         }
 
-        return placementSequence;
     }
 
     private void setBoardBackground() {
-        /**
-         * This method adds a stackpane and uses a background image for the board.
-         */
         StackPane boardBackgroundStack = new StackPane();
         boardBackgroundStack.setLayoutX(BOARD_MARGIN + SQUARE_SIZE);
         boardBackgroundStack.setLayoutY(BOARD_MARGIN + SQUARE_SIZE);
@@ -716,9 +590,9 @@ public class Game extends Application {
             station.setImage(new Image(this.getClass().getResource(stationLoc).toString()));
             if (i <= 8) {
                 board.add(station, 9 - i, 0);
-            } else if (i <= 16 && i >= 9) {
+            } else if (i <= 16) {
                 board.add(station, 0, i - 8);
-            } else if (i <= 24 && i >= 17) {
+            } else if (i <= 24) {
                 board.add(station, i - 16, 9);
             } else {
                 board.add(station, 9, 33 - i);
@@ -743,6 +617,100 @@ public class Game extends Application {
         }
 
         root.getChildren().add(board);
+    }
+
+    public String getPlacementSequence() {
+        placementSequence = "";
+        for (int n = 0; n < tileOnBoard.size(); n++) {
+            double layoutX = tileOnBoard.get(n).getLayoutX();
+            double layoutY = tileOnBoard.get(n).getLayoutY();
+            int tileRow = (int) ((layoutY - 82) / 64) - 1;
+            int tileColumn = (int) ((layoutX - 82) / 64) - 1;
+            String placeString = tileOnBoard.get(n).tileType + String.valueOf(tileRow) + String.valueOf(tileColumn);
+            placementSequence = placementSequence + placeString;
+        }
+
+        return placementSequence;
+    }
+
+    public int updateMarks(int numOfPlayers, int index) {
+        int[] markArray = Metro.getScore(getPlacementSequence(), numOfPlayers);
+        int score = 0;
+
+        if (index < markArray.length) {
+            score = markArray[index];
+        }
+
+        return score;
+    }
+
+    public void updateTurns() {
+        int currentTurn = 0;
+        for (int i = 0; i < totalPlayerNum; i++) {
+            if (turns[i] == true) {
+                currentTurn = i;
+            }
+        }
+        System.out.println("currentTurn " + currentTurn);
+
+        round++;
+        System.out.println("round " + round);
+
+        int nextIndex = round % totalPlayerNum;
+        System.out.println("nextIndex " + nextIndex);
+
+        turns[currentTurn] = false;
+        turns[nextIndex] = true;
+
+
+        for (int d = 0; d < turns.length; d++) {
+            System.out.print(turns[d] + "");
+        }
+        System.out.println();
+    }
+
+    boolean checkAiTurn() {
+        if (round % totalPlayerNum >= numPlayers1Start) {
+            System.out.println("AI turn");
+            return true;
+        }
+        return false;
+    }
+
+    void placeAiTile() {
+        DraggableSquare tileAI = new DraggableSquare(GAME_WIDTH - BOARD_MARGIN - VBOX_WIDTH + SQUARE_SIZE, GAME_HEIGHT - 2 * BOARD_MARGIN, this);
+
+        String tiletype1 = "";
+        if (allTilesGenerated == "") {
+            tiletype1 = Metro.drawFromDeck("", "");
+            tileAI.tileType = tiletype1;
+            allTilesGenerated = allTilesGenerated + tiletype1;
+        } else {
+            tiletype1 = Metro.drawFromDeck("", allTilesGenerated);
+            tileAI.tileType = tiletype1;
+            allTilesGenerated = allTilesGenerated + tiletype1;
+        }
+
+        String placeS = getPlacementSequence();
+
+        String s = Metro.generateMove(placeS, tiletype1, totalPlayerNum);
+        System.out.println(s);
+
+        int row = Integer.parseInt(String.valueOf(s.charAt(4)));
+        int column = Integer.parseInt(String.valueOf(s.charAt(5)));
+        double setX = (row + 1) * 64 + 82;
+        double setY = (column + 1) * 64 + 82;
+        System.out.println("row " + row + " column " + column + " setX " + setX + " setY " + setY);
+
+        tileAI.setLayoutX(setY);
+        tileAI.setLayoutY(setX);
+        tileOnBoard.add(tileAI);
+
+        Image img1 = new Image(this.getClass().getResource("assets/" + tiletype1 + ".jpg").toString());
+        tileAI.setFill(new ImagePattern(img1));
+
+        root.getChildren().add(tileAI);
+
     }
 
 
