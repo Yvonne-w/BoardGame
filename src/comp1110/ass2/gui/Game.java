@@ -1,6 +1,8 @@
 package comp1110.ass2.gui;
 
 import comp1110.ass2.Metro;
+import comp1110.ass2.PathList;
+import comp1110.ass2.PathState;
 import comp1110.ass2.Tile;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
@@ -26,6 +28,7 @@ import javafx.scene.text.Text;
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.LinkedList;
 
 public class Game extends Application {
     private static final int GAME_WIDTH = 1024;
@@ -33,7 +36,6 @@ public class Game extends Application {
     public static final int SQUARE_SIZE = 64;
     private static final int BOARD_MARGIN = 50;
     private static final int VBOX_WIDTH = 234;
-    private static final int VBOX_HEIGHT = 512;
     private static final double PLAYER_WIDTH = (double) VBOX_WIDTH / 2;
     private static final String URI_BASE = "assets/";
 
@@ -64,9 +66,7 @@ public class Game extends Application {
     private TextField textField3Start;
     private VBox vbStart = new VBox();
     public Button button3;
-
-    public ImageView playerHand;//
-
+    public ImageView playerHand;
     public int numPlayers1Start;
     public int numPlayers2Start;
     public int totalPlayerNum;
@@ -133,7 +133,7 @@ public class Game extends Application {
             @Override
             public void handle(ActionEvent e) {
                 playerInput1Start = textField1Start.getText();
-                System.out.println(playerInput1Start);
+                //System.out.println(playerInput1Start);
 
                 //create player image based on input
                 numPlayers1Start = 1;
@@ -176,14 +176,14 @@ public class Game extends Application {
 
         Label label2 = new Label("AI Player Name:");
         label2.setTextFill(Color.BLACK);
-        textField2Start = new TextField("Enter Players' Sequence, e.g. Amy, Bob");
+        textField2Start = new TextField("Enter Players' Sequence, e.g. CindyAI, DavidAI");
         textField2Start.setPrefWidth(300);
         Button button2 = new Button("Set AI Players");
         button2.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent e) {
                 playerInput2Start = textField2Start.getText();
-                System.out.println(playerInput2Start);
+                //System.out.println(playerInput2Start);
 
                 //create player image based on input
                 numPlayers2Start = 1;
@@ -373,51 +373,8 @@ public class Game extends Application {
                     placeAiTile();
                     updateTurns();
                 }
-                /*
-                System.out.println("indexTurn " + indexTurn);
 
-                round++;
-                System.out.println("round " + round);
-
-                int nextIndex = round % totalPlayerNum;
-                System.out.println("nextIndex " + nextIndex);
-
-                turns[indexTurn] = false;
-                turns[nextIndex] = true;
-
-
-                for (int d = 0; d < turns.length; d++) {
-                    System.out.print(turns[d] + "");
-                }
-                System.out.println();
-
-                 */
-
-                  /*
-                if (indexTurn >= numPlayers1Start) {
-                    System.out.println("AI turn");
-
-                    String tiletype3 = Metro.drawFromDeck("", allTilesGenerated);
-                    allTilesGenerated = allTilesGenerated + tiletype3;
-
-                    String s = Metro.generateMove(getPlacementSequence(), tiletype3, totalPlayerNum);
-                    System.out.println(s);
-
-                    int row = s.charAt(4);
-                    int column = s.charAt(5);
-                    double setX = (row + 1) * 64 + 82;
-                    double setY = (column + 1) * 64 + 82;
-
-                    DraggableSquare tileAI = new DraggableSquare(setX, setY, Game.this);
-                    Image img3 = new Image(this.getClass().getResource("assets/" + tiletype3 + ".jpg").toString());
-                    tileAI.setFill(new ImagePattern(img3));
-                    root.getChildren().add(tileAI);
-                    //tileOnBoard.add(tileAI);
-
-
-                }
-                */
-
+                getPathMarkList(PathList.getPathList(getPlacementSequence()), getPathStatusList(PathList.getPathList(getPlacementSequence())));
             });
         }
     }
@@ -651,22 +608,22 @@ public class Game extends Application {
                 currentTurn = i;
             }
         }
-        System.out.println("currentTurn " + currentTurn);
+        //System.out.println("currentTurn " + currentTurn);
 
         round++;
-        System.out.println("round " + round);
+        //System.out.println("round " + round);
 
         int nextIndex = round % totalPlayerNum;
-        System.out.println("nextIndex " + nextIndex);
+        //System.out.println("nextIndex " + nextIndex);
 
         turns[currentTurn] = false;
         turns[nextIndex] = true;
 
 
         for (int d = 0; d < turns.length; d++) {
-            System.out.print(turns[d] + "");
+            //System.out.print(turns[d] + "");
         }
-        System.out.println();
+        //System.out.println();
     }
 
     boolean checkAiTurn() {
@@ -694,13 +651,13 @@ public class Game extends Application {
         String placeS = getPlacementSequence();
 
         String s = Metro.generateMove(placeS, tiletype1, totalPlayerNum);
-        System.out.println(s);
+        //System.out.println(s);
 
         int row = Integer.parseInt(String.valueOf(s.charAt(4)));
         int column = Integer.parseInt(String.valueOf(s.charAt(5)));
         double setX = (row + 1) * 64 + 82;
         double setY = (column + 1) * 64 + 82;
-        System.out.println("row " + row + " column " + column + " setX " + setX + " setY " + setY);
+        //System.out.println("row " + row + " column " + column + " setX " + setX + " setY " + setY);
 
         tileAI.setLayoutX(setY);
         tileAI.setLayoutY(setX);
@@ -712,6 +669,58 @@ public class Game extends Application {
         root.getChildren().add(tileAI);
 
     }
+
+    public ArrayList<PathState> getPathStatusList(ArrayList<LinkedList<Integer>> pathlist) {
+        ArrayList<PathState> pathStatusList = new ArrayList<PathState>();
+        System.out.println(pathlist);
+        //ArrayList<Integer> alreadyEnd = new ArrayList<>(Arrays.asList(0,1,2,3,4,5,6,7,10,17,20,27,30,37,40,47,50,57,60,67,70,71,72,73,74,75,76,77));
+
+        for (int i = 0; i < pathlist.size(); i++) {
+            int pathLength = pathlist.get(i).size();
+            int endPoint = pathlist.get(i).get(pathLength - 1);
+            System.out.print(endPoint + " ");
+            pathStatusList.add(PathState.getState(pathLength, endPoint));
+        }
+
+        System.out.println(pathStatusList);
+
+        return pathStatusList;
+    }
+
+    public ArrayList<Double> getPathMarkList(ArrayList<LinkedList<Integer>> pathlist, ArrayList<PathState> pathStatusList) {
+        ArrayList<Double> pathMarkList = new ArrayList<>();
+
+        for (int i = 0; i < pathStatusList.size(); i++) {
+            if (pathStatusList.get(i) == PathState.INACTIVE) {
+                pathMarkList.add(0.0);
+            } else {
+                int pathLength = pathlist.get(i).size();
+                int endPoint = pathlist.get(i).get(pathLength - 1);
+                double distance = getDistanceToCentralFromInt(endPoint);
+                double mark = pathLength + 2 * (3.5 * Math.sqrt(2) - distance);
+                //length + coefficient * ( 4 * Math.sqrt(2) - distance(endpoint - (0, 0)))
+                pathMarkList.add(mark);
+            }
+        }
+
+        System.out.println(pathMarkList);
+        return pathMarkList;
+    }
+
+    public static double getDistanceToCentralFromInt(int endPoint) {
+
+        int row = endPoint / 10;
+        int column = endPoint % 10;
+        //System.out.println(row + " " + column);
+
+        double distance = Math.sqrt(Math.pow((row - 3.5), 2) + Math.pow((column - 3.5), 2));
+        //System.out.println(distance);
+        return distance;
+    }
+
+
+
+
 
 
 }

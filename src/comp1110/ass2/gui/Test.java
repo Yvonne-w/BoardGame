@@ -20,8 +20,15 @@ import static comp1110.ass2.gui.Game.SQUARE_SIZE;
 
 public class Test {
     public static void main(String[] args) {
+        Game.getDistanceToCentralFromInt(00);
+        Game.getDistanceToCentralFromInt(11);
+        Game.getDistanceToCentralFromInt(22);
+        Game.getDistanceToCentralFromInt(30);
+        Game.getDistanceToCentralFromInt(31);
+        Game.getDistanceToCentralFromInt(32);
+        Game.getDistanceToCentralFromInt(77);
         //System.out.println(Metro.generateMove("", "bcbc", 2));
-        System.out.println(Metro.generateMove("", "cccc", 2));
+        //System.out.println(Metro.generateMove("", "cccc", 2));
         //System.out.println(Metro.getScore("", 2));
         //Game.highlightPossibleLocation("", "cbcb");
         //Game.getPossibleLocation("","cbcb");

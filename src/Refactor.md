@@ -257,7 +257,8 @@ ValidCheck.java
 
 #Yiwei Wu 
 Game.java
-    
+
+    private static final int VBOX_HEIGHT = 512;
     public int numPlayers1;
     public String playerInput1;
     private ArrayList<ImageView> playerStillList;
@@ -463,5 +464,48 @@ Game.java
 
         root.getChildren().add(vRight);
     }
+    
+ PathList.java
+ 
+     public static ArrayList<ArrayList<Integer>> getplayerstationByNum(int numberOfPlayers) {
+         ArrayList<ArrayList<Integer>> playerstation = new ArrayList<>();
+ 
+         switch (numberOfPlayers) {
+             case 2:
+                 playerstation.add(new ArrayList<>(Arrays.asList(1, 3, 5, 7, 9, 11, 13, 15, 17, 19, 21, 23, 25, 27, 29, 31)));
+                 playerstation.add(new ArrayList<>(Arrays.asList(2, 4, 6, 8, 10, 12, 14, 16, 18, 20, 22, 24, 26, 28, 30, 32)));
+                 break;
+             case 3:
+                 playerstation.add(new ArrayList<>(Arrays.asList(1, 4, 6, 11, 15, 20, 23, 25, 28, 31)));
+                 playerstation.add(new ArrayList<>(Arrays.asList(2, 7, 9, 12, 14, 19, 22, 27, 29, 32)));
+                 playerstation.add(new ArrayList<>(Arrays.asList(3, 5, 8, 10, 13, 18, 21, 24, 26, 30)));
+                 break;
+             case 4:
+                 playerstation.add(new ArrayList<>(Arrays.asList(4, 7, 11, 16, 20, 23, 27, 32)));
+                 playerstation.add(new ArrayList<>(Arrays.asList(3, 8, 12, 15, 19, 24, 28, 31)));
+                 playerstation.add(new ArrayList<>(Arrays.asList(1, 6, 10, 13, 18, 21, 25, 30)));
+                 playerstation.add(new ArrayList<>(Arrays.asList(2, 5, 9, 14, 17, 22, 26, 29)));
+                 break;
+             case 5:
+                 playerstation.add(new ArrayList<>(Arrays.asList(1, 5, 10, 14, 22, 28)));
+                 playerstation.add(new ArrayList<>(Arrays.asList(6, 12, 18, 23, 27, 32)));
+                 playerstation.add(new ArrayList<>(Arrays.asList(3, 7, 15, 19, 25, 29)));
+                 playerstation.add(new ArrayList<>(Arrays.asList(2, 9, 13, 21, 26, 30)));
+                 playerstation.add(new ArrayList<>(Arrays.asList(4, 8, 11, 20, 24, 31)));
+                 break;
+             case 6:
+                 playerstation.add(new ArrayList<>(Arrays.asList(1, 5, 10, 19, 27)));
+                 playerstation.add(new ArrayList<>(Arrays.asList(2, 11, 18, 25, 29)));
+                 playerstation.add(new ArrayList<>(Arrays.asList(4, 8, 14, 21, 26)));
+                 playerstation.add(new ArrayList<>(Arrays.asList(6, 15, 20, 24, 31)));
+                 playerstation.add(new ArrayList<>(Arrays.asList(3, 9, 13, 23, 30)));
+                 playerstation.add(new ArrayList<>(Arrays.asList(7, 12, 22, 28, 32)));
+                 break;
+         }
+         System.out.println(numberOfPlayers);
+         System.out.println(playerstation);
+         return playerstation;
+     }
+  
     
 

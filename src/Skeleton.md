@@ -1,9 +1,10 @@
 package comp1110.ass2;
-//// author of this class: Yiwei (u7020050)
+@author of this class: Yiwei (u7020050)
 
-public class Skeleton {
+    public class Skeleton {
+    
 /*
-Main class:
+#Main class:
 Plan to use Game.fxml (or a Main class link to Game.fxml).
 I have finished the layout part of the Game.fxml, so please check the Game.fxml in the GUI folder.
 For the event-handler part, we are trying to mock the Metro Game on iOS platform as much as we can.
@@ -19,7 +20,7 @@ Class 1. Board {
 
 }
 
-Class 2. Players {
+#Class 2. Players {
     public enum playersDefault(){
         color;
         the default setting for 6 players;
@@ -40,7 +41,7 @@ Class 2. Players {
 
 }
 
-Class 3. Turns{
+#Class 3. Turns{
     public static boolean[] whoseTurn(){
         return boolean[] of whose turn it is;
         e.g. {True, False, False, False, False, False}
@@ -48,7 +49,7 @@ Class 3. Turns{
 
 }
 
-Class 4. Tiles{
+#Class 4. Tiles{
     construct Tiles;
 
     public static String getTileType(){
@@ -68,7 +69,7 @@ Class 4. Tiles{
 
 }
 
-Class 5. Scores {
+#Class 5. Scores {
     set the initial scores to be 0;
 
     public static boolean isRouteConnected (tile1, tile2) {
@@ -107,11 +108,11 @@ Class 5. Scores {
     }
 }
 
-Class 6. TileDock {
+#Class 6. TileDock {
      construct a String[]
 }
 
-Class 7. PossibleLocation {
+#Class 7. PossibleLocation {
     public static boolean isEmptyLocation(){
         return isEmptyLocation;
     }

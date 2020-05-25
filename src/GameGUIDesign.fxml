@@ -72,7 +72,7 @@
                         <ImageView fitHeight="64.0" fitWidth="64.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="3" GridPane.rowIndex="3" />
                         <ImageView fitHeight="64.0" fitWidth="64.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="4" GridPane.rowIndex="3">
                            <image>
-                              <Image url="@assets/centre_station.jpg" />
+                              <Image url="@comp1110/ass2/gui/assets/centre_station.jpg" />
                            </image>
                         </ImageView>
                         <ImageView fitHeight="64.0" fitWidth="64.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="5" GridPane.rowIndex="3" />
@@ -114,7 +114,7 @@
                   </GridPane>
                   <ImageView fitHeight="512.0" fitWidth="512.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@assets/board_withoutEdges.png" />
+                        <Image url="@comp1110/ass2/gui/assets/board_withoutEdges.png" />
                      </image>
                   </ImageView>
                </children>
@@ -125,52 +125,52 @@
                <children>
                   <ImageView fitHeight="64.0" fitWidth="64.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@assets/tile_back_cover.jpg" />
+                        <Image url="@comp1110/ass2/gui/assets/tile_back_cover.jpg" />
                      </image>
                   </ImageView>
                   <ImageView fitHeight="64.0" fitWidth="64.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@assets/station8.jpg" />
+                        <Image url="@comp1110/ass2/gui/assets/station8.jpg" />
                      </image>
                   </ImageView>
                   <ImageView fitHeight="64.0" fitWidth="64.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@assets/station7.jpg" />
+                        <Image url="@comp1110/ass2/gui/assets/station7.jpg" />
                      </image>
                   </ImageView>
                   <ImageView fitHeight="64.0" fitWidth="64.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@assets/station6.jpg" />
+                        <Image url="@comp1110/ass2/gui/assets/station6.jpg" />
                      </image>
                   </ImageView>
                   <ImageView fitHeight="64.0" fitWidth="64.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@assets/station5.jpg" />
+                        <Image url="@comp1110/ass2/gui/assets/station5.jpg" />
                      </image>
                   </ImageView>
                   <ImageView fitHeight="64.0" fitWidth="64.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@assets/station4.jpg" />
+                        <Image url="@comp1110/ass2/gui/assets/station4.jpg" />
                      </image>
                   </ImageView>
                   <ImageView fitHeight="64.0" fitWidth="64.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@assets/station3.jpg" />
+                        <Image url="@comp1110/ass2/gui/assets/station3.jpg" />
                      </image>
                   </ImageView>
                   <ImageView fitHeight="64.0" fitWidth="64.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@assets/station2.jpg" />
+                        <Image url="@comp1110/ass2/gui/assets/station2.jpg" />
                      </image>
                   </ImageView>
                   <ImageView fitHeight="64.0" fitWidth="64.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@assets/station1.jpg" />
+                        <Image url="@comp1110/ass2/gui/assets/station1.jpg" />
                      </image>
                   </ImageView>
                   <ImageView fitHeight="64.0" fitWidth="64.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@assets/tile_back_cover.jpg" />
+                        <Image url="@comp1110/ass2/gui/assets/tile_back_cover.jpg" />
                      </image>
                   </ImageView>
                </children>
@@ -181,42 +181,42 @@
                <children>
                   <ImageView fitHeight="64.0" fitWidth="64.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@assets/station9.jpg" />
+                        <Image url="@comp1110/ass2/gui/assets/station9.jpg" />
                      </image>
                   </ImageView>
                   <ImageView fitHeight="64.0" fitWidth="64.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@assets/station10.jpg" />
+                        <Image url="@comp1110/ass2/gui/assets/station10.jpg" />
                      </image>
                   </ImageView>
                   <ImageView fitHeight="64.0" fitWidth="64.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@assets/station11.jpg" />
+                        <Image url="@comp1110/ass2/gui/assets/station11.jpg" />
                      </image>
                   </ImageView>
                   <ImageView fitHeight="64.0" fitWidth="64.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@assets/station12.jpg" />
+                        <Image url="@comp1110/ass2/gui/assets/station12.jpg" />
                      </image>
                   </ImageView>
                   <ImageView fitHeight="64.0" fitWidth="64.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@assets/station13.jpg" />
+                        <Image url="@comp1110/ass2/gui/assets/station13.jpg" />
                      </image>
                   </ImageView>
                   <ImageView fitHeight="64.0" fitWidth="64.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@assets/station14.jpg" />
+                        <Image url="@comp1110/ass2/gui/assets/station14.jpg" />
                      </image>
                   </ImageView>
                   <ImageView fitHeight="64.0" fitWidth="64.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@assets/station15.jpg" />
+                        <Image url="@comp1110/ass2/gui/assets/station15.jpg" />
                      </image>
                   </ImageView>
                   <ImageView fitHeight="64.0" fitWidth="64.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@assets/station16.jpg" />
+                        <Image url="@comp1110/ass2/gui/assets/station16.jpg" />
                      </image>
                   </ImageView>
                </children>
@@ -227,52 +227,52 @@
                <children>
                   <ImageView fitHeight="64.0" fitWidth="64.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@assets/tile_back_cover.jpg" />
+                        <Image url="@comp1110/ass2/gui/assets/tile_back_cover.jpg" />
                      </image>
                   </ImageView>
                   <ImageView fitHeight="64.0" fitWidth="64.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@assets/station17.jpg" />
+                        <Image url="@comp1110/ass2/gui/assets/station17.jpg" />
                      </image>
                   </ImageView>
                   <ImageView fitHeight="64.0" fitWidth="64.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@assets/station18.jpg" />
+                        <Image url="@comp1110/ass2/gui/assets/station18.jpg" />
                      </image>
                   </ImageView>
                   <ImageView fitHeight="64.0" fitWidth="64.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@assets/station19.jpg" />
+                        <Image url="@comp1110/ass2/gui/assets/station19.jpg" />
                      </image>
                   </ImageView>
                   <ImageView fitHeight="64.0" fitWidth="64.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@assets/station20.jpg" />
+                        <Image url="@comp1110/ass2/gui/assets/station20.jpg" />
                      </image>
                   </ImageView>
                   <ImageView fitHeight="64.0" fitWidth="64.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@assets/station21.jpg" />
+                        <Image url="@comp1110/ass2/gui/assets/station21.jpg" />
                      </image>
                   </ImageView>
                   <ImageView fitHeight="64.0" fitWidth="64.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@assets/station22.jpg" />
+                        <Image url="@comp1110/ass2/gui/assets/station22.jpg" />
                      </image>
                   </ImageView>
                   <ImageView fitHeight="64.0" fitWidth="64.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@assets/station23.jpg" />
+                        <Image url="@comp1110/ass2/gui/assets/station23.jpg" />
                      </image>
                   </ImageView>
                   <ImageView fitHeight="64.0" fitWidth="64.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@assets/station24.jpg" />
+                        <Image url="@comp1110/ass2/gui/assets/station24.jpg" />
                      </image>
                   </ImageView>
                   <ImageView fitHeight="64.0" fitWidth="64.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@assets/tile_back_cover.jpg" />
+                        <Image url="@comp1110/ass2/gui/assets/tile_back_cover.jpg" />
                      </image>
                   </ImageView>
                </children>
@@ -283,42 +283,42 @@
                <children>
                   <ImageView fitHeight="64.0" fitWidth="64.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@assets/station32.jpg" />
+                        <Image url="@comp1110/ass2/gui/assets/station32.jpg" />
                      </image>
                   </ImageView>
                   <ImageView fitHeight="64.0" fitWidth="64.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@assets/station31.jpg" />
+                        <Image url="@comp1110/ass2/gui/assets/station31.jpg" />
                      </image>
                   </ImageView>
                   <ImageView fitHeight="64.0" fitWidth="64.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@assets/station30.jpg" />
+                        <Image url="@comp1110/ass2/gui/assets/station30.jpg" />
                      </image>
                   </ImageView>
                   <ImageView fitHeight="64.0" fitWidth="64.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@assets/station29.jpg" />
+                        <Image url="@comp1110/ass2/gui/assets/station29.jpg" />
                      </image>
                   </ImageView>
                   <ImageView fitHeight="64.0" fitWidth="64.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@assets/station28.jpg" />
+                        <Image url="@comp1110/ass2/gui/assets/station28.jpg" />
                      </image>
                   </ImageView>
                   <ImageView fitHeight="64.0" fitWidth="64.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@assets/station27.jpg" />
+                        <Image url="@comp1110/ass2/gui/assets/station27.jpg" />
                      </image>
                   </ImageView>
                   <ImageView fitHeight="64.0" fitWidth="64.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@assets/station26.jpg" />
+                        <Image url="@comp1110/ass2/gui/assets/station26.jpg" />
                      </image>
                   </ImageView>
                   <ImageView fitHeight="64.0" fitWidth="64.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@assets/station25.jpg" />
+                        <Image url="@comp1110/ass2/gui/assets/station25.jpg" />
                      </image>
                   </ImageView>
                </children>
