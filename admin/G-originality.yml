@@ -64,9 +64,9 @@ assets:
       url: https://www.pinterest.com.au/cheryldctn/impressionist-portrait/
       licence: "a limited, non-exclusive, non-transferable, and revocable license"
 
-    - comment: Background Music
-        url: https://www.bensound.com/royalty-free-music/funky-groove
-        licence: Free License with Attribution.
+#    - comment: Background Music
+#        url: https://www.bensound.com/royalty-free-music/funky-groove
+#        licence: Free License with Attribution.
 
 
 # Sign *your* name and uids here. (Remove entries if you have fewer
