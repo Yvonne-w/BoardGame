@@ -31,7 +31,7 @@ declaration: >-
 # Add as many "url+licence+comment" entries as necessary
 # (or remove it altogether if you haven't used any external code)
 #code:
-  - comment: How to add Background Music
+comment: How to add Background Music
     url: https://stackoverflow.com/questions/31784698/javafx-background-thread-task-should-play-music-in-a-loop-as-background-thread
     licence: basic sytax
 
@@ -43,7 +43,7 @@ declaration: >-
 #
 # Add as many "url+licence+comment" entries as necessary
 # (or remove it altogether if you haven't used any external assets)
-  assets:
+assets:
     - comment: Metro Game IOS Version as a reference
       url: None
       licence: NA
@@ -53,8 +53,8 @@ declaration: >-
       licence: All content on Pixabay can be used for free for commercial and noncommercial use across print and digital, except in the cases mentioned in "What is not allowed".
 
     - comment: AI Player Image
-     url: https://pixabay.com/images/search/portrait%20oil/?pagi=3
-     licence: Same as above
+      url: https://pixabay.com/images/search/portrait%20oil/?pagi=3
+      licence: Same as above
 
     - comment: Human Player Image
       url: https://pixabay.com/images/search/oil%20canvas/?pagi=5
