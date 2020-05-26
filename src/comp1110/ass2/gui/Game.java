@@ -18,6 +18,8 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
@@ -26,6 +28,7 @@ import javafx.stage.Stage;
 import javafx.scene.text.Text;
 
 import java.awt.*;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedList;
@@ -89,7 +92,7 @@ public class Game extends Application {
         //To launch the still setting part of the game
         mainscene = new Scene(root, GAME_WIDTH, GAME_HEIGHT);
 
-        Image mainSceneBackground = new Image(this.getClass().getResource("assets/vintagePaper.jpg").toString());
+        Image mainSceneBackground = new Image(this.getClass().getResource("assets/MainSceneBackground.png").toString());
         mainscene.setFill(new ImagePattern(mainSceneBackground));
 
         primaryStage.setTitle("Metro Game");
@@ -101,6 +104,7 @@ public class Game extends Application {
         setVBoxRight();
         sethBOX();
         makeLightGreySquareBoard();
+        music();
 
 
         //Startscene
@@ -109,7 +113,7 @@ public class Game extends Application {
 
         addVariants();
         rootStart.getChildren().add(controlsStart);
-        Image startSceneBackground = new Image(this.getClass().getResource("assets/StartSceneBackground.jpg").toString());
+        Image startSceneBackground = new Image(this.getClass().getResource("assets/StartSceneBackground.png").toString());
         sceneStart.setFill(new ImagePattern(startSceneBackground));
         sceneStart.getStylesheets().addAll(this.getClass().getResource("styleGame.css").toExternalForm());
         button3.setOnMouseClicked(event -> {
@@ -171,7 +175,7 @@ public class Game extends Application {
 
         vbStart.getChildren().addAll(label1, textField1Start, button1);
         vbStart.setSpacing(10);
-        vbStart.setLayoutX(GAME_WIDTH / 3);
+        vbStart.setLayoutX(GAME_WIDTH / 5);
         vbStart.setLayoutY(GAME_HEIGHT / 2.5);
 
         Label label2 = new Label("AI Player Name:");
@@ -246,7 +250,7 @@ public class Game extends Application {
         System.out.println(aiplayerlistStart);
 
         for (int i = 0; i < numPlayers2Start; i++) {
-            Image imgPlayer2 = new Image(this.getClass().getResource("assets/p" + (i + 6) + ".jpg").toString());
+            Image imgPlayer2 = new Image(this.getClass().getResource("assets/p" + (i + 4) + ".jpg").toString());
             Circle c2 = new Circle(PLAYER_WIDTH / 2.5);
             c2.setFill(new ImagePattern(imgPlayer2));
             vRight.getChildren().add(c2);
@@ -718,9 +722,15 @@ public class Game extends Application {
         return distance;
     }
 
+    MediaPlayer mediaPlayer;
 
-
-
+    public void music() {
+        Media h = new Media(this.getClass().getResource("assets/background.mp3").toString());
+        mediaPlayer = new MediaPlayer(h);
+        mediaPlayer.setVolume(0.01f);
+        mediaPlayer.setCycleCount(MediaPlayer.INDEFINITE);
+        mediaPlayer.play();
+    }
 
 
 }

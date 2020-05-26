@@ -20,13 +20,12 @@ import static comp1110.ass2.gui.Game.SQUARE_SIZE;
 
 public class Test {
     public static void main(String[] args) {
-        Game.getDistanceToCentralFromInt(00);
-        Game.getDistanceToCentralFromInt(11);
-        Game.getDistanceToCentralFromInt(22);
-        Game.getDistanceToCentralFromInt(30);
-        Game.getDistanceToCentralFromInt(31);
-        Game.getDistanceToCentralFromInt(32);
-        Game.getDistanceToCentralFromInt(77);
+        Metro.generateMove("cddb05accd17cbaa74dbcd73adad75acba65dddd15aacb66bbad64cbcb60ccda27baac20dada14", "bcbc", 2);
+
+        //for(int i=0;i<8;i++){
+        //    System.out.println(Tile.encodeTileType("bcbc")[i]);
+        //}
+
         //System.out.println(Metro.generateMove("", "bcbc", 2));
         //System.out.println(Metro.generateMove("", "cccc", 2));
         //System.out.println(Metro.getScore("", 2));

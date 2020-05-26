@@ -507,5 +507,128 @@ Game.java
          return playerstation;
      }
   
+ Metro.java
+ 
+        // Old Version 
+        /**
+         * Task 9
+         * Given a placement sequence string, generate a valid next move.
+         *
+         * @param placementSequence a String representing the sequence of piece placements made so far in the game
+         * @param piece             a four-character String representing the tile to be placed
+         * @param numberOfPlayers   The number of players in the game
+         * @return A valid placement of the given tile
+         */
+        
+        public static String generateMove(String placementSequence, String piece, int numberOfPlayers) {
+            //System.out.println(placementSequence);
+            String generatedMove = "";
+            ArrayList<String> placelistStr = new ArrayList();
+            ArrayList<String> possibleLocListStr = new ArrayList<>();
+            ArrayList<Integer> placeList = new ArrayList();
     
+            if (placementSequence == "") {
+                placelistStr = new ArrayList(Arrays.asList("00", "01", "02", "03", "04", "05", "06", "07", "10", "20", "30", "40", "50", "60", "70", "71", "72", "73", "74", "75", "76", "77", "17", "27", "37", "47", "57", "67"));
+                int[] tilecode = Tile.encodeTileType(piece);
+                //System.out.println(Tile.encodeTileType("cccc")[0]);
+                if (tilecode[0] == 3 || tilecode[1] == 3) {
+                    placelistStr.remove("00");
+                    placelistStr.remove("07");
+                    placelistStr.remove("70");
+                    placelistStr.remove("77");
+                    //System.out.println("placelistStr = " + placelistStr);
+                }
+    
+            } else {
+                for (int i = 0; i < 80; i += 10) {
+                    for (int j = 0; j < 8; j++) {
+                        int placeInt = i + j;
+                        placeList.add(placeInt);
+                    }
+                }
+            }
+    
+            //System.out.println(placeList);
+    
+            ArrayList<Integer> existList = new ArrayList<>();
+            for (int m = 4; m < placementSequence.length(); m += 6) {
+                int existPlaceInt = Integer.parseInt(placementSequence.substring(m, m + 2));
+                existList.add(existPlaceInt);
+            }
+    
+            //System.out.println(existList);
+    
+            for (int existPlaceInt : existList) {
+                int removeIdx = placeList.indexOf(existPlaceInt);
+                placeList.remove(removeIdx);
+            }
+    
+            //System.out.println(placeList);
+    
+    
+            for (int placeInt : placeList) {
+                if (placeInt < 8) {
+                    String s = "0" + String.valueOf(placeInt);
+                    placelistStr.add(s);
+                } else {
+                    placelistStr.add(String.valueOf(placeInt));
+                }
+            }
+    
+            for (String placeStr : placelistStr) {
+                //System.out.println(placeStr);
+                String tryPlacement = "";
+                tryPlacement = placementSequence + piece + placeStr;
+                //System.out.println(tryPlacement);
+                boolean b = isPlacementSequenceValid(tryPlacement);
+                //System.out.println(b);
+                if (b) {
+                    possibleLocListStr.add(tryPlacement);
+                }
+    
+            }
+    
+            if (possibleLocListStr.size() != 0) {
+                Random r = new Random();
+                int randomLoc = r.nextInt(possibleLocListStr.size());
+    
+                generatedMove = possibleLocListStr.get(randomLoc).substring(placementSequence.length(), placementSequence.length() + 6);
+    
+                String checkCentral = generatedMove.substring(generatedMove.length() - 2, generatedMove.length());
+    
+                while (checkCentral.equals("33") || checkCentral.equals("34") || checkCentral.equals("43") || checkCentral.equals("44")) {
+                    randomLoc = r.nextInt(possibleLocListStr.size());
+    
+                    generatedMove = possibleLocListStr.get(randomLoc).substring(placementSequence.length(), placementSequence.length() + 6);
+    
+                    checkCentral = generatedMove.substring(generatedMove.length() - 2, generatedMove.length());
+                }
+            }
+            return generatedMove;
+        }
+    
+        public static ArrayList<String> convertStationToStartLoc(ArrayList<Integer> stationlist) {
+            ArrayList<String> startStationList = new ArrayList<>();
+            for (Integer station : stationlist) {
+                if (station <= 8) {
+                    int startLocInt = 8 - station;
+                    startStationList.add("0" + String.valueOf(startLocInt));
+                } else if (station <= 16) {
+                    int startLocInt = station - 9;
+                    startStationList.add(String.valueOf(startLocInt) + "0");
+                } else if (station <= 24) {
+                    int startLocInt = station + 53;
+                    startStationList.add(String.valueOf(startLocInt));
+                } else {
+                    int startLocInt = 102 - (station - 25) * 9 - station;
+                    if (startLocInt < 10) {
+                        startStationList.add("0" + String.valueOf(startLocInt));
+                    } else {
+                        startStationList.add(String.valueOf(startLocInt));
+                    }
+                }
+            }
+    
+            return startStationList;
+        }
 

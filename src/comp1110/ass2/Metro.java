@@ -3,7 +3,8 @@ package comp1110.ass2;
 import java.util.*;
 
 public class Metro {
-    //public static final Integer TITLE_SIZE = 6; Birdy Shang
+    //public static final Integer TITLE_SIZE = 6; //Birdy Shang
+
     public static ArrayList<String> possibleLocListStr;
 
     /**
@@ -141,6 +142,68 @@ public class Metro {
 
 
     public static boolean isPlacementSequenceValid(String placementSequence) {
+
+
+        /*
+        boolean isValid = true;
+
+        if (placementSequence == "") return true;
+
+        if (placementSequence.substring(0, 4) == "dddd") {
+            placementSequence = placementSequence.substring(6);
+        }
+
+        ArrayList<String> illeagelPlace = new ArrayList<>(Arrays.asList(
+                "43", "44", "33", "34"));
+
+        ArrayList<String> existList = new ArrayList<>();
+
+        ArrayList<String> edgeList = new ArrayList<>(Arrays.asList(
+                "00", "01", "02", "03", "04", "05", "06", "07",
+                "10", "17",
+                "20", "27",
+                "30", "37",
+                "40", "47",
+                "50", "57",
+                "60", "67",
+                "70", "71", "72", "73", "74", "75", "76", "77"));
+
+        for (int i = 0; i < placementSequence.length(); i += 6) {
+            String piece = placementSequence.substring(i, i + 4);
+            String place = placementSequence.substring(i + 4, i + 6);
+
+            if (illeagelPlace.contains(place)) {
+                return false;
+            }
+
+            if (existList.contains(place)) {
+                return false;
+            }
+
+            existList.add(place);
+
+            int placeInt = Integer.parseInt(place);
+            String up = "";
+            if (placeInt - 10 < 10) {
+                up = "0" + String.valueOf(placeInt - 10);
+            }
+            up = String.valueOf(placeInt - 10);
+            String down = String.valueOf(placeInt + 10);
+            String left = String.valueOf(placeInt - 1);
+            String right = String.valueOf(placeInt + 1);
+
+            if (!edgeList.contains(place) && !existList.contains(up) && !existList.contains(down) && !existList.contains(left) && !existList.contains(right)) {
+                return false;
+            }
+
+
+        }
+
+
+        return true;
+         */
+
+
         //System.out.println(placementSequence);
 
 
@@ -269,6 +332,8 @@ public class Metro {
 
 
         return true;
+
+
     }
 
     /**
@@ -285,31 +350,6 @@ public class Metro {
     }
 
 
-    public static ArrayList<String> convertStationToStartLoc(ArrayList<Integer> stationlist) {
-        ArrayList<String> startStationList = new ArrayList<>();
-        for (Integer station : stationlist) {
-            if (station <= 8) {
-                int startLocInt = 8 - station;
-                startStationList.add("0" + String.valueOf(startLocInt));
-            } else if (station <= 16) {
-                int startLocInt = station - 9;
-                startStationList.add(String.valueOf(startLocInt) + "0");
-            } else if (station <= 24) {
-                int startLocInt = station + 53;
-                startStationList.add(String.valueOf(startLocInt));
-            } else {
-                int startLocInt = 102 - (station - 25) * 9 - station;
-                if (startLocInt < 10) {
-                    startStationList.add("0" + String.valueOf(startLocInt));
-                } else {
-                    startStationList.add(String.valueOf(startLocInt));
-                }
-            }
-        }
-
-        return startStationList;
-    }
-
     /**
      * Task 9
      * Given a placement sequence string, generate a valid next move.
@@ -322,100 +362,57 @@ public class Metro {
     public static String generateMove(String placementSequence, String piece, int numberOfPlayers) {
         // FIXME Task 9: generate a valid move
         //System.out.println(placementSequence);
-        String generatedMove = "";
-        ArrayList<String> placelistStr = new ArrayList();
-        ArrayList<String> possibleLocListStr = new ArrayList<>();
-        ArrayList<Integer> placeList = new ArrayList();
+        String move = "";
 
-        if (placementSequence == "") {
-            placelistStr = new ArrayList(Arrays.asList("00", "01", "02", "03", "04", "05", "06", "07", "10", "20", "30", "40", "50", "60", "70", "71", "72", "73", "74", "75", "76", "77", "17", "27", "37", "47", "57", "67"));
+
+        ArrayList<String> placementList = new ArrayList<>(Arrays.asList(
+                "00", "01", "02", "03", "04", "05", "06", "07",
+                "10", "11", "12", "13", "14", "15", "16", "17",
+                "20", "21", "22", "23", "24", "25", "26", "27",
+                "30", "31", "32", "35", "36", "37",
+                "40", "41", "42", "45", "46", "47",
+                "50", "51", "52", "53", "54", "55", "56", "57",
+                "60", "61", "62", "63", "64", "65", "66", "67",
+                "70", "71", "72", "73", "74", "75", "76", "77"));
+
+        for (int j = 0; j < placementSequence.length(); j += 6) {
+            String exist = placementSequence.substring(j + 4, j + 6);
+            placementList.remove(exist);
+        }
+
+        if (placementSequence.length() < 354) {
             int[] tilecode = Tile.encodeTileType(piece);
-            //System.out.println(Tile.encodeTileType("cccc")[0]);
-            if (tilecode[0] == 3 || tilecode[1] == 3) {
-                placelistStr.remove("00");
-                placelistStr.remove("07");
-                placelistStr.remove("70");
-                placelistStr.remove("77");
-                //System.out.println("placelistStr = " + placelistStr);
+            if (tilecode[0] == 3) {
+                placementList.remove("00");
             }
-
-        } else {
-            for (int i = 0; i < 80; i += 10) {
-                for (int j = 0; j < 8; j++) {
-                    int placeInt = i + j;
-                    placeList.add(placeInt);
-                }
+            if (tilecode[2] == 3) {
+                placementList.remove("07");
+            }
+            if (tilecode[3] == 3) {
+                placementList.remove("77");
+            }
+            if (tilecode[6] == 3) {
+                placementList.remove("70");
             }
         }
 
-        //System.out.println(placeList);
 
-        ArrayList<Integer> existList = new ArrayList<>();
-        for (int m = 4; m < placementSequence.length(); m += 6) {
-            int existPlaceInt = Integer.parseInt(placementSequence.substring(m, m + 2));
-            existList.add(existPlaceInt);
-        }
-
-        //System.out.println(existList);
-
-        for (int existPlaceInt : existList) {
-            int removeIdx = placeList.indexOf(existPlaceInt);
-            placeList.remove(removeIdx);
-        }
-
-        //System.out.println(placeList);
-
-
-        for (int placeInt : placeList) {
-            if (placeInt < 8) {
-                String s = "0" + String.valueOf(placeInt);
-                placelistStr.add(s);
-            } else {
-                placelistStr.add(String.valueOf(placeInt));
+        ArrayList<String> possibleList = new ArrayList<>();
+        for (int i = 0; i < placementList.size(); i++) {
+            String newPlacementSequence = placementSequence + piece + placementList.get(i);
+            if (isPlacementSequenceValid(newPlacementSequence)) {
+                String newPlacement = piece + placementList.get(i);
+                possibleList.add(newPlacement);
             }
         }
 
-        //System.out.println(placelistStr);
-
-        for (String placeStr : placelistStr) {
-            //System.out.println(placeStr);
-            String tryPlacement = "";
-            tryPlacement = placementSequence + piece + placeStr;
-            //System.out.println(tryPlacement);
-            boolean b = isPlacementSequenceValid(tryPlacement);
-            //System.out.println(b);
-            if (b) {
-                possibleLocListStr.add(tryPlacement);
-            }
-
-        }
-        System.out.println(possibleLocListStr);
-
-        if (possibleLocListStr.size() != 0) {
-            Random r = new Random();
-            int randomLoc = r.nextInt(possibleLocListStr.size());
-            //System.out.println(randomLoc);
-
-            generatedMove = possibleLocListStr.get(randomLoc).substring(placementSequence.length(), placementSequence.length() + 6);
-            //System.out.println(generatedMove);
-
-            String checkCentral = generatedMove.substring(generatedMove.length() - 2, generatedMove.length());
-            //System.out.println(checkCentral);
-
-            while (checkCentral.equals("33") || checkCentral.equals("34") || checkCentral.equals("43") || checkCentral.equals("44")) {
-                randomLoc = r.nextInt(possibleLocListStr.size());
-                //System.out.println(randomLoc);
-
-                generatedMove = possibleLocListStr.get(randomLoc).substring(placementSequence.length(), placementSequence.length() + 6);
-                //System.out.println(generatedMove);
-
-                checkCentral = generatedMove.substring(generatedMove.length() - 2, generatedMove.length());
-                //System.out.println(checkCentral);
-            }
+        Random r = new Random();
+        if (possibleList.size() > 0) {
+            move = possibleList.get(r.nextInt(possibleList.size()));
         }
 
-        //System.out.println(generatedMove);
-        return generatedMove;
+
+        return move;
     }
 
     public static int getPreviousDirctionForEdge(String tileType, int tilePlace) {
@@ -496,59 +493,6 @@ public class Metro {
         return direction;
     }
 
-    public static ArrayList<ArrayList<Integer>> getplayerstationByNum(int numberOfPlayers) {
-        ArrayList<ArrayList<Integer>> playerstation = new ArrayList<>();
-
-        switch (numberOfPlayers) {
-            case 2:
-                playerstation.add(new ArrayList<>(Arrays.asList(1, 3, 5, 7, 9, 11, 13, 15, 17, 19, 21, 23, 25, 27, 29, 31)));
-                playerstation.add(new ArrayList<>(Arrays.asList(2, 4, 6, 8, 10, 12, 14, 16, 18, 20, 22, 24, 26, 28, 30, 32)));
-                break;
-            case 3:
-                playerstation.add(new ArrayList<>(Arrays.asList(1, 4, 6, 11, 15, 20, 23, 25, 28, 31)));
-                playerstation.add(new ArrayList<>(Arrays.asList(2, 7, 9, 12, 14, 19, 22, 27, 29, 32)));
-                playerstation.add(new ArrayList<>(Arrays.asList(3, 5, 8, 10, 13, 18, 21, 24, 26, 30)));
-                break;
-            case 4:
-                playerstation.add(new ArrayList<>(Arrays.asList(4, 7, 11, 16, 20, 23, 27, 32)));
-                playerstation.add(new ArrayList<>(Arrays.asList(3, 8, 12, 15, 19, 24, 28, 31)));
-                playerstation.add(new ArrayList<>(Arrays.asList(1, 6, 10, 13, 18, 21, 25, 30)));
-                playerstation.add(new ArrayList<>(Arrays.asList(2, 5, 9, 14, 17, 22, 26, 29)));
-                break;
-            case 5:
-                playerstation.add(new ArrayList<>(Arrays.asList(1, 5, 10, 14, 22, 28)));
-                playerstation.add(new ArrayList<>(Arrays.asList(6, 12, 18, 23, 27, 32)));
-                playerstation.add(new ArrayList<>(Arrays.asList(3, 7, 15, 19, 25, 29)));
-                playerstation.add(new ArrayList<>(Arrays.asList(2, 9, 13, 21, 26, 30)));
-                playerstation.add(new ArrayList<>(Arrays.asList(4, 8, 11, 20, 24, 31)));
-                break;
-            case 6:
-                playerstation.add(new ArrayList<>(Arrays.asList(1, 5, 10, 19, 27)));
-                playerstation.add(new ArrayList<>(Arrays.asList(2, 11, 18, 25, 29)));
-                playerstation.add(new ArrayList<>(Arrays.asList(4, 8, 14, 21, 26)));
-                playerstation.add(new ArrayList<>(Arrays.asList(6, 15, 20, 24, 31)));
-                playerstation.add(new ArrayList<>(Arrays.asList(3, 9, 13, 23, 30)));
-                playerstation.add(new ArrayList<>(Arrays.asList(7, 12, 22, 28, 32)));
-                break;
-        }
-        System.out.println(numberOfPlayers);
-        //System.out.println(playerstation);
-        return playerstation;
-    }
-
-    public static int getDirectionByStartStation(int playerStation) {
-        int checkDirction = 0;
-        if (playerStation <= 8) {
-            checkDirction = 10; //down
-        } else if (playerStation <= 16) {
-            checkDirction = 1;  //right
-        } else if (playerStation <= 24) {
-            checkDirction = -10;
-        } else {
-            checkDirction = -1;
-        }
-        return checkDirction;
-    }
 
     public static boolean isTileConnected(HashMap<String, String> tileList, String position, int direction) {
         int positionInt = Integer.parseInt(position);
