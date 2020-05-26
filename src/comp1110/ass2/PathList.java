@@ -26,7 +26,7 @@ public class PathList {
             }
         }
         Collections.sort(startStationInt);
-        System.out.println("startLocationIntList " + startStationInt);
+        //System.out.println("startLocationIntList " + startStationInt);
 
         ArrayList<LinkedList<Integer>> pathlist = new ArrayList<>(32);
         //System.out.println("pathlist " + pathlist);

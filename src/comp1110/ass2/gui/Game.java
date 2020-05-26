@@ -1,9 +1,6 @@
 package comp1110.ass2.gui;
 
-import comp1110.ass2.Metro;
-import comp1110.ass2.PathList;
-import comp1110.ass2.PathState;
-import comp1110.ass2.Tile;
+import comp1110.ass2.*;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -31,7 +28,10 @@ import java.awt.*;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.LinkedList;
+
+import static comp1110.ass2.Metro.isPlacementSequenceValid;
 
 public class Game extends Application {
     private static final int GAME_WIDTH = 1024;
@@ -81,6 +81,7 @@ public class Game extends Application {
     public ArrayList<String> totalName = new ArrayList<>();
     public boolean[] turns;
     public int round = 0;
+    public AIDifficulty aiDifficulty = AIDifficulty.EASY;
 
     public static void main(String[] args) {
         launch(args);
@@ -111,6 +112,8 @@ public class Game extends Application {
         sceneStart = new Scene(rootStart, GAME_WIDTH, GAME_HEIGHT);
         makeStartControls();
 
+
+        chooseDifficulty();
         addVariants();
         rootStart.getChildren().add(controlsStart);
         Image startSceneBackground = new Image(this.getClass().getResource("assets/StartSceneBackground.png").toString());
@@ -119,6 +122,7 @@ public class Game extends Application {
         button3.setOnMouseClicked(event -> {
             primaryStage.setScene(mainscene);
         });
+
 
         primaryStage.setScene(sceneStart);
         mainscene.getStylesheets().addAll(this.getClass().getResource("styleGame.css").toExternalForm());
@@ -151,7 +155,7 @@ public class Game extends Application {
                     l++;
                 }
 
-                System.out.println(numPlayers1Start);
+                //System.out.println(numPlayers1Start);
 
                 String s = "";
                 for (int j = 0; j < playerInput1Start.length(); j++) {
@@ -164,10 +168,6 @@ public class Game extends Application {
                 }
                 humanPlayerListStart.add(s);
 
-
-                for (int m = 0; m < humanPlayerListStart.size(); m++) {
-                    System.out.println(humanPlayerListStart.get(m));
-                }
 
                 setHumanPlayersStart();
             }
@@ -201,7 +201,7 @@ public class Game extends Application {
                     l++;
                 }
 
-                System.out.println(numPlayers2Start);
+                //System.out.println(numPlayers2Start);
 
                 String s2 = "";
                 for (int j = 0; j < playerInput2Start.length(); j++) {
@@ -214,9 +214,6 @@ public class Game extends Application {
                 }
                 aiplayerlistStart.add(s2);
 
-                for (int m = 0; m < aiplayerlistStart.size(); m++) {
-                    System.out.println(aiplayerlistStart.get(m));
-                }
 
                 setAiPlayersStart();
             }
@@ -247,7 +244,7 @@ public class Game extends Application {
 
     private void setAiPlayersStart() {
         //create Image for players
-        System.out.println(aiplayerlistStart);
+        //System.out.println(aiplayerlistStart);
 
         for (int i = 0; i < numPlayers2Start; i++) {
             Image imgPlayer2 = new Image(this.getClass().getResource("assets/p" + (i + 4) + ".jpg").toString());
@@ -287,10 +284,31 @@ public class Game extends Application {
 
                 textField1Start.clear();
 
+                //
+                //System.out.println("check here");
+                getAIPathStationList();
+                //
+
             }
         });
 
         vbStart.getChildren().addAll(label3, textField3Start, button3);
+    }
+
+    private void chooseDifficulty() {
+        Label label4 = new Label("Choose Difficulty: ");
+        label4.setTextFill(Color.BLACK);
+        Button button4 = new Button("Easy");
+        Button button5 = new Button("Difficult");
+        button5.setOnMouseClicked(e -> {
+            aiDifficulty = AIDifficulty.DIFFICULT;
+            System.out.println(aiDifficulty);
+        });
+
+        //Button button6 = new Button("Random");
+        HBox hbStart = new HBox(label4, button4, button5);
+        hbStart.setSpacing(10);
+        vbStart.getChildren().addAll(hbStart);
     }
 
 
@@ -315,6 +333,8 @@ public class Game extends Application {
             }
         }
         return possibleLocationList;
+
+
     }
 
     public void highlightPossibleLocation(String placementSequence, String tileType) {
@@ -373,12 +393,19 @@ public class Game extends Application {
 
                 updateTurns();
 
-                while (checkAiTurn()) {
+                while (checkAiTurn() && aiDifficulty == AIDifficulty.EASY) {
                     placeAiTile();
                     updateTurns();
                 }
 
-                getPathMarkList(PathList.getPathList(getPlacementSequence()), getPathStatusList(PathList.getPathList(getPlacementSequence())));
+                while (AIDifficulty.DIFFICULT == AIDifficulty.DIFFICULT && checkAiTurn()) {
+                    placeAdvancedAiTile();
+                    updateTurns();
+                }
+
+                //AdvancedAI.getPathMarkList(PathList.getPathList(getPlacementSequence()), AdvancedAI.getPathStatusList(PathList.getPathList(getPlacementSequence())));
+                //getAdvancedTilePlacement(AdvancedAI.getPathMarkList(PathList.getPathList(getPlacementSequence()), AdvancedAI.getPathStatusList(PathList.getPathList(getPlacementSequence()))), getAIPathStationList(),);
+                //getAdvancedTilePlacement("aaaa");
             });
         }
     }
@@ -465,6 +492,8 @@ public class Game extends Application {
             Image img1 = new Image(this.getClass().getResource("assets/" + tiletype1 + ".jpg").toString());
             tileHand.setFill(new ImagePattern(img1));
             root.getChildren().add(tileHand);
+
+            // getAdvancedTilePlacement(AdvancedAI.getPathMarkList(PathList.getPathList(getPlacementSequence()), AdvancedAI.getPathStatusList(PathList.getPathList(getPlacementSequence()))), getAIPathStationList(),tiletype1);
 
 
         });
@@ -623,16 +652,11 @@ public class Game extends Application {
         turns[currentTurn] = false;
         turns[nextIndex] = true;
 
-
-        for (int d = 0; d < turns.length; d++) {
-            //System.out.print(turns[d] + "");
-        }
-        //System.out.println();
     }
 
     boolean checkAiTurn() {
         if (round % totalPlayerNum >= numPlayers1Start) {
-            System.out.println("AI turn");
+            //System.out.println("AI turn");
             return true;
         }
         return false;
@@ -642,7 +666,7 @@ public class Game extends Application {
         DraggableSquare tileAI = new DraggableSquare(GAME_WIDTH - BOARD_MARGIN - VBOX_WIDTH + SQUARE_SIZE, GAME_HEIGHT - 2 * BOARD_MARGIN, this);
 
         String tiletype1 = "";
-        if (allTilesGenerated == "") {
+        if (allTilesGenerated.equals("")) {
             tiletype1 = Metro.drawFromDeck("", "");
             tileAI.tileType = tiletype1;
             allTilesGenerated = allTilesGenerated + tiletype1;
@@ -674,53 +698,269 @@ public class Game extends Application {
 
     }
 
-    public ArrayList<PathState> getPathStatusList(ArrayList<LinkedList<Integer>> pathlist) {
-        ArrayList<PathState> pathStatusList = new ArrayList<PathState>();
-        System.out.println(pathlist);
-        //ArrayList<Integer> alreadyEnd = new ArrayList<>(Arrays.asList(0,1,2,3,4,5,6,7,10,17,20,27,30,37,40,47,50,57,60,67,70,71,72,73,74,75,76,77));
-
-        for (int i = 0; i < pathlist.size(); i++) {
-            int pathLength = pathlist.get(i).size();
-            int endPoint = pathlist.get(i).get(pathLength - 1);
-            System.out.print(endPoint + " ");
-            pathStatusList.add(PathState.getState(pathLength, endPoint));
+    public ArrayList<Integer> getAIPathStationList() {
+        ArrayList<Integer> stationList = new ArrayList<>();
+        ArrayList<ArrayList<Integer>> playerstation = getplayerstationByNum(totalPlayerNum);
+        for (int i = numPlayers1Start; i < totalPlayerNum; i++) {
+            stationList.addAll(playerstation.get(i));
         }
-
-        System.out.println(pathStatusList);
-
-        return pathStatusList;
+        //System.out.println(stationList);
+        return stationList;
     }
 
-    public ArrayList<Double> getPathMarkList(ArrayList<LinkedList<Integer>> pathlist, ArrayList<PathState> pathStatusList) {
-        ArrayList<Double> pathMarkList = new ArrayList<>();
+    public ArrayList<ArrayList<Integer>> getplayerstationByNum(int numberOfPlayers) {
+        ArrayList<ArrayList<Integer>> playerstation = new ArrayList<>();
 
-        for (int i = 0; i < pathStatusList.size(); i++) {
-            if (pathStatusList.get(i) == PathState.INACTIVE) {
-                pathMarkList.add(0.0);
+        switch (numberOfPlayers) {
+            case 2:
+                playerstation.add(new ArrayList<>(Arrays.asList(1, 3, 5, 7, 9, 11, 13, 15, 17, 19, 21, 23, 25, 27, 29, 31)));
+                playerstation.add(new ArrayList<>(Arrays.asList(2, 4, 6, 8, 10, 12, 14, 16, 18, 20, 22, 24, 26, 28, 30, 32)));
+                break;
+            case 3:
+                playerstation.add(new ArrayList<>(Arrays.asList(1, 4, 6, 11, 15, 20, 23, 25, 28, 31)));
+                playerstation.add(new ArrayList<>(Arrays.asList(2, 7, 9, 12, 14, 19, 22, 27, 29, 32)));
+                playerstation.add(new ArrayList<>(Arrays.asList(3, 5, 8, 10, 13, 18, 21, 24, 26, 30)));
+                break;
+            case 4:
+                playerstation.add(new ArrayList<>(Arrays.asList(4, 7, 11, 16, 20, 23, 27, 32)));
+                playerstation.add(new ArrayList<>(Arrays.asList(3, 8, 12, 15, 19, 24, 28, 31)));
+                playerstation.add(new ArrayList<>(Arrays.asList(1, 6, 10, 13, 18, 21, 25, 30)));
+                playerstation.add(new ArrayList<>(Arrays.asList(2, 5, 9, 14, 17, 22, 26, 29)));
+                break;
+            case 5:
+                playerstation.add(new ArrayList<>(Arrays.asList(1, 5, 10, 14, 22, 28)));
+                playerstation.add(new ArrayList<>(Arrays.asList(6, 12, 18, 23, 27, 32)));
+                playerstation.add(new ArrayList<>(Arrays.asList(3, 7, 15, 19, 25, 29)));
+                playerstation.add(new ArrayList<>(Arrays.asList(2, 9, 13, 21, 26, 30)));
+                playerstation.add(new ArrayList<>(Arrays.asList(4, 8, 11, 20, 24, 31)));
+                break;
+            case 6:
+                playerstation.add(new ArrayList<>(Arrays.asList(1, 5, 10, 19, 27)));
+                playerstation.add(new ArrayList<>(Arrays.asList(2, 11, 18, 25, 29)));
+                playerstation.add(new ArrayList<>(Arrays.asList(4, 8, 14, 21, 26)));
+                playerstation.add(new ArrayList<>(Arrays.asList(6, 15, 20, 24, 31)));
+                playerstation.add(new ArrayList<>(Arrays.asList(3, 9, 13, 23, 30)));
+                playerstation.add(new ArrayList<>(Arrays.asList(7, 12, 22, 28, 32)));
+                break;
+        }
+        //System.out.println(numberOfPlayers);
+        //System.out.println(playerstation);
+        return playerstation;
+    }
+
+    String getAdvancedTilePlacement(String tiletypeAi) {
+        String advanced = "";
+
+        String placementSequence = getPlacementSequence();
+        HashMap<Integer, String> tileList = new HashMap<>();
+        for (int j = 0; j < placementSequence.length(); j += 6) {
+            //Hashmap for the placement, position as Key
+            String tile = placementSequence.substring(j, j + 4);
+            String position = placementSequence.substring(j + 4, j + 6);
+            int positionInt = Integer.parseInt(position);
+            tileList.put(positionInt, tile);
+            //System.out.println(positionInt + " " + tile);
+        }
+
+        ArrayList<Integer> possibleListInt = new ArrayList<>();
+        ArrayList<String> possibleListStr = Metro.getPossibleListNew(placementSequence, tiletypeAi);
+        for (String s : possibleListStr) {
+            int n = Integer.parseInt(s.substring(s.length() - 2));
+            possibleListInt.add(n);
+        }
+        System.out.println("possibleListInt " + possibleListInt);
+
+        /*
+        ArrayList<LinkedList<Integer>> pathList = PathList.getPathList(placementSequence);
+        ArrayList<PathState> pathStatusList = AdvancedAI.getPathStatusList(pathList);
+        ArrayList<Double> markListNew = AdvancedAI.getPathMarkList(pathList, pathStatusList);
+
+        ArrayList<Integer> aiStationList = getAIPathStationList();
+
+        HashMap<Double, LinkedList<Integer>> markStationMap = new HashMap<>();
+        for (int i : aiStationList) {
+            if (markStationMap.containsKey(markListNew.get(i - 1))) {
+                markStationMap.get(markListNew.get(i - 1)).add(i);
             } else {
-                int pathLength = pathlist.get(i).size();
-                int endPoint = pathlist.get(i).get(pathLength - 1);
-                double distance = getDistanceToCentralFromInt(endPoint);
-                double mark = pathLength + 2 * (3.5 * Math.sqrt(2) - distance);
-                //length + coefficient * ( 4 * Math.sqrt(2) - distance(endpoint - (0, 0)))
-                pathMarkList.add(mark);
+                markStationMap.put(markListNew.get(i - 1), new LinkedList<>());
+                markStationMap.get(markListNew.get(i - 1)).addFirst(i);
+            }
+        }
+        //System.out.println(aiMarkList);
+        System.out.println("HashMap " + markStationMap);
+
+        double sum = 0;
+        for (double markAi : markStationMap.keySet()) {
+            sum += markAi;
+        }
+         */
+
+        HashMap<Double, String> possibleMarkList = new HashMap<>();
+        ArrayList<Integer> aiStationList = getAIPathStationList();
+
+        for (int i = 0; i < possibleListStr.size(); i++) {
+            String placeSequenceNew = "";
+            String place1 = possibleListStr.get(i);
+            placeSequenceNew = placementSequence + place1;
+            //System.out.println("new plcementSequence " + placeSequenceNew);
+
+            ArrayList<LinkedList<Integer>> pathListNew = PathList.getPathList(placeSequenceNew);
+            ArrayList<PathState> pathStatusListNew = AdvancedAI.getPathStatusList(pathListNew);
+            ArrayList<Double> markListNew = AdvancedAI.getPathMarkList(pathListNew, pathStatusListNew);
+
+            ArrayList<Integer> aiStationListNew = getAIPathStationList();
+
+            HashMap<Double, LinkedList<Integer>> markStationMapNew = new HashMap<>();
+            for (int j : aiStationList) {
+                if (markStationMapNew.containsKey(markListNew.get(j - 1))) {
+                    markStationMapNew.get(markListNew.get(j - 1)).add(j);
+                } else {
+                    markStationMapNew.put(markListNew.get(j - 1), new LinkedList<>());
+                    markStationMapNew.get(markListNew.get(j - 1)).addFirst(j);
+                }
+            }
+            //System.out.println(aiMarkList);
+            System.out.println("HashMap " + markStationMapNew);
+
+            double sumNew = 0;
+            for (double markAi : markStationMapNew.keySet()) {
+                sumNew += markAi;
+                System.out.println("sumNew" + sumNew);
+            }
+
+            possibleMarkList.put(sumNew, place1);
+        }
+
+        System.out.println("possibleMarkList " + possibleMarkList);
+
+        double greatest = 0;
+        for (double h : possibleMarkList.keySet()) {
+            if (h > greatest) {
+                greatest = h;
             }
         }
 
-        System.out.println(pathMarkList);
-        return pathMarkList;
+        advanced = possibleMarkList.get(greatest);
+        System.out.println(advanced);
+        return advanced;
     }
 
-    public static double getDistanceToCentralFromInt(int endPoint) {
-
-        int row = endPoint / 10;
-        int column = endPoint % 10;
-        //System.out.println(row + " " + column);
-
-        double distance = Math.sqrt(Math.pow((row - 3.5), 2) + Math.pow((column - 3.5), 2));
-        //System.out.println(distance);
-        return distance;
+    int convertStartStationToLoc(int startStation) {
+        int startLoc = 0;
+        if (startStation <= 8) {
+            startLoc = 8 - startStation;
+        } else if (startStation <= 16) {
+            startLoc = startStation - 9;
+        } else if (startStation <= 24) {
+            startLoc = startStation + 53;
+        } else {
+            startLoc = 102 - (startStation - 25) * 9 - startStation;
+        }
+        return startLoc;
     }
+
+    int getNextPosition(String startType, int startPlace, LinkedList<Integer> path) {
+        String placementSequence = getPlacementSequence();
+
+        HashMap<Integer, String> tileList = new HashMap<>();
+        for (int j = 0; j < placementSequence.length(); j += 6) {
+            //Hashmap for the placement, position as Key
+            String tile = placementSequence.substring(j, j + 4);
+            String position = placementSequence.substring(j + 4, j + 6);
+            int positionInt = Integer.parseInt(position);
+            tileList.put(positionInt, tile);
+            //System.out.println(positionInt + " " + tile);
+        }
+
+        int next = 0;
+        int startDirection = PathList.getPreviousDirctionForEdge(startType, startPlace);
+
+
+        String tiletype1 = tileList.get(startPlace);
+        int tilePlace1 = startPlace;
+        int direction = startDirection;
+        int newDirection = 0;
+
+        while (next != path.get(path.size() - 1)) {
+            newDirection = PathList.getDirectionForTile(tiletype1, tilePlace1, direction);
+            next = tilePlace1 + newDirection;
+            tiletype1 = tileList.get(next);
+            tilePlace1 = next;
+            direction = newDirection;
+        }
+
+        System.out.println("direction " + direction);
+
+
+        return next;
+    }
+
+    LinkedList<Integer> getStationWithMaxMark(HashMap<Double, LinkedList<Integer>> markStationMap) {
+        double max = 0.0;
+        LinkedList<Integer> maxStationList = new LinkedList<>();
+
+        for (double mark : markStationMap.keySet()) {
+            if (mark > max) {
+                max = mark;
+                maxStationList = markStationMap.get(max);
+            }
+        }
+
+
+        return maxStationList;
+    }
+
+    double getHightestMark(HashMap<Double, LinkedList<Integer>> markStationMap) {
+        double max = 0.0;
+        LinkedList<Integer> maxStationList = new LinkedList<>();
+
+        for (double mark : markStationMap.keySet()) {
+            if (mark > max) {
+                max = mark;
+                maxStationList = markStationMap.get(max);
+            }
+        }
+
+
+        return max;
+    }
+
+    void placeAdvancedAiTile() {
+        DraggableSquare tileAI = new DraggableSquare(GAME_WIDTH - BOARD_MARGIN - VBOX_WIDTH + SQUARE_SIZE, GAME_HEIGHT - 2 * BOARD_MARGIN, this);
+
+        String tiletype1 = "";
+        if (allTilesGenerated.equals("")) {
+            tiletype1 = Metro.drawFromDeck("", "");
+            tileAI.tileType = tiletype1;
+            allTilesGenerated = allTilesGenerated + tiletype1;
+        } else {
+            tiletype1 = Metro.drawFromDeck("", allTilesGenerated);
+            tileAI.tileType = tiletype1;
+            allTilesGenerated = allTilesGenerated + tiletype1;
+        }
+
+        String placeS = getPlacementSequence();
+
+        String s = getAdvancedTilePlacement(tiletype1);
+        //System.out.println(s);
+
+        int row = Integer.parseInt(String.valueOf(s.charAt(4)));
+        int column = Integer.parseInt(String.valueOf(s.charAt(5)));
+        double setX = (row + 1) * 64 + 82;
+        double setY = (column + 1) * 64 + 82;
+        //System.out.println("row " + row + " column " + column + " setX " + setX + " setY " + setY);
+
+        tileAI.setLayoutX(setY);
+        tileAI.setLayoutY(setX);
+        tileOnBoard.add(tileAI);
+
+        Image img1 = new Image(this.getClass().getResource("assets/" + tiletype1 + ".jpg").toString());
+        tileAI.setFill(new ImagePattern(img1));
+
+        root.getChildren().add(tileAI);
+
+    }
+
 
     MediaPlayer mediaPlayer;
 

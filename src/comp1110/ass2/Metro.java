@@ -503,5 +503,52 @@ public class Metro {
         return false;
     }
 
+    public static ArrayList<String> getPossibleListNew(String placementSequence, String piece) {
+        String move = "";
+        ArrayList<String> placementList = new ArrayList<>(Arrays.asList(
+                "00", "01", "02", "03", "04", "05", "06", "07",
+                "10", "11", "12", "13", "14", "15", "16", "17",
+                "20", "21", "22", "23", "24", "25", "26", "27",
+                "30", "31", "32", "35", "36", "37",
+                "40", "41", "42", "45", "46", "47",
+                "50", "51", "52", "53", "54", "55", "56", "57",
+                "60", "61", "62", "63", "64", "65", "66", "67",
+                "70", "71", "72", "73", "74", "75", "76", "77"));
+
+        for (int j = 0; j < placementSequence.length(); j += 6) {
+            String exist = placementSequence.substring(j + 4, j + 6);
+            placementList.remove(exist);
+        }
+
+        if (placementSequence.length() < 354) {
+            int[] tilecode = Tile.encodeTileType(piece);
+            if (tilecode[0] == 3) {
+                placementList.remove("00");
+            }
+            if (tilecode[2] == 3) {
+                placementList.remove("07");
+            }
+            if (tilecode[3] == 3) {
+                placementList.remove("77");
+            }
+            if (tilecode[6] == 3) {
+                placementList.remove("70");
+            }
+        }
+
+
+        ArrayList<String> possibleList = new ArrayList<>();
+        for (int i = 0; i < placementList.size(); i++) {
+            String newPlacementSequence = placementSequence + piece + placementList.get(i);
+            if (isPlacementSequenceValid(newPlacementSequence)) {
+                String newPlacement = piece + placementList.get(i);
+                possibleList.add(newPlacement);
+            }
+        }
+
+
+        return possibleList;
+    }
+
 }
 

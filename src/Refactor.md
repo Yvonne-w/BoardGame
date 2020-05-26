@@ -467,46 +467,7 @@ Game.java
     
  PathList.java
  
-     public static ArrayList<ArrayList<Integer>> getplayerstationByNum(int numberOfPlayers) {
-         ArrayList<ArrayList<Integer>> playerstation = new ArrayList<>();
- 
-         switch (numberOfPlayers) {
-             case 2:
-                 playerstation.add(new ArrayList<>(Arrays.asList(1, 3, 5, 7, 9, 11, 13, 15, 17, 19, 21, 23, 25, 27, 29, 31)));
-                 playerstation.add(new ArrayList<>(Arrays.asList(2, 4, 6, 8, 10, 12, 14, 16, 18, 20, 22, 24, 26, 28, 30, 32)));
-                 break;
-             case 3:
-                 playerstation.add(new ArrayList<>(Arrays.asList(1, 4, 6, 11, 15, 20, 23, 25, 28, 31)));
-                 playerstation.add(new ArrayList<>(Arrays.asList(2, 7, 9, 12, 14, 19, 22, 27, 29, 32)));
-                 playerstation.add(new ArrayList<>(Arrays.asList(3, 5, 8, 10, 13, 18, 21, 24, 26, 30)));
-                 break;
-             case 4:
-                 playerstation.add(new ArrayList<>(Arrays.asList(4, 7, 11, 16, 20, 23, 27, 32)));
-                 playerstation.add(new ArrayList<>(Arrays.asList(3, 8, 12, 15, 19, 24, 28, 31)));
-                 playerstation.add(new ArrayList<>(Arrays.asList(1, 6, 10, 13, 18, 21, 25, 30)));
-                 playerstation.add(new ArrayList<>(Arrays.asList(2, 5, 9, 14, 17, 22, 26, 29)));
-                 break;
-             case 5:
-                 playerstation.add(new ArrayList<>(Arrays.asList(1, 5, 10, 14, 22, 28)));
-                 playerstation.add(new ArrayList<>(Arrays.asList(6, 12, 18, 23, 27, 32)));
-                 playerstation.add(new ArrayList<>(Arrays.asList(3, 7, 15, 19, 25, 29)));
-                 playerstation.add(new ArrayList<>(Arrays.asList(2, 9, 13, 21, 26, 30)));
-                 playerstation.add(new ArrayList<>(Arrays.asList(4, 8, 11, 20, 24, 31)));
-                 break;
-             case 6:
-                 playerstation.add(new ArrayList<>(Arrays.asList(1, 5, 10, 19, 27)));
-                 playerstation.add(new ArrayList<>(Arrays.asList(2, 11, 18, 25, 29)));
-                 playerstation.add(new ArrayList<>(Arrays.asList(4, 8, 14, 21, 26)));
-                 playerstation.add(new ArrayList<>(Arrays.asList(6, 15, 20, 24, 31)));
-                 playerstation.add(new ArrayList<>(Arrays.asList(3, 9, 13, 23, 30)));
-                 playerstation.add(new ArrayList<>(Arrays.asList(7, 12, 22, 28, 32)));
-                 break;
-         }
-         System.out.println(numberOfPlayers);
-         System.out.println(playerstation);
-         return playerstation;
-     }
-  
+     
  Metro.java
  
         // Old Version 
@@ -631,4 +592,246 @@ Game.java
     
             return startStationList;
         }
+        
+Unfinished Improvement Trial
+
+    public static ArrayList<String> getPossibleLocation(String placementSequence, String tileType) {
+        
+        if (placementSequence == "") {
+            ArrayList<String> possibleList = new ArrayList<>(Arrays.asList(
+                    "00", "01", "02", "03", "04", "05", "06", "07",
+                    "10", "17",
+                    "20", "27",
+                    "30", "37",
+                    "40", "47",
+                    "50", "57",
+                    "60", "67",
+                    "70", "71", "72", "73", "74", "75", "76", "77"));
+            if (piece == "dddd") {
+                return possibleList;
+            }
+
+            int[] tilecode = Tile.encodeTileType(piece);
+            if (tilecode[0] == 4) {
+                possibleList.removeAll(Arrays.asList("00", "01", "02", "03", "04", "05", "06", "07"));
+            }
+            if (tilecode[2] == 4) {
+                possibleList.removeAll(Arrays.asList("17", "27", "37", "47", "57", "67", "77", "07"));
+            }
+            if (tilecode[4] == 4) {
+                possibleList.removeAll(Arrays.asList("70", "71", "72", "73", "74", "75", "76", "77"));
+            }
+            if (tilecode[6] == 4) {
+                possibleList.removeAll(Arrays.asList("10", "20", "30", "40", "50", "60", "70", "00"));
+            }
+            return possibleList;
+        }
+
+        ArrayList<String> placementList = new ArrayList<>(Arrays.asList(
+                "00", "01", "02", "03", "04", "05", "06", "07",
+                "10", "11", "12", "13", "14", "15", "16", "17",
+                "20", "21", "22", "23", "24", "25", "26", "27",
+                "30", "31", "32", "35", "36", "37",
+                "40", "41", "42", "45", "46", "47",
+                "50", "51", "52", "53", "54", "55", "56", "57",
+                "60", "61", "62", "63", "64", "65", "66", "67",
+                "70", "71", "72", "73", "74", "75", "76", "77"));
+
+        for (int j = 0; j < placementSequence.length(); j += 6) {
+            String exist = placementSequence.substring(j + 4, j + 6);
+            placementList.remove(exist);
+        }
+
+        if (placementSequence.length() < 354) {
+            int[] tilecode = Tile.encodeTileType(piece);
+            if (tilecode[0] == 3) {
+                placementList.remove("00");
+            }
+            if (tilecode[2] == 3) {
+                placementList.remove("07");
+            }
+            if (tilecode[3] == 3) {
+                placementList.remove("77");
+            }
+            if (tilecode[6] == 3) {
+                placementList.remove("70");
+            }
+        }
+
+
+        ArrayList<String> possibleList = new ArrayList<>();
+        for (int i = 0; i < placementList.size(); i++) {
+            String newPlacementSequence = placementSequence + piece + placementList.get(i);
+            if (isPlacementSequenceValid(newPlacementSequence)) {
+                String newPlacement = piece + placementList.get(i);
+                possibleList.add(newPlacement);
+            }
+        }
+
+
+        return possibleList;
+        }
+        
+Advanced AI
+
+    String getAdvancedTilePlacement(ArrayList<Double> markList, ArrayList<Integer> aiSTationList, String tiletypeAi) {
+        String placementSequence = getPlacementSequence();
+
+        HashMap<Integer, String> tileList = new HashMap<>();
+        for (int j = 0; j < placementSequence.length(); j += 6) {
+            //Hashmap for the placement, position as Key
+            String tile = placementSequence.substring(j, j + 4);
+            String position = placementSequence.substring(j + 4, j + 6);
+            int positionInt = Integer.parseInt(position);
+            tileList.put(positionInt, tile);
+            //System.out.println(positionInt + " " + tile);
+        }
+
+        ArrayList<Integer> possibleListInt = new ArrayList<>();
+        ArrayList<String> possibleListStr = Metro.getPossibleListNew(placementSequence, tiletypeAi);
+        for (String s : possibleListStr) {
+            int n = Integer.parseInt(s.substring(s.length()-2));
+            possibleListInt.add(n);
+        }
+
+
+        String advanced = "";
+        ArrayList<Double> aiMarkList = new ArrayList<>();
+        HashMap<Double, LinkedList<Integer>> markStationMap = new HashMap<>();
+
+        for (int i : aiSTationList) {
+            aiMarkList.add(markList.get(i - 1));
+            //stationMarkMap.put(i, markList.get(i - 1));
+            if (markStationMap.containsKey(markList.get(i - 1))) {
+                markStationMap.get(markList.get(i - 1)).add(i);
+            } else {
+                markStationMap.put(markList.get(i - 1), new LinkedList<>());
+                markStationMap.get(markList.get(i - 1)).addFirst(i);
+            }
+        }
+        //System.out.println(aiMarkList);
+        System.out.println("HashMap " + markStationMap);
+
+        LinkedList<Integer> maxList = getStationWithMaxMark(markStationMap);
+        System.out.println("maxList" + maxList);
+
+        int advancedInt = -1;
+        for (int j = 0; j < maxList.size(); j++) {
+            advancedInt = 0;
+            int startStation = maxList.get(j);
+            LinkedList<Integer> path = PathList.getPathList(getPlacementSequence()).get(startStation - 1);
+            int endPoint = path.get(path.size() - 1);
+            System.out.println("endPoint " + endPoint);
+            if (path.size() == 1) {
+                advancedInt = convertStartStationToLoc(endPoint);
+            } else {
+                int startPlace = convertStartStationToLoc(startStation);
+                String startType = tileList.get(startPlace);
+                LinkedList<Integer> path1 = PathList.getPathList(getPlacementSequence()).get(startStation - 1);
+                advancedInt = getNextPosition(startType, startPlace, path1);
+                if (!possibleListInt.contains(advancedInt)) {
+                    markStationMap.remove(maxList);
+                    maxList = getStationWithMaxMark(markStationMap);
+                }
+            }
+            System.out.println("advancedInt " + advancedInt);
+        }
+
+        if (advancedInt < 10) {
+            advanced = "0" + String.valueOf(advancedInt);
+        } else {
+            advanced = String.valueOf(advancedInt);
+        }
+        System.out.println("advanced" + advanced);
+
+        return advanced;
+    }
+    
+Advanced AI Trial 2
+
+    String getAdvancedTilePlacement(String tiletypeAi) {
+        String advanced = "";
+
+        String placementSequence = getPlacementSequence();
+        HashMap<Integer, String> tileList = new HashMap<>();
+        for (int j = 0; j < placementSequence.length(); j += 6) {
+            //Hashmap for the placement, position as Key
+            String tile = placementSequence.substring(j, j + 4);
+            String position = placementSequence.substring(j + 4, j + 6);
+            int positionInt = Integer.parseInt(position);
+            tileList.put(positionInt, tile);
+            //System.out.println(positionInt + " " + tile);
+        }
+
+        ArrayList<Integer> possibleListInt = new ArrayList<>();
+        ArrayList<String> possibleListStr = Metro.getPossibleListNew(placementSequence, tiletypeAi);
+        for (String s : possibleListStr) {
+            int n = Integer.parseInt(s.substring(s.length() - 2));
+            possibleListInt.add(n);
+        }
+        System.out.println("possibleListInt " + possibleListInt);
+
+
+        ArrayList<LinkedList<Integer>> pathList = PathList.getPathList(placementSequence);
+        ArrayList<PathState> pathStatusList = AdvancedAI.getPathStatusList(pathList);
+        ArrayList<Double> markListNew = AdvancedAI.getPathMarkList(pathList, pathStatusList);
+
+        ArrayList<Integer> aiStationList = getAIPathStationList();
+
+        HashMap<Double, LinkedList<Integer>> markStationMap = new HashMap<>();
+        for (int i : aiStationList) {
+            if (markStationMap.containsKey(markListNew.get(i - 1))) {
+                markStationMap.get(markListNew.get(i - 1)).add(i);
+            } else {
+                markStationMap.put(markListNew.get(i - 1), new LinkedList<>());
+                markStationMap.get(markListNew.get(i - 1)).addFirst(i);
+            }
+        }
+        //System.out.println(aiMarkList);
+        System.out.println("HashMap " + markStationMap);
+
+        LinkedList<Integer> maxStationList = getStationWithMaxMark(markStationMap);
+        System.out.println("maxStationList " + maxStationList);
+
+
+        while (advanced == "") {
+            for (int j = 0; j < maxStationList.size(); j++) {
+                int station = maxStationList.get(j);
+                int place = convertStartStationToLoc(station);
+                if (possibleListInt.contains(place)) {
+                    advanced = String.valueOf(place);
+                    System.out.println("advanced" + advanced);
+                    return advanced;
+                }
+            }
+
+            double max = getHightestMark(markStationMap);
+            markStationMap.remove(max);
+            maxStationList = getStationWithMaxMark(markStationMap);
+
+            for (int m = 0; m < maxStationList.size(); m++) {
+
+                int station = maxStationList.get(m);
+                int place = convertStartStationToLoc(station);
+                String startType = tileList.get(place);
+                LinkedList<Integer> path1 = pathList.get(station - 1);
+
+                int advancedInt = getNextPosition(startType, place, path1);
+
+                if (possibleListInt.contains(advancedInt)) {
+                    advanced = String.valueOf(advancedInt);
+                    System.out.println("advanced" + advanced);
+                    return advanced;
+                }
+            }
+
+            max = getHightestMark(markStationMap);
+            markStationMap.remove(max);
+            maxStationList = getStationWithMaxMark(markStationMap);
+
+        }
+
+
+        return advanced;
+    }
 
