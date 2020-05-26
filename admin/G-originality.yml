@@ -30,10 +30,10 @@ declaration: >-
 #
 # Add as many "url+licence+comment" entries as necessary
 # (or remove it altogether if you haven't used any external code)
-code:
-  - comment: How to add Background Music
-     url: https://stackoverflow.com/questions/31784698/javafx-background-thread-task-should-play-music-in-a-loop-as-background-thread
-     licence: basic sytax
+#code:
+#  - comment: How to add Background Music
+#     url: https://stackoverflow.com/questions/31784698/javafx-background-thread-task-should-play-music-in-a-loop-as-background-thread
+#     licence: basic sytax
 
 
 
