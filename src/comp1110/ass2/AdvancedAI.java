@@ -16,17 +16,14 @@ public class AdvancedAI {
 
     public static ArrayList<PathState> getPathStatusList(ArrayList<LinkedList<Integer>> pathlist) {
         ArrayList<PathState> pathStatusList = new ArrayList<PathState>();
-        System.out.println(pathlist);
-        //ArrayList<Integer> alreadyEnd = new ArrayList<>(Arrays.asList(0,1,2,3,4,5,6,7,10,17,20,27,30,37,40,47,50,57,60,67,70,71,72,73,74,75,76,77));
+
 
         for (int i = 0; i < pathlist.size(); i++) {
             int pathLength = pathlist.get(i).size();
             int endPoint = pathlist.get(i).get(pathLength - 1);
-            System.out.print(endPoint + " ");
+
             pathStatusList.add(PathState.getState(pathLength, endPoint));
         }
-
-        System.out.println(pathStatusList);
 
         return pathStatusList;
     }
@@ -47,7 +44,7 @@ public class AdvancedAI {
             }
         }
 
-        System.out.println(pathMarkList);
+
         return pathMarkList;
     }
 
@@ -55,10 +52,10 @@ public class AdvancedAI {
 
         int row = endPoint / 10;
         int column = endPoint % 10;
-        //System.out.println(row + " " + column);
+
 
         double distance = Math.sqrt(Math.pow((row - 3.5), 2) + Math.pow((column - 3.5), 2));
-        //System.out.println(distance);
+
         return distance;
     }
 

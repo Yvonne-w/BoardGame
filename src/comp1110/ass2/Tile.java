@@ -193,12 +193,6 @@ public class Tile extends Polygon {
                 break;
         }
 
-
-        /*
-        for (int i = 0; i < 8; i++) {
-            System.out.print(tileTypeCode[i]);
-        }
-         */
         return tileTypeCode;
 
     }

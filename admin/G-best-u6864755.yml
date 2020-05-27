@@ -32,7 +32,7 @@ declaration: >-
 # I wish to submit the following classes as entirely my own (remove this if
 # you want to just submit methods):
 #class:
-#  - ValidCheck     //Refactored to Refactor.md, starts from line 23, comment added by Yiwei, agreed by Birdy
+#  - ValidCheck     //Refactored to Y_Refactor.md, starts from line 23, comment added by Yiwei, agreed by Birdy
 #  -
 
     # I wish to submit the following methods as entirely my own (remove this if

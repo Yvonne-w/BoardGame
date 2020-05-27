@@ -142,71 +142,6 @@ public class Metro {
 
 
     public static boolean isPlacementSequenceValid(String placementSequence) {
-
-
-        /*
-        boolean isValid = true;
-
-        if (placementSequence == "") return true;
-
-        if (placementSequence.substring(0, 4) == "dddd") {
-            placementSequence = placementSequence.substring(6);
-        }
-
-        ArrayList<String> illeagelPlace = new ArrayList<>(Arrays.asList(
-                "43", "44", "33", "34"));
-
-        ArrayList<String> existList = new ArrayList<>();
-
-        ArrayList<String> edgeList = new ArrayList<>(Arrays.asList(
-                "00", "01", "02", "03", "04", "05", "06", "07",
-                "10", "17",
-                "20", "27",
-                "30", "37",
-                "40", "47",
-                "50", "57",
-                "60", "67",
-                "70", "71", "72", "73", "74", "75", "76", "77"));
-
-        for (int i = 0; i < placementSequence.length(); i += 6) {
-            String piece = placementSequence.substring(i, i + 4);
-            String place = placementSequence.substring(i + 4, i + 6);
-
-            if (illeagelPlace.contains(place)) {
-                return false;
-            }
-
-            if (existList.contains(place)) {
-                return false;
-            }
-
-            existList.add(place);
-
-            int placeInt = Integer.parseInt(place);
-            String up = "";
-            if (placeInt - 10 < 10) {
-                up = "0" + String.valueOf(placeInt - 10);
-            }
-            up = String.valueOf(placeInt - 10);
-            String down = String.valueOf(placeInt + 10);
-            String left = String.valueOf(placeInt - 1);
-            String right = String.valueOf(placeInt + 1);
-
-            if (!edgeList.contains(place) && !existList.contains(up) && !existList.contains(down) && !existList.contains(left) && !existList.contains(right)) {
-                return false;
-            }
-
-
-        }
-
-
-        return true;
-         */
-
-
-        //System.out.println(placementSequence);
-
-
         if (placementSequence.length() == 0 || placementSequence.length() == 360 || placementSequence == "dddd03acba57bbbb06cccc67") {
             //dddd first is an exception
             return true;
@@ -219,11 +154,8 @@ public class Metro {
             String position = placementSequence.substring(i, i + 2);
             int positionInt = Integer.parseInt(position);
             if (positionList.contains(positionInt) || centralList.contains(positionInt)) {
-                //test duplication and placement on central station
-                //System.out.println("test duplication");
                 return false;
             }
-            //System.out.println("rule: duplication" + positionInt);
             positionList.add(positionInt);
         }
 
@@ -245,7 +177,6 @@ public class Metro {
             String position = placementSequence.substring(j + 4, j + 6);
             int positionInt = Integer.parseInt(position);
             tileList.put(positionInt, tile);
-            //System.out.println(positionInt + " " + tile);
         }
 
         ArrayList edgeListUpper = new ArrayList(Arrays.asList(01, 02, 03, 04, 05, 06));
@@ -282,7 +213,7 @@ public class Metro {
                     }
                 }
                 if (countNull == 3) {
-                    //System.out.println("test central");
+
                     return false;
                 }
             }
@@ -290,16 +221,16 @@ public class Metro {
             //check adjacent for tiles not on edge
             if (positionInt > 7 && positionInt < 70) {  //first line is 0-7, no need to test adjacent, also last line
                 String s = String.valueOf(positionInt);
-                //System.out.println(s);
+
 
                 if (s.charAt(1) != '0' && s.charAt(1) != '7') {
-                    //System.out.println(s.charAt(1));
+
                     int countAdjacent = 0;
                     if (positionList.contains(positionInt + 1) || positionList.contains(positionInt - 1) || positionList.contains(positionInt + 10) || positionList.contains(positionInt - 10)) {
                         countAdjacent++;
                     }
                     if (countAdjacent == 0) {
-                        //System.out.println("test adjacent");
+
                         return false;
                     }
                 }
@@ -361,7 +292,7 @@ public class Metro {
      */
     public static String generateMove(String placementSequence, String piece, int numberOfPlayers) {
         // FIXME Task 9: generate a valid move
-        //System.out.println(placementSequence);
+
         String move = "";
 
 
@@ -467,7 +398,7 @@ public class Metro {
                 convertDirection = 2;
                 break;
         }
-        //System.out.println("convertPosition " + convertDirection);
+
         int[] tileCode = Tile.encodeTile(tileType1);
 
         int direction = 0;
