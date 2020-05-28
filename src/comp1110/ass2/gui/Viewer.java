@@ -19,6 +19,8 @@ import javafx.stage.Stage;
  * NOTE: This class is separate from your main game class.  This
  * class does not play a game, it just illustrates various piece
  * placements.
+ *
+ *
  */
 public class Viewer extends Application {
     /* board layout */

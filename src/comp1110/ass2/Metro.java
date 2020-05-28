@@ -277,7 +277,7 @@ public class Metro {
      */
     // author of this method: Luna
     public static int[] getScore(String placementSequence, int numberOfPlayers) {
-        return new RoadMap(placementSequence, numberOfPlayers).getScore();
+        return new Score.RoadMap(placementSequence, numberOfPlayers).getScore();
     }
 
 

@@ -383,6 +383,11 @@ public class Game extends Application {
             squareBoard.get(i).setFill(Color.LIGHTGRAY);
         }
 
+        ArrayList<Integer> centralList = new ArrayList<>(Arrays.asList(27, 28, 35, 36));
+        for (int n : centralList) {
+            squareBoard.get(n).setFill(central);
+        }
+
         ArrayList<Integer> indexList = new ArrayList<>();
         for (String element : getPossibleLocation(placementSequence, tileType)) {
             int row = Integer.parseInt(String.valueOf(element.charAt(0)));
@@ -418,6 +423,8 @@ public class Game extends Application {
                 mousex = this.getLayoutX();
                 mousey = this.getLayoutY();
                 game.highlightNearestSquare(mousex, mousey);
+
+                //highlightPossibleLocation(getPlacementSequence(), this.tileType);
 
             });
 
@@ -491,7 +498,7 @@ public class Game extends Application {
 
         ArrayList<Integer> centralList = new ArrayList<>(Arrays.asList(27, 28, 35, 36));
         for (int n : centralList) {
-            squareBoardNew.get(n).setFill(central);
+            squareBoard.get(n).setFill(central);
         }
     }
 
@@ -522,6 +529,10 @@ public class Game extends Application {
         hightlighted = findNearestSquare(mousex, mousey);
         if (hightlighted != null) {
             hightlighted.setFill(Color.GREEN);
+        }
+        ArrayList<Integer> centralList = new ArrayList<>(Arrays.asList(27, 28, 35, 36));
+        for (int n : centralList) {
+            squareBoard.get(n).setFill(central);
         }
     }
 

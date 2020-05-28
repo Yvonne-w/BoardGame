@@ -20,7 +20,7 @@ declaration: >-
 # I wish to submit the following classes as entirely my own (remove this if
 # you want to just submit methods):
 #class:
-#  - RoadMap
+#  - RoadMap               //Refactored to Score.java, starting from line 225, comment added by Yiwei, May 28, 2020
 
     # I wish to submit the following methods as entirely my own (remove this if
   # you want to just submit classes):
