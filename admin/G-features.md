@@ -116,11 +116,20 @@ The following structure aligns with the original order of Game.java
 -	public void music() {
 
 # Other comments
+- Comments and authorship added
 
 - JUnits:
     - 3 newly added Junits for test driven development in tests (suffix _new)
 
-- Comments and authorship added
+- Obejects: 
+    - Tile (the still part)
+    - DraggableSquare (the moving part)
+    - Game (as a big object for all tiles, used as Game game)
+
+- Enum:
+    - AIDifficulty
+    - PathState
+    - TrainState (inner class of Score)
 
 # Limitations 
 
