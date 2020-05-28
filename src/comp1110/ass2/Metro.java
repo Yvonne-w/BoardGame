@@ -3,8 +3,6 @@ package comp1110.ass2;
 import java.util.*;
 
 public class Metro {
-    //public static final Integer TITLE_SIZE = 6; //Birdy Shang
-
     public static ArrayList<String> possibleLocListStr;
 
     /**
@@ -27,10 +25,8 @@ public class Metro {
                     && piecePlacement.charAt(1) <= 'd' && piecePlacement.charAt(1) >= 'a'
                     && piecePlacement.charAt(2) <= 'd' && piecePlacement.charAt(2) >= 'a'
                     && piecePlacement.charAt(3) <= 'd' && piecePlacement.charAt(3) >= 'a') {
-                if (Character.getNumericValue(piecePlacement.charAt(4)) <= 7 && Character.getNumericValue(piecePlacement.charAt(4)) >= 0
-                        && Character.getNumericValue(piecePlacement.charAt(5)) <= 7 && Character.getNumericValue(piecePlacement.charAt(5)) >= 0) {
-                    return true;
-                }
+                return Character.getNumericValue(piecePlacement.charAt(4)) <= 7 && Character.getNumericValue(piecePlacement.charAt(4)) >= 0
+                        && Character.getNumericValue(piecePlacement.charAt(5)) <= 7 && Character.getNumericValue(piecePlacement.charAt(5)) >= 0;
             }
         }
         return false;
@@ -80,10 +76,9 @@ public class Metro {
      * @param totalHands        a String representing all tiles (if any) in
      *                          all players' hands
      * @return a random tile from the deck
+     * @method Author Yiwei
      */
     public static String drawFromDeck(String placementSequence, String totalHands) {
-        // Task 5: draw a random tile from the deck
-        //// author of this method: Yiwei (u7020050)
         ArrayList<String> tileList = new ArrayList<String>(
                 Arrays.asList("aacb", "aacb", "aacb", "aacb",
                         "cbaa", "cbaa", "cbaa", "cbaa",
@@ -138,12 +133,11 @@ public class Metro {
      *
      * @param placementSequence A sequence of placements on the board.
      * @return Whether this placement string is valid.
+     * @author Yiwei
      */
-
 
     public static boolean isPlacementSequenceValid(String placementSequence) {
         if (placementSequence.length() == 0 || placementSequence.length() == 360 || placementSequence == "dddd03acba57bbbb06cccc67") {
-            //dddd first is an exception
             return true;
         }
 
@@ -186,23 +180,18 @@ public class Metro {
 
         for (int positionInt : positionList) {
             String tile = tileList.get(positionInt);
-
             if (edgeListBottom.contains(positionInt) && tile.charAt(2) == 'd') {
                 return false;
             }
-
             if (edgeListUpper.contains(positionInt) && tile.charAt(0) == 'd') {
                 return false;
             }
-
             if (edgeListLeft.contains(positionInt) && tile.charAt(3) == 'd') {
                 return false;
             }
-
             if (edgeListRight.contains(positionInt) && tile.charAt(1) == 'd') {
                 return false;
             }
-
             if (aroundCentralList.contains(positionInt)) {
                 //test placement neighbours if around central station
                 List<Integer> neighbours = outerCheckList.get(positionInt);
@@ -213,7 +202,6 @@ public class Metro {
                     }
                 }
                 if (countNull == 3) {
-
                     return false;
                 }
             }
@@ -221,16 +209,12 @@ public class Metro {
             //check adjacent for tiles not on edge
             if (positionInt > 7 && positionInt < 70) {  //first line is 0-7, no need to test adjacent, also last line
                 String s = String.valueOf(positionInt);
-
-
                 if (s.charAt(1) != '0' && s.charAt(1) != '7') {
-
                     int countAdjacent = 0;
                     if (positionList.contains(positionInt + 1) || positionList.contains(positionInt - 1) || positionList.contains(positionInt + 10) || positionList.contains(positionInt - 10)) {
                         countAdjacent++;
                     }
                     if (countAdjacent == 0) {
-
                         return false;
                     }
                 }
@@ -239,7 +223,6 @@ public class Metro {
             if (positionInt == 0 || positionInt == 7 || positionInt == 70 || positionInt == 77) {
                 //check corner cases
                 int[] tilecode = Tile.encodeTileType(tileList.get(positionInt));
-
                 switch (positionInt) {
                     case 0:
                         if (tilecode[0] == 4 || tilecode[7] == 4) {
@@ -261,10 +244,7 @@ public class Metro {
             }
         }
 
-
         return true;
-
-
     }
 
     /**
@@ -291,11 +271,8 @@ public class Metro {
      * @return A valid placement of the given tile
      */
     public static String generateMove(String placementSequence, String piece, int numberOfPlayers) {
-        // FIXME Task 9: generate a valid move
-
+        // Author: Yiwei
         String move = "";
-
-
         ArrayList<String> placementList = new ArrayList<>(Arrays.asList(
                 "00", "01", "02", "03", "04", "05", "06", "07",
                 "10", "11", "12", "13", "14", "15", "16", "17",
@@ -327,7 +304,6 @@ public class Metro {
             }
         }
 
-
         ArrayList<String> possibleList = new ArrayList<>();
         for (int i = 0; i < placementList.size(); i++) {
             String newPlacementSequence = placementSequence + piece + placementList.get(i);
@@ -342,7 +318,6 @@ public class Metro {
             move = possibleList.get(r.nextInt(possibleList.size()));
         }
 
-
         return move;
     }
 
@@ -350,7 +325,6 @@ public class Metro {
         int previousDirection = 0;
         int index = 0;
         int[] tileCode = Tile.encodeTile(tileType);
-
         if (tilePlace <= 8) {
             index = 0;
         } else if (tilePlace <= 16) {
@@ -380,6 +354,50 @@ public class Metro {
             }
         }
         return previousDirection;
+    }
+
+    public static ArrayList<String> getPossibleListNew(String placementSequence, String piece) {
+        String move = "";
+        ArrayList<String> placementList = new ArrayList<>(Arrays.asList(
+                "00", "01", "02", "03", "04", "05", "06", "07",
+                "10", "11", "12", "13", "14", "15", "16", "17",
+                "20", "21", "22", "23", "24", "25", "26", "27",
+                "30", "31", "32", "35", "36", "37",
+                "40", "41", "42", "45", "46", "47",
+                "50", "51", "52", "53", "54", "55", "56", "57",
+                "60", "61", "62", "63", "64", "65", "66", "67",
+                "70", "71", "72", "73", "74", "75", "76", "77"));
+
+        for (int j = 0; j < placementSequence.length(); j += 6) {
+            String exist = placementSequence.substring(j + 4, j + 6);
+            placementList.remove(exist);
+        }
+
+        if (placementSequence.length() < 354) {
+            int[] tilecode = Tile.encodeTileType(piece);
+            if (tilecode[0] == 3) {
+                placementList.remove("00");
+            }
+            if (tilecode[2] == 3) {
+                placementList.remove("07");
+            }
+            if (tilecode[3] == 3) {
+                placementList.remove("77");
+            }
+            if (tilecode[6] == 3) {
+                placementList.remove("70");
+            }
+        }
+
+        ArrayList<String> possibleList = new ArrayList<>();
+        for (int i = 0; i < placementList.size(); i++) {
+            String newPlacementSequence = placementSequence + piece + placementList.get(i);
+            if (isPlacementSequenceValid(newPlacementSequence)) {
+                String newPlacement = piece + placementList.get(i);
+                possibleList.add(newPlacement);
+            }
+        }
+        return possibleList;
     }
 
     public static int getDirectionForTile(String tileType1, int tilePlace1, int previoudDirection) {
@@ -424,62 +442,6 @@ public class Metro {
         return direction;
     }
 
-
-    public static boolean isTileConnected(HashMap<String, String> tileList, String position, int direction) {
-        int positionInt = Integer.parseInt(position);
-        int checkLoc = positionInt + direction;
-        if (tileList.containsKey(String.valueOf(checkLoc))) {
-            return true;
-        }
-        return false;
-    }
-
-    public static ArrayList<String> getPossibleListNew(String placementSequence, String piece) {
-        String move = "";
-        ArrayList<String> placementList = new ArrayList<>(Arrays.asList(
-                "00", "01", "02", "03", "04", "05", "06", "07",
-                "10", "11", "12", "13", "14", "15", "16", "17",
-                "20", "21", "22", "23", "24", "25", "26", "27",
-                "30", "31", "32", "35", "36", "37",
-                "40", "41", "42", "45", "46", "47",
-                "50", "51", "52", "53", "54", "55", "56", "57",
-                "60", "61", "62", "63", "64", "65", "66", "67",
-                "70", "71", "72", "73", "74", "75", "76", "77"));
-
-        for (int j = 0; j < placementSequence.length(); j += 6) {
-            String exist = placementSequence.substring(j + 4, j + 6);
-            placementList.remove(exist);
-        }
-
-        if (placementSequence.length() < 354) {
-            int[] tilecode = Tile.encodeTileType(piece);
-            if (tilecode[0] == 3) {
-                placementList.remove("00");
-            }
-            if (tilecode[2] == 3) {
-                placementList.remove("07");
-            }
-            if (tilecode[3] == 3) {
-                placementList.remove("77");
-            }
-            if (tilecode[6] == 3) {
-                placementList.remove("70");
-            }
-        }
-
-
-        ArrayList<String> possibleList = new ArrayList<>();
-        for (int i = 0; i < placementList.size(); i++) {
-            String newPlacementSequence = placementSequence + piece + placementList.get(i);
-            if (isPlacementSequenceValid(newPlacementSequence)) {
-                String newPlacement = piece + placementList.get(i);
-                possibleList.add(newPlacement);
-            }
-        }
-
-
-        return possibleList;
-    }
 
 }
 

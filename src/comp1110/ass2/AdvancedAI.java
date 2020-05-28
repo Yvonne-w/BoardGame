@@ -3,6 +3,11 @@ package comp1110.ass2;
 import java.util.ArrayList;
 import java.util.LinkedList;
 
+/**
+ * This class generate an Advanced AI and contains the help methods to calculate mark for all the existing paths.
+ * @author Yiwei
+ */
+
 public class AdvancedAI {
     private final AIDifficulty AIDifficulty;
     public int index;
@@ -17,11 +22,9 @@ public class AdvancedAI {
     public static ArrayList<PathState> getPathStatusList(ArrayList<LinkedList<Integer>> pathlist) {
         ArrayList<PathState> pathStatusList = new ArrayList<PathState>();
 
-
         for (int i = 0; i < pathlist.size(); i++) {
             int pathLength = pathlist.get(i).size();
             int endPoint = pathlist.get(i).get(pathLength - 1);
-
             pathStatusList.add(PathState.getState(pathLength, endPoint));
         }
 
@@ -44,16 +47,12 @@ public class AdvancedAI {
             }
         }
 
-
         return pathMarkList;
     }
 
     public static double getDistanceToCentralFromInt(int endPoint) {
-
         int row = endPoint / 10;
         int column = endPoint % 10;
-
-
         double distance = Math.sqrt(Math.pow((row - 3.5), 2) + Math.pow((column - 3.5), 2));
 
         return distance;

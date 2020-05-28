@@ -4,6 +4,10 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Objects;
 
+/**
+ * This class is to calculate the scores for players.
+ * @author Runa (Luna)
+ */
 public class Score {
 
     public static class Config {

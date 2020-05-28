@@ -31,6 +31,7 @@ declaration: >-
 # you want to just submit methods):
 class:
   - Game.java
+  #Please check the structure in G-features.md to get a clear picture of the Game.java class. (starting from G-features line 37)
   - AdvancedAI.java
   # I wish to submit the following methods as entirely my own (remove this if
   # you want to just submit classes):

@@ -19,8 +19,6 @@ import javafx.stage.Stage;
  * NOTE: This class is separate from your main game class.  This
  * class does not play a game, it just illustrates various piece
  * placements.
- *
- *
  */
 public class Viewer extends Application {
     /* board layout */
@@ -42,11 +40,9 @@ public class Viewer extends Application {
      * Draw a placement in the window, removing any previously drawn one
      *
      * @param placement A valid placement string
+     * @author: Yiwei
      */
     void makePlacement(String placement) {
-        // Task 4: implement the simple placement viewer
-        //// author of this method: Yiwei (u7020050)
-        //board
         GridPane board = new GridPane();
 
         for (int i = 1; i <= 32; i++) {
@@ -82,7 +78,6 @@ public class Viewer extends Application {
             }
         }
 
-        //tile placement
         for (int idx = 0; idx < placement.length(); idx += 6) {
             String tileType = placement.substring(idx, idx + 4);
             int row = Integer.parseInt(placement.substring(idx + 4, idx + 5));

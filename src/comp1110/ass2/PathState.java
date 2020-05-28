@@ -2,7 +2,10 @@ package comp1110.ass2;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-
+/**
+ * Set the PathStatus
+ * @author Yiwei
+ */
 public enum PathState {
     ACTIVE, INACTIVE;
 

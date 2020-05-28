@@ -1,10 +1,27 @@
 package comp1110.ass2;
 
-import java.sql.SQLOutput;
 import java.util.*;
 
+/**
+ * PathList.java gets all the path on the board, starting with the station.
+ *
+ * @author Yiwei
+ */
 public class PathList {
-
+    /**
+     * The logic for this class is to first get a start direction based on station and tile, and the encode the tile to get the next union.
+     * Based on the int[]union to get the direction for the next tile, if there is a tile on that location, then keep repeating the
+     * process until there is no tile.
+     * For example, if "aaaa" is placed on station 1 (07), the start direction is int[0], then based on tileType int[], 0 connects to 5,
+     * so the next direction is to go down.
+     * Then we check the placement for (17).
+     *
+     *    0  1
+     * 7  tile 2
+     * 6       3
+     *    5  4
+     *
+     */
     public static ArrayList<LinkedList<Integer>> getPathList(String placementSequence) {
         HashMap<Integer, String> tileListPT = new HashMap<>();
         ArrayList<Integer> startStationInt = new ArrayList<>();
@@ -71,7 +88,6 @@ public class PathList {
         int previousDirection = 0;
         int index = 0;
         int[] tileCode = Tile.encodeTile(tileType);
-
         if (tilePlace <= 8) {
             index = 0;
         } else if (tilePlace > 68) {
@@ -109,7 +125,6 @@ public class PathList {
      * @param previoudDirection -10 Up, +10 Down, +1 Right, -1 Left
      * @return
      */
-
     public static int getDirectionForTile(String tileType1, int tilePlace1, int previoudDirection) {
         int convertDirection = 0;
         switch (previoudDirection) {
@@ -147,16 +162,12 @@ public class PathList {
                 }
             }
         }
-
         return direction;
     }
 
     public static boolean isTileConnected(HashMap<Integer, String> tileList, int position, int direction) {
         int checkLoc = position + direction;
-        if (tileList.containsKey(position)) {
-            return true;
-        }
-        return false;
+        return tileList.containsKey(position);
     }
 }
 

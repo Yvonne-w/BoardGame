@@ -1,6 +1,12 @@
 package comp1110.ass2;
-// This class represents shape of a tile on the game board.
-// author of this class: Yiwei (u7020050)
+/**
+ * This class represents the still part of a tile on the board. (Compared with DraggableSquare, which represents the moving part)
+ * For this still tile, it has the String tileType, but this attribute is only used while draw from deck in the front end to refer to
+ * the image name.
+ * In all other methods and class (I wrote) for the backend part, I used the encoding method to manipulate the tile.
+ * The x and y is the first coordinate set for a tile.
+ * Polymorphism of a shape and a patten.
+ */
 
 import javafx.scene.shape.Polygon;
 
@@ -31,8 +37,17 @@ public class Tile extends Polygon {
         return Math.sqrt(Math.pow(x2 - x, 2) + Math.pow(y2 - y, 2));
     }
 
-    //Tile inner union method
-
+    /**
+     * This method is a preparation for getting all the paths on the Board, and to color the path by node.
+     *
+     *    0  1
+     * 7  tile 2
+     * 6       3
+     *    5  4
+     *
+     * @param tilePlacement: A String representing the tile, either 4 or 6 is OK
+     * @return tilecode
+     */
 
     public static int[] encodeTile(String tilePlacement) {
         String tileString = tilePlacement.substring(0, 4);
@@ -109,11 +124,12 @@ public class Tile extends Polygon {
 
     }
 
-    /*
-    return a tile array based on tiletype
+    /**
+     * This method encodes the tiletype, use 1 for a, 2 for b, 3 for c and 4 for d.
+     *
+     * @param tilePlacement tileString
+     * @return tileTypeCode
      */
-
-
     public static int[] encodeTileType(String tilePlacement) {
         String tileString = tilePlacement.substring(0, 4);
 

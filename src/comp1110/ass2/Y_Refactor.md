@@ -834,4 +834,84 @@ Advanced AI Trial 2
 
         return advanced;
     }
+    
+AI help method 1
+    
+    LinkedList<Integer> getStationWithMaxMark(HashMap<Double, LinkedList<Integer>> markStationMap) {
+        double max = 0.0;
+        LinkedList<Integer> maxStationList = new LinkedList<>();
+
+        for (double mark : markStationMap.keySet()) {
+            if (mark > max) {
+                max = mark;
+                maxStationList = markStationMap.get(max);
+            }
+        }
+
+
+        return maxStationList;
+    }
+
+AI help method 2
+
+    double getHightestMark(HashMap<Double, LinkedList<Integer>> markStationMap) {
+        double max = 0.0;
+        LinkedList<Integer> maxStationList = new LinkedList<>();
+
+        for (double mark : markStationMap.keySet()) {
+            if (mark > max) {
+                max = mark;
+                maxStationList = markStationMap.get(max);
+            }
+        }
+
+
+        return max;
+    }
+    
+AI help method 3
+
+    int getNextPosition(String startType, int startPlace, LinkedList<Integer> path) {
+        String placementSequence = getPlacementSequence();
+
+        HashMap<Integer, String> tileList = new HashMap<>();
+        for (int j = 0; j < placementSequence.length(); j += 6) {
+            //Hashmap for the placement, position as Key
+            String tile = placementSequence.substring(j, j + 4);
+            String position = placementSequence.substring(j + 4, j + 6);
+            int positionInt = Integer.parseInt(position);
+            tileList.put(positionInt, tile);
+
+        }
+
+        int next = 0;
+        int startDirection = PathList.getPreviousDirctionForEdge(startType, startPlace);
+
+
+        String tiletype1 = tileList.get(startPlace);
+        int tilePlace1 = startPlace;
+        int direction = startDirection;
+        int newDirection = 0;
+
+        while (next != path.get(path.size() - 1)) {
+            newDirection = PathList.getDirectionForTile(tiletype1, tilePlace1, direction);
+            next = tilePlace1 + newDirection;
+            tiletype1 = tileList.get(next);
+            tilePlace1 = next;
+            direction = newDirection;
+        }
+
+
+        return next;
+    }
+    
+Task 9 help method
+
+    public static boolean isTileConnected(HashMap<String, String> tileList, String position, int direction) {
+        int positionInt = Integer.parseInt(position);
+        int checkLoc = positionInt + direction;
+        return tileList.containsKey(String.valueOf(checkLoc));
+    }
+    
+PathList help method
 
