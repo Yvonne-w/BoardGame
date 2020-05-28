@@ -31,11 +31,13 @@ declaration: >-
 # you want to just submit methods):
 class:
   - Game.java
-  - # I wish to submit the following methods as entirely my own (remove this if
+  - AdvancedAI.java
+  # I wish to submit the following methods as entirely my own (remove this if
   # you want to just submit classes):
 method:
-  - Game.java String getAdvancedTilePlacement(String tiletypeAi) {}
+  - Game.java       String getAdvancedTilePlacement(String tiletypeAi) {}
   - PathList.java   public static ArrayList<LinkedList<Integer>> getPathList(String placementSequence) {}
+  - Tile.java       public static int[] encodeTile(String tilePlacement) {}
 
   # sign *your* name and uid here
 name: Yiwei Wu
