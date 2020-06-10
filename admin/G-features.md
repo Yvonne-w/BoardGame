@@ -121,10 +121,12 @@ The following structure aligns with the original order of Game.java
 - JUnits:
     - 3 newly added Junits for test driven development in tests (suffix _new)
 
-- Obejects: 
-    - Tile (the still part)
-    - DraggableSquare (the moving part)
-    - Game (as a big object for all tiles, used as Game game)
+- Obejects: //Edited by Yiwei 29, May
+    - Tile class - Still
+    - Advanced AI
+    - DraggableSquare class- Movement
+    - Score class: Path, TileRoad
+    - Game
 
 - Enum:
     - AIDifficulty
